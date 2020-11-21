@@ -1,0 +1,18 @@
+database: postgresql+asyncpg://voidpp:teve@localhost/buck
+redis: ""
+logger:
+  disable_existing_loggers: false
+  formatters:
+    standard:
+      format: '%(asctime)s - %(levelname)s - %(filename)s:%(lineno)s: %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: standard
+      level: DEBUG
+  loggers:
+    buck:
+      handlers: [console]
+      level: DEBUG
+      propagate: true
+  version: 1
