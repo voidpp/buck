@@ -1,0 +1,5 @@
+generates:
+  ./api.ts:
+    schema: schema.graphql
+    plugins:
+      - typescript

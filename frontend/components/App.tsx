@@ -3,6 +3,11 @@ import {colors, createMuiTheme, CssBaseline, MuiThemeProvider} from "@material-u
 import {BrowserRouter as Router} from "react-router-dom";
 import messages from "../translations";
 import {IntlProvider} from "react-intl";
+import Kiosk from "./layouts/kiosk/Kiosk";
+import {createClient} from "../apollo-client/factory";
+import {ApolloProvider} from "@apollo/client";
+import {Provider as ReduxStoreProvider} from "react-redux";
+import configureStore from "../store";
 
 const lightTheme = createMuiTheme({
     palette: {
@@ -19,17 +24,27 @@ const darkTheme = createMuiTheme({
         primary: colors.cyan,
         secondary: colors.pink,
     },
-    typography: {}
+    typography: {
+        fontSize: 22,
+    }
 });
+
+const store = configureStore();
+const client = createClient(store);
 
 export default () => {
     return (
-        <IntlProvider messages={messages.en} locale="en" defaultLocale="en">
-            <MuiThemeProvider theme={darkTheme}>
-                <Router>
-                    <CssBaseline/>
-                </Router>
-            </MuiThemeProvider>
-        </IntlProvider>
+        <ApolloProvider client={client}>
+            <ReduxStoreProvider store={store}>
+                <IntlProvider messages={messages.en} locale="en" defaultLocale="en">
+                    <MuiThemeProvider theme={darkTheme}>
+                        <Router>
+                            <CssBaseline/>
+                            <Kiosk/>
+                        </Router>
+                    </MuiThemeProvider>
+                </IntlProvider>
+            </ReduxStoreProvider>
+        </ApolloProvider>
     );
 }

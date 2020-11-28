@@ -16,6 +16,8 @@ class PredefinedTimer(Base):
     length = Column(Integer, nullable = False)
     group_id = Column(Integer, ForeignKey('group.id', ondelete = 'CASCADE'))
 
+    group = relationship("Group")
+
 
 class Timer(Base):
     __tablename__ = 'timer'

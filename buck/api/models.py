@@ -1,6 +1,6 @@
 from enum import Enum
 
-from graphene import Int, ObjectType, String, List
+from graphene import Int, ObjectType, String, List, JSONString
 from graphene_sqlalchemy import SQLAlchemyObjectType
 
 from buck import models
@@ -35,8 +35,9 @@ class Group(SQLAlchemyObjectType):
 
 
 class Error(ObjectType):
-    field_name = String()
-    message = String()
+    path = List(String)
+    type = String()
+    context = JSONString()
 
 
 class ValidationResult(ObjectType):

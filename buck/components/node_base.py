@@ -17,6 +17,12 @@ class NoArgumentsDefinedError(Exception):
     pass
 
 
+class ValidationError(Exception):
+    def __init__(self, result):
+        super().__init__("ValidationError")
+        self.result = result
+
+
 class NodeBase(ABC, Generic[InputType]):
     result_type: OrderedType
     input_validator: Type[BaseModel] = None
@@ -49,14 +55,16 @@ class NodeBase(ABC, Generic[InputType]):
         return self._args
 
     async def validate(self):
-        if self.input_validator:
-            self.input_validator(**self._kwargs)
+        pass
 
     @classmethod
     async def _resolve(cls, root, info, **kwargs):
         obj = cls(root, info, **kwargs)
 
-        await obj.validate()
+        try:
+            await obj.validate()
+        except ValidationError as e:
+            return e.result
 
         return await obj.resolve()
 

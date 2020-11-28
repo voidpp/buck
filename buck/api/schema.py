@@ -48,8 +48,9 @@ class Schema(BaseSchema):
         http_request_context: RequestContext = request.scope[Keys.HTTP_REQUEST_CONTEXT]
 
         async with AsyncSession(http_request_context.db.engine) as session:
-            context[Keys.API_CONTEXT_SESSION] = session
-            result = await super().execute(*args, **kwargs)
+            async with session.begin():
+                context[Keys.API_CONTEXT_SESSION] = session
+                result = await super().execute(*args, **kwargs)
 
         duration = round((time.perf_counter() - start) * 1000, 2)
         print("Processed GraphQL query (%s ms):\n%s\nVariables: %s" % (duration, args[0], kwargs.get("variables")))
