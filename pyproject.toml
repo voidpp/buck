@@ -18,6 +18,7 @@ asyncpg = "^0.21.0"
 alembic = "^1.4.3"
 psycopg2 = "^2.8.6"
 graphene-sqlalchemy = "^2.3.0"
+pytimeparse = "^1.1.8"
 
 [tool.poetry.dev-dependencies]
 invoke = "^1.4.1"

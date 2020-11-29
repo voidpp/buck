@@ -8,11 +8,11 @@ export type GroupedPredefinedTimer = {
     predefinedTimers: Omit<PredefinedTimer, "__typename" | "group" | "groupId">[],
 };
 
-export const useGroupedPredefinedTimerList = (): GroupedPredefinedTimer[] => {
-    const {data} = useQuery<PredefinedTimerList>(predefinedTimerListQuery);
+export const useGroupedPredefinedTimerList = (): { timers: GroupedPredefinedTimer[], refetch: Function } => {
+    const {data, refetch} = useQuery<PredefinedTimerList>(predefinedTimerListQuery, {fetchPolicy: "cache-and-network"});
 
     if (!data)
-        return [];
+        return {timers: [], refetch};
 
     const groups: Record<number, GroupedPredefinedTimer> = {};
 
@@ -30,5 +30,8 @@ export const useGroupedPredefinedTimerList = (): GroupedPredefinedTimer[] => {
             }
     }
 
-    return Object.values(groups).sort((a, b) => a.group.name.localeCompare(b.group.name));
+    return {
+        timers: Object.values(groups).sort((a, b) => a.group.name.localeCompare(b.group.name)),
+        refetch,
+    };
 }

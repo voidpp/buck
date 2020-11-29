@@ -1,16 +1,23 @@
-from pydantic import ValidationError as PydanticValidationError
+from pydantic import ValidationError as PydanticValidationError, validator
 from pydantic.main import BaseModel
+from pytimeparse.timeparse import timeparse
 
-from buck.api.models import InstanceResult
+from buck.api.models import InstanceResult, InvalidTimedeltaError
 from buck.api.tools import error_list_from_pydantic_error
 from buck.components.node_base import NodeBase, ValidationError
 from buck.models import Timer, TimerEvent, TimerEventType
 
 
 class StartTimerValidator(BaseModel):
-    length: int
+    length: str
     name: str = None
     predefined_timer_id: int = None  # TODO
+
+    @validator('length')
+    def validate_length(cls, value: str):
+        if not timeparse(value):
+            raise InvalidTimedeltaError()
+        return value
 
 
 class StartTimerNode(NodeBase):

@@ -5,20 +5,20 @@ import {FormattedButton} from "../../../translations";
 import {useGroupedPredefinedTimerList} from "../hooks";
 
 type Props = {
-    onSelect: (length: number, name: string, id: number) => void,
+    onSelect: (length: string, name: string, id: number) => void,
 };
 
 export default ({onSelect}: Props) => {
     const [isShowDialog, showDialog, hideDialog] = useBoolState();
 
-    const groupedTimers = useGroupedPredefinedTimerList();
+    const {timers} = useGroupedPredefinedTimerList();
 
     return (
         <React.Fragment>
-            <FormattedButton onClick={showDialog} msgId="predefinedTimersSelect"/>
+            <FormattedButton onClick={showDialog} msgId="predefinedTimersSelect" variant="contained" size="small"/>
             <Dialog open={isShowDialog} onClose={hideDialog}>
                 <DialogContent>
-                    {groupedTimers.map(grp => (
+                    {timers.map(grp => (
                         <List
                             key={grp.group?.id ?? 0}
                             subheader={(
@@ -32,7 +32,7 @@ export default ({onSelect}: Props) => {
                                     onSelect(t.length, t.name, t.id);
                                     hideDialog();
                                 }}>
-                                    <ListItemText>{t.name} ({t.length}s)</ListItemText>
+                                    <ListItemText>{t.name} ({t.length})</ListItemText>
                                 </ListItem>
                             ))}
                         </List>

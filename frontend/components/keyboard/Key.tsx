@@ -33,6 +33,7 @@ type Formatter = (k: string, c: Context, t: Theme) => {
 
 const formatters: {[s: string]: Formatter} = {
     generic: k => ({text: k}),
+    [SpecialKeys.Placeholder]: k => ({text: ''}),
     [SpecialKeys.Backspace]: k => ({text: <BackspaceIcon />}),
     [SpecialKeys.Space]: k => ({
         text: <SpaceBarIcon />,

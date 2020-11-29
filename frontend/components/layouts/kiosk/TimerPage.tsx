@@ -5,7 +5,7 @@ import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 import {FormattedButton} from "../../translations";
 import StartTimerDialog from "./start-timer/StartTimerDialog";
 import CreateTimerDialog from "./CreateTimerDialog";
-import PredefinedTimerManagerDialog from "./PredefinedTimerManagerDialog";
+import PredefinedTimerManagerDialog from "./predefined-timers-manager/Dialog";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {

@@ -15,6 +15,12 @@ export type KeyboardProps = {
 const useStyles = makeStyles((theme: Theme) => createStyles({
     row: {
         display: "flex",
+        flexGrow: 1,
+    } as CreateCSSProperties,
+    container: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
     } as CreateCSSProperties,
 }));
 
@@ -47,7 +53,7 @@ export default (props: KeyboardProps) => {
     }
 
     return (
-        <div>
+        <div className={classes.container}>
             {layout.keys.map((row, idx) => (
                 <div key={`${layout.name}-row-${idx}`} className={classes.row}>
                     {row.map(k => <Key context={context} keyString={k} key={k} onClick={clickKey}/>)}

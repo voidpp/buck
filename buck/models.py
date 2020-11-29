@@ -13,7 +13,7 @@ class PredefinedTimer(Base):
 
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False, unique = True)
-    length = Column(Integer, nullable = False)
+    length = Column(String, nullable = False)
     group_id = Column(Integer, ForeignKey('group.id', ondelete = 'CASCADE'))
 
     group = relationship("Group")
@@ -23,7 +23,7 @@ class Timer(Base):
     __tablename__ = 'timer'
 
     id = Column(Integer, primary_key = True)
-    length = Column(Integer, nullable = False)
+    length = Column(String, nullable = False)
     name = Column(String)
 
 

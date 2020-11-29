@@ -283,6 +283,14 @@ python-versions = "*"
 Unidecode = ">=0.04.16"
 
 [[package]]
+name = "pytimeparse"
+version = "1.1.8"
+description = "Time expression parser"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pyyaml"
 version = "5.3.1"
 description = "YAML parser and emitter for Python"
@@ -437,7 +445,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e3494adece75ab7fd250cc6dcbb5e1266934f59e73cd0b47303470e11bc8d280"
+content-hash = "3f3d395dbf407ccf58533412c26f449b0cbe1d798f6d8822ce3d146c329b13fe"
 
 [metadata.files]
 aiofiles = [
@@ -638,6 +646,10 @@ python-editor = [
 ]
 python-slugify = [
     {file = "python-slugify-1.2.6.tar.gz", hash = "sha256:7723daf30996db26573176bddcdf5fcb98f66dc70df05c9cb29f2c79b8193245"},
+]
+pytimeparse = [
+    {file = "pytimeparse-1.1.8-py2.py3-none-any.whl", hash = "sha256:04b7be6cc8bd9f5647a6325444926c3ac34ee6bc7e69da4367ba282f076036bd"},
+    {file = "pytimeparse-1.1.8.tar.gz", hash = "sha256:e86136477be924d7e670646a98561957e8ca7308d44841e21f5ddea757556a0a"},
 ]
 pyyaml = [
     {file = "PyYAML-5.3.1-cp27-cp27m-win32.whl", hash = "sha256:74809a57b329d6cc0fdccee6318f44b9b8649961fa73144a98735b0aaf029f1f"},

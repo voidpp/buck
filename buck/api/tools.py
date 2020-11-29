@@ -10,7 +10,7 @@ def error_list_from_pydantic_error(error: ValidationError) -> list[Error]:
         res.append(Error(
             path = err['loc'],
             type = err['type'],
-            context = err['ctx'],
+            context = err.get('ctx'),
         ))
 
     return res

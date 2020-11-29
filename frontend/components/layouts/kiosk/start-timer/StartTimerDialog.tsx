@@ -8,9 +8,11 @@ import {FormattedButton, FormattedMessage} from "../../../translations";
 import {ErrorList} from "../../../forms";
 import {FormErrorHelper} from "../../../../forms/formErrorHelper";
 import PredefinedTimers from "./PredefinedTimers";
+import DialogActionButtons from "../../../DialogActionButtons";
+import TextFieldDialog from "../../../keyboard/TextFieldDialog";
 
 const startTimerMutation = gql`
-    mutation StartTimerMutation($name: String, $length: Int!, $predefinedTimerId: Int) {
+    mutation StartTimerMutation($name: String, $length: String!, $predefinedTimerId: Int) {
         startTimer(name: $name length: $length predefinedTimerId: $predefinedTimerId) {
             id
             errors {
@@ -29,7 +31,7 @@ type Props = {
 };
 
 const defaultFormData: StartTimerMutationVariables = {
-    length: 30,
+    length: '10m',
     name: "",
 }
 
@@ -52,7 +54,7 @@ export default ({show, close}: Props) => {
         errors.resetErrors();
     }
 
-    const onSelectPredefinedTimer = (length: number, name: string, id: number) => {
+    const onSelectPredefinedTimer = (length: string, name: string, id: number) => {
         setFormData({length, name, predefinedTimerId: id});
     }
 
@@ -60,17 +62,17 @@ export default ({show, close}: Props) => {
         <Dialog open={show} onClose={close} onExited={resetForm}>
             <FormattedDialogTitle msgId="startTimer" onCloseIconClick={close}/>
             <DialogContent>
-                <TextField
+                <TextFieldDialog
                     label={<FormattedMessage id="length"/>}
                     fullWidth
                     required
                     helperText={<ErrorList errors={errors.getErrors("length")}/>}
                     error={errors.hasError("length")}
                     value={formData.length}
-                    onChange={ev => setFormData({...formData, length: Number(ev.target.value)})}
+                    onChange={ev => setFormData({...formData, length: ev.target.value})}
                     style={{marginBottom: '0.7em'}}
                 />
-                <TextField
+                <TextFieldDialog
                     label={<FormattedMessage id="name"/>}
                     fullWidth
                     helperText={<ErrorList errors={errors.getErrors("name")}/>}
@@ -81,10 +83,7 @@ export default ({show, close}: Props) => {
                 />
                 <PredefinedTimers onSelect={onSelectPredefinedTimer}/>
             </DialogContent>
-            <DialogActions>
-                <FormattedButton onClick={submit} msgId="submit"/>
-                <FormattedButton onClick={close} msgId="cancel" color="secondary"/>
-            </DialogActions>
+            <DialogActionButtons onSubmit={submit} onCancel={close} />
         </Dialog>
     );
 }

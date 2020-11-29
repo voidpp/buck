@@ -5,6 +5,7 @@ import {Dialog, DialogActions, DialogContent, DialogTitle, Slide, TextField, Tex
 import Keyboard from "./Keyboard";
 import {TransitionProps} from "@material-ui/core/transitions";
 import {FormattedButton} from "../translations";
+import {numericLayout} from "./layouts";
 
 
 type Props = {} & TextFieldProps;

@@ -1,9 +1,10 @@
-from pydantic import ValidationError as PydanticValidationError
+from pydantic import ValidationError as PydanticValidationError, validator
 from pydantic.main import BaseModel
-from pydantic.types import constr, conint
+from pydantic.types import constr
+from pytimeparse.timeparse import timeparse
 from sqlalchemy import select
 
-from buck.api.models import InstanceResult, Error
+from buck.api.models import InstanceResult, Error, InvalidTimedeltaError
 from buck.api.tools import error_list_from_pydantic_error
 from buck.components.node_base import NodeBase, ValidationError
 from buck.models import PredefinedTimer, Group
@@ -11,8 +12,14 @@ from buck.models import PredefinedTimer, Group
 
 class PredefineTimerValidator(BaseModel):
     name: constr(min_length = 3)
-    length: conint(gt = 5)
+    length: str
     group_name: str = None
+
+    @validator('length')
+    def validate_length(cls, value: str):
+        if not timeparse(value):
+            raise InvalidTimedeltaError()
+        return value
 
 
 class PredefineTimerNode(NodeBase[PredefineTimerValidator]):

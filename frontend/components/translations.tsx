@@ -1,7 +1,7 @@
 import * as React from "react";
 import {TranslationKey} from "../translations";
 import {FormattedMessage as ReactFormattedMessage} from "react-intl";
-import {Button, ButtonProps} from "@material-ui/core";
+import {Button, ButtonProps, TableCell, TableCellProps} from "@material-ui/core";
 
 
 export const FormattedMessage = ({id, values}: { id: TranslationKey, values?: any }) => (
@@ -22,3 +22,19 @@ export const FormattedButton = (props: FormattedButtonProps) => {
         </Button>
     )
 };
+
+type FormattedTableCellProps = {
+    msgId: TranslationKey,
+} & TableCellProps;
+
+
+export const FormattedTableCell = (props: FormattedTableCellProps) => {
+    const props_ = {...props};
+    delete props_.msgId;
+
+    return (
+        <TableCell {...props_}>
+            <FormattedMessage id={props.msgId}/>
+        </TableCell>
+    )
+}

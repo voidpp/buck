@@ -6,8 +6,9 @@ generate = Collection('generate')
 
 
 @task
-def transpile(c):
+def build(c):
     from .assets import Frontend
+    all(c)
     Frontend.transpile(c, False)
 
 
@@ -35,3 +36,13 @@ def api_ts(c):
     with c.cd(str(Folders.frontend)):
         c.run('npx graphql-codegen')
     print("api.ts has been generated")
+
+
+@generate.task()
+def all(c):
+    """generate all typescript stuff"""
+    from .top import clean
+    clean(c)
+    schema(c)
+    api_ts(c)
+    query_type_definitions(c)

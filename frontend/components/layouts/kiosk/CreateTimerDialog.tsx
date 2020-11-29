@@ -1,18 +1,18 @@
 import * as React from "react";
 import {useState} from "react";
-import {Dialog, DialogActions, DialogContent, TextField} from "@material-ui/core";
+import {Dialog, DialogActions, DialogContent} from "@material-ui/core";
 import {FormattedButton, FormattedMessage} from "../../translations";
 import {FormattedDialogTitle} from "../../widgets/dialogs";
-import {gql, useMutation, useQuery} from "@apollo/client";
+import {gql, useMutation} from "@apollo/client";
 import {CreateTimerMutation, CreateTimerMutationVariables} from "./__generated__/CreateTimerMutation";
 import {FormErrorHelper} from "../../../forms/formErrorHelper";
 import {ErrorList} from "../../forms";
-import {GroupList} from "./__generated__/GroupList";
-import {Autocomplete} from "@material-ui/lab";
 import TextFieldDialog from "../../keyboard/TextFieldDialog";
+import GroupSelectInput from "./GroupSelectInput";
+import DialogActionButtons from "../../DialogActionButtons";
 
 const createTimerMutation = gql`
-    mutation CreateTimerMutation($name: String!, $length: Int!, $groupName: String) {
+    mutation CreateTimerMutation($name: String!, $length: String!, $groupName: String) {
         predefineTimer(name: $name length: $length groupName: $groupName) {
             id
             errors {
@@ -24,19 +24,10 @@ const createTimerMutation = gql`
     }
 `;
 
-const groupListQuery = gql`
-    query GroupList {
-        groups {
-            id
-            name
-        }
-    }
-`;
-
 const defaultFormData: CreateTimerMutationVariables = {
     name: "",
-    length: 30,
-    groupName: null,
+    length: "10m",
+    groupName: "",
 };
 
 type Props = {
@@ -50,7 +41,6 @@ export default ({show, close, defaultData = defaultFormData, onTimerCreated}: Pr
 
     const [formData, setFormData] = useState<CreateTimerMutationVariables>({...defaultFormData, ...defaultData});
     const [createTimer] = useMutation<CreateTimerMutation, CreateTimerMutationVariables>(createTimerMutation);
-    const {data} = useQuery<GroupList>(groupListQuery);
 
     const errors = new FormErrorHelper<CreateTimerMutationVariables>();
 
@@ -90,20 +80,15 @@ export default ({show, close, defaultData = defaultFormData, onTimerCreated}: Pr
                     helperText={<ErrorList errors={errors.getErrors("length")}/>}
                     error={errors.hasError("length")}
                     value={formData.length}
-                    onChange={ev => setFormData({...formData, length: Number(ev.target.value)})}
+                    onChange={ev => setFormData({...formData, length: ev.target.value})}
+                    style={{marginBottom: '0.7em'}}
                 />
-                <Autocomplete
-                    freeSolo={true}
-                    options={data?.groups ? data.groups.map(g => g.name) : []}
-                    renderInput={(params) => (
-                        <TextField {...params} label={<FormattedMessage id="group"/>} margin="dense"/>
-                    )}
+                <GroupSelectInput
+                    value={formData.groupName}
+                    onChange={groupName => setFormData({...formData, groupName})}
                 />
             </DialogContent>
-            <DialogActions>
-                <FormattedButton onClick={submit} msgId="submit"/>
-                <FormattedButton onClick={close} msgId="cancel" color="secondary"/>
-            </DialogActions>
+            <DialogActionButtons onSubmit={submit} onCancel={close} />
         </Dialog>
     );
 }

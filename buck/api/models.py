@@ -2,6 +2,7 @@ from enum import Enum
 
 from graphene import Int, ObjectType, String, List, JSONString
 from graphene_sqlalchemy import SQLAlchemyObjectType
+from pydantic import PydanticValueError
 
 from buck import models
 
@@ -52,3 +53,8 @@ class TimerOperation(Enum):
     PAUSE = 'PAUSE'
     UNPAUSE = 'UNPAUSE'
     STOP = 'STOP'
+
+
+class InvalidTimedeltaError(PydanticValueError):
+    code = "timedelta"
+    msg_template = ""

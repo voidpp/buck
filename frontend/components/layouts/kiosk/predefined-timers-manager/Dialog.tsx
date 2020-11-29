@@ -17,12 +17,12 @@ import {
     Theme,
     Typography
 } from "@material-ui/core";
-import {FormattedDialogTitle} from "../../widgets/dialogs";
-import {useGroupedPredefinedTimerList} from "./hooks";
+import {FormattedDialogTitle} from "../../../widgets/dialogs";
+import {useGroupedPredefinedTimerList} from "../hooks";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import {FormattedMessage} from "../../translations";
+import {FormattedMessage, FormattedTableCell} from "../../../translations";
+import DeleteButton from "./DeleteButton";
 
 type Props = {
     show: boolean,
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Content = () => {
-    const timers = useGroupedPredefinedTimerList();
+    const {timers, refetch} = useGroupedPredefinedTimerList();
     const [showGrpId, setShowGrpId] = useState<number>();
     const classes = useStyles();
 
@@ -75,8 +75,8 @@ const Content = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Length</TableCell>
+                                    <FormattedTableCell msgId="name"/>
+                                    <FormattedTableCell msgId="lengthHeader"/>
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
@@ -84,14 +84,12 @@ const Content = () => {
                                 {grp.predefinedTimers.map(t => (
                                     <TableRow key={t.id}>
                                         <TableCell>{t.name}</TableCell>
-                                        <TableCell>{t.length}s</TableCell>
+                                        <TableCell>{t.length}</TableCell>
                                         <TableCell>
                                             <IconButton size="small" style={{marginRight: 10}}>
                                                 <EditIcon fontSize="small"/>
                                             </IconButton>
-                                            <IconButton size="small">
-                                                <DeleteIcon fontSize="small"/>
-                                            </IconButton>
+                                            <DeleteButton timer={t} onDeleteSuccess={refetch}/>
                                         </TableCell>
                                     </TableRow>
                                 ))}
