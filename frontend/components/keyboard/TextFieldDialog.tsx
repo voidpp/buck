@@ -1,11 +1,23 @@
 import * as React from "react";
 import {useState} from "react";
 import {useBoolState} from "../../hooks";
-import {Dialog, DialogActions, DialogContent, DialogTitle, Slide, TextField, TextFieldProps} from "@material-ui/core";
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    Slide,
+    TextField,
+    TextFieldProps
+} from "@material-ui/core";
 import Keyboard from "./Keyboard";
 import {TransitionProps} from "@material-ui/core/transitions";
 import {FormattedButton} from "../translations";
-import {numericLayout} from "./layouts";
+import {LayoutName, layouts} from "./layouts";
 
 
 type Props = {} & TextFieldProps;
@@ -21,6 +33,7 @@ export default (props: Props) => {
     const [isShowDialog, showDialog, hideDialog] = useBoolState();
     const [text, setText] = useState<string>(props.value as string ?? "");
     const [edited, setEdited] = useState(false);
+    const [layoutName, setLayoutName] = useState<LayoutName>("hungarian"); // TODO: localstorage
 
     const onFocus = () => {
         if (!edited)
@@ -45,9 +58,19 @@ export default (props: Props) => {
                     <TextField value={text} fullWidth label={props.label}/>
                 </DialogTitle>
                 <DialogContent>
-                    <Keyboard value={text} onChange={setText}/>
+                    <Keyboard value={text} onChange={setText} layout={layouts[layoutName]}/>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions style={{justifyContent: "flex-start", padding: "0px 1em 0.4em"}}>
+                    <Select
+                        value={layoutName}
+                        onChange={ev => setLayoutName(ev.target.value as LayoutName)}
+                        style={{minWidth: 150}}
+                    >
+                        {Object.keys(layouts).map(name => (
+                            <MenuItem key={name} value={name}>{name}</MenuItem>
+                        ))}
+                    </Select>
+                    <div style={{flexGrow: 1}} />
                     <FormattedButton
                         msgId="submit"
                         onClick={() => {

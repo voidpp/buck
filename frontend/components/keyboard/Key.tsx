@@ -51,9 +51,14 @@ export default ({keyString, onClick, context}: KeyProps) => {
     const {text, style, buttonProps} = formatter(keyString, context, theme);
     return (
         <Button
+            size="small"
             className={classes.root}
             onClick={() => onClick(keyString)}
-            style={{textTransform: context.capsLock ? 'uppercase' : 'none', ...style}}
+            style={{
+                textTransform: context.capsLock ? 'uppercase' : 'none',
+                minWidth: "auto",
+                ...style,
+            }}
             variant="contained"
             {...buttonProps}
         >

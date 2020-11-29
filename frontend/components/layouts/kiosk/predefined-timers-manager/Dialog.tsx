@@ -21,8 +21,10 @@ import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import {useGroupedPredefinedTimerList} from "../hooks";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditIcon from '@material-ui/icons/Edit';
-import {FormattedMessage, FormattedTableCell} from "../../../translations";
+import {FormattedButton, FormattedMessage, FormattedTableCell} from "../../../translations";
 import DeleteButton from "./DeleteButton";
+import CreateTimerDialog from "../CreateTimerDialog";
+import {useBoolState} from "../../../../hooks";
 
 type Props = {
     show: boolean,
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Content = () => {
     const {timers, refetch} = useGroupedPredefinedTimerList();
     const [showGrpId, setShowGrpId] = useState<number>();
+    const [isShowCreateTimerDialog, showCreateTimerDialog, hideCreateTimerDialog] = useBoolState();
     const classes = useStyles();
 
     const openGroup = (grpId: number) => (ev, isExpanded: boolean) => {
@@ -57,7 +60,14 @@ const Content = () => {
 
     return (
         <DialogContent>
-            {/*create button*/}
+            <CreateTimerDialog show={isShowCreateTimerDialog} close={hideCreateTimerDialog}/>
+            <FormattedButton
+                onClick={showCreateTimerDialog}
+                msgId="createTimer"
+                style={{marginBottom: '0.3em'}}
+                variant="contained"
+                size="small"
+            />
             {timers.map(grp => (
                 <Accordion
                     expanded={showGrpId == (grp.group.id)}

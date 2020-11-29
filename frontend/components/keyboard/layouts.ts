@@ -1,8 +1,3 @@
-export interface Layout {
-    name: string,
-    keys: string[][],
-}
-
 export enum SpecialKeys {
     Backspace = 'Backspace',
     Enter = 'Enter',
@@ -11,23 +6,29 @@ export enum SpecialKeys {
     Placeholder = 'Placeholder',
 }
 
-export const latinLayout: Layout = {
-    name: "Latin",
-    keys: [
+export type Layout = string[][];
+
+export const layouts = {
+    latin: [
         ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-        [SpecialKeys.CapsLock, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-        ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+        [SpecialKeys.CapsLock, 'z', 'x', 'c', 'v', 'b', 'n', 'm', '.', '-', '_'],
         [SpecialKeys.Space]
     ],
-};
-
-export const numericLayout: Layout = {
-    name: "Numeric",
-    keys: [
+    hungarian: [
+        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
+        ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ő', 'ú'],
+        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'é', 'á', 'ű'],
+        [SpecialKeys.CapsLock, 'í', 'y', 'x', 'c', 'v', 'b', 'n', 'm', '.', '-', '_'],
+        [SpecialKeys.Space]
+    ],
+    numeric: [
         ['7', '8', '9'],
         ['4', '5', '6'],
         ['1', '2', '3'],
         [SpecialKeys.Placeholder, '0', SpecialKeys.Backspace]
-    ],
-};
+    ]
+}
+
+export type LayoutName = keyof typeof layouts;
