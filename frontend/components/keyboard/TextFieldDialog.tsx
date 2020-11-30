@@ -1,23 +1,12 @@
 import * as React from "react";
 import {useState} from "react";
 import {useBoolState} from "../../hooks";
-import {
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    Slide,
-    TextField,
-    TextFieldProps
-} from "@material-ui/core";
+import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Slide, TextField, TextFieldProps} from "@material-ui/core";
 import Keyboard from "./Keyboard";
 import {TransitionProps} from "@material-ui/core/transitions";
-import {FormattedButton} from "../translations";
+import {FormattedButton, FormattedMessage} from "../translations";
 import {LayoutName, layouts} from "./layouts";
+import {objectKeys} from "../../tools";
 
 
 type Props = {} & TextFieldProps;
@@ -66,11 +55,13 @@ export default (props: Props) => {
                         onChange={ev => setLayoutName(ev.target.value as LayoutName)}
                         style={{minWidth: 150}}
                     >
-                        {Object.keys(layouts).map(name => (
-                            <MenuItem key={name} value={name}>{name}</MenuItem>
+                        {objectKeys(layouts).map(name => (
+                            <MenuItem key={name} value={name}>
+                                <FormattedMessage id={name}/>
+                            </MenuItem>
                         ))}
                     </Select>
-                    <div style={{flexGrow: 1}} />
+                    <div style={{flexGrow: 1}}/>
                     <FormattedButton
                         msgId="submit"
                         onClick={() => {

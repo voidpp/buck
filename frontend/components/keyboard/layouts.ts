@@ -1,3 +1,5 @@
+import {TranslationKey} from "../../translations";
+
 export enum SpecialKeys {
     Backspace = 'Backspace',
     Enter = 'Enter',
@@ -8,7 +10,7 @@ export enum SpecialKeys {
 
 export type Layout = string[][];
 
-export const layouts = {
+export const layouts: { [K in TranslationKey]?: Layout } = {
     latin: [
         ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
