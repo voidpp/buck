@@ -1,6 +1,7 @@
 const messages = {
     en: {
         createTimer: "Create timer",
+        updateTimer: "Update timer",
         startTimer: "Start timer",
         name: "Name",
         length: "Length (eg 30m)",
@@ -15,12 +16,16 @@ const messages = {
         newGroup: "New group",
         selectGroup: "Select group",
         predefinedTimers: "Predefined timers",
+        predefinedTimerManager: "Predefined timers",
         areYouSure: "Are you sure?",
         "timersCount": "{cnt, number} {cnt, plural, one {timer} other {timers}}",
         yes: "yes",
         no: "no",
         confirm: "Confirm",
         deletePredefinedTimer: "Do you really want to delete the timer, \"{name}\"?",
+        latin: "Latin",
+        hungarian: "Hungarian",
+        numeric: "Numeric",
     },
 }
 

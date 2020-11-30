@@ -10,7 +10,7 @@ from .nodes.delete_group import DeleteGroupNode
 from .nodes.delete_predefined_timer import DeletePredefinedTimerNode
 from .nodes.groups import GroupsNode
 from .nodes.operate_timer import OperateTimerNode
-from .nodes.predefine_timer import PredefineTimerNode
+from .nodes.save_predefined_timer import SavePredefinedTimerNode
 from .nodes.predefined_timers import PredefinedTimersNode
 from .nodes.save_group import SaveGroupNode
 from .nodes.save_timer import SaveTimerNode
@@ -30,7 +30,7 @@ class Query(ObjectType):
 class Mutation(ObjectType):
     delete_group = DeleteGroupNode.field()
     delete_predefined_timer = DeletePredefinedTimerNode.field()
-    predefine_timer = PredefineTimerNode.field()
+    save_predefined_timer = SavePredefinedTimerNode.field()
     save_group = SaveGroupNode.field()
     save_timer = SaveTimerNode.field()
     start_timer = StartTimerNode.field()

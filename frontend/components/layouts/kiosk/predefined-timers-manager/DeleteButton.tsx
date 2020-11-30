@@ -12,13 +12,13 @@ const deleteTimerMutation = gql`
     }
 `;
 
-export default ({timer, onDeleteSuccess}: { timer: PredefinedTimer, onDeleteSuccess: Function }) => {
+export default ({timer, onSuccess}: { timer: PredefinedTimer, onSuccess: () => void }) => {
 
     const [deleteTimer] = useMutation<DeleteTimerMutation, DeleteTimerMutationVariables>(deleteTimerMutation);
 
     const confirm = async () => {
         await deleteTimer({variables: {id: timer.id}});
-        onDeleteSuccess();
+        onSuccess();
     };
 
     return (

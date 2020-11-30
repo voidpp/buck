@@ -10,6 +10,7 @@ import {FormErrorHelper} from "../../../../forms/formErrorHelper";
 import PredefinedTimers from "./PredefinedTimers";
 import DialogActionButtons from "../../../DialogActionButtons";
 import TextFieldDialog from "../../../keyboard/TextFieldDialog";
+import {TimerPageDialogProps} from "../types";
 
 const startTimerMutation = gql`
     mutation StartTimerMutation($name: String, $length: String!, $predefinedTimerId: Int) {
@@ -25,17 +26,13 @@ const startTimerMutation = gql`
 `;
 
 
-type Props = {
-    show: boolean,
-    close: () => void,
-};
 
 const defaultFormData: StartTimerMutationVariables = {
     length: '10m',
     name: "",
 }
 
-export default ({show, close}: Props) => {
+export default ({show, close}: TimerPageDialogProps) => {
 
     const [formData, setFormData] = useState<StartTimerMutationVariables>(defaultFormData);
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);

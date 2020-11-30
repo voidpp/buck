@@ -20,16 +20,13 @@ import {
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import {useGroupedPredefinedTimerList} from "../hooks";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import EditIcon from '@material-ui/icons/Edit';
-import {FormattedButton, FormattedMessage, FormattedTableCell} from "../../../translations";
+import {FormattedMessage, FormattedTableCell} from "../../../translations";
 import DeleteButton from "./DeleteButton";
-import CreateTimerDialog from "../CreateTimerDialog";
 import {useBoolState} from "../../../../hooks";
-
-type Props = {
-    show: boolean,
-    close: () => void,
-}
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import UpdateButton from "./UpdateButton";
+import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
+import {TimerPageDialogProps} from "../types";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Content = () => {
+const Content = ({close}: { close: () => void }) => {
     const {timers, refetch} = useGroupedPredefinedTimerList();
     const [showGrpId, setShowGrpId] = useState<number>();
     const [isShowCreateTimerDialog, showCreateTimerDialog, hideCreateTimerDialog] = useBoolState();
@@ -59,64 +56,65 @@ const Content = () => {
     }
 
     return (
-        <DialogContent>
-            <CreateTimerDialog show={isShowCreateTimerDialog} close={hideCreateTimerDialog}/>
-            <FormattedButton
-                onClick={showCreateTimerDialog}
-                msgId="createTimer"
-                style={{marginBottom: '0.3em'}}
-                variant="contained"
-                size="small"
+        <React.Fragment>
+            <SavePredefinedTimerDialog
+                show={isShowCreateTimerDialog}
+                close={hideCreateTimerDialog}
+                onSuccess={() => refetch()}
             />
-            {timers.map(grp => (
-                <Accordion
-                    expanded={showGrpId == (grp.group.id)}
-                    key={grp.group.id}
-                    onChange={openGroup(grp.group.id)}
-                    elevation={5}
-                >
-                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                        <Typography className={classes.heading}>{grp.group.name}</Typography>
-                        <Typography className={classes.heading}>
-                            <FormattedMessage id="timersCount" values={{cnt: grp.predefinedTimers.length}}/>
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <FormattedTableCell msgId="name"/>
-                                    <FormattedTableCell msgId="lengthHeader"/>
-                                    <TableCell/>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {grp.predefinedTimers.map(t => (
-                                    <TableRow key={t.id}>
-                                        <TableCell>{t.name}</TableCell>
-                                        <TableCell>{t.length}</TableCell>
-                                        <TableCell>
-                                            <IconButton size="small" style={{marginRight: 10}}>
-                                                <EditIcon fontSize="small"/>
-                                            </IconButton>
-                                            <DeleteButton timer={t} onDeleteSuccess={refetch}/>
-                                        </TableCell>
+            <FormattedDialogTitle msgId="predefinedTimers" onCloseIconClick={close} style={{paddingBottom: 0}}>
+                <IconButton onClick={showCreateTimerDialog} style={{marginLeft: '0.1em'}}>
+                    <AddBoxIcon/>
+                </IconButton>
+            </FormattedDialogTitle>
+            <DialogContent>
+                {timers.map(grp => (
+                    <Accordion
+                        expanded={showGrpId == (grp.group.id)}
+                        key={grp.group.id}
+                        onChange={openGroup(grp.group.id)}
+                        elevation={5}
+                    >
+                        <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                            <Typography className={classes.heading}>{grp.group.name}</Typography>
+                            <Typography className={classes.heading}>
+                                <FormattedMessage id="timersCount" values={{cnt: grp.predefinedTimers.length}}/>
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <FormattedTableCell msgId="name"/>
+                                        <FormattedTableCell msgId="lengthHeader"/>
+                                        <TableCell/>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
-        </DialogContent>
+                                </TableHead>
+                                <TableBody>
+                                    {grp.predefinedTimers.map(t => (
+                                        <TableRow key={t.id}>
+                                            <TableCell>{t.name}</TableCell>
+                                            <TableCell>{t.length}</TableCell>
+                                            <TableCell>
+                                                <UpdateButton timer={t} onSuccess={() => refetch()}/>
+                                                <DeleteButton timer={t} onSuccess={() => refetch()}/>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
+            </DialogContent>
+        </React.Fragment>
     );
 }
 
-export default ({show, close}: Props) => {
+export default ({show, close}: TimerPageDialogProps) => {
     return (
         <Dialog open={show} onClose={close}>
-            <FormattedDialogTitle msgId="predefinedTimers" onCloseIconClick={close}/>
-            <Content/>
+            <Content close={close}/>
         </Dialog>
     );
 }
