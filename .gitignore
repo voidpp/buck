@@ -22,3 +22,4 @@ __generated__
 schema.graphql
 frontend/api.ts
 htmlcov
+celery.state

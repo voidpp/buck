@@ -1,7 +1,10 @@
+import logging
 import logging.config
 
 from configpp.soil import Config
 from configpp.tree import Tree, Settings, DatabaseLeaf
+
+logger = logging.getLogger(__name__)
 
 tree = Tree(Settings(
     convert_underscores_to_hypens = True,
@@ -25,5 +28,7 @@ def load() -> AppConfig:
     app_config: AppConfig = tree.load(config_loader.data)
 
     logging.config.dictConfig(app_config.logger)
+
+    logger.debug("config loaded from %s", config_loader.path)
 
     return app_config

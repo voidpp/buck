@@ -17,9 +17,9 @@ class SaveGroupNode(NodeBase[SaveGroupValidator]):
 
     async def resolve(self):
 
-        async with self.db.begin():
+        async with self.session.begin():
             if self.args.id:
-                result = await self.db.execute(select(models.Group).filter(models.Group.id == self.args.id))
+                result = await self.session.execute(select(models.Group).filter(models.Group.id == self.args.id))
                 rows = result.first()
                 if rows:
                     group = rows.Group
@@ -28,8 +28,8 @@ class SaveGroupNode(NodeBase[SaveGroupValidator]):
                     return InstanceResult(errors = [Error(field_name = 'id', message = 'unknown')])
             else:
                 group = models.Group(name = self.args.name)
-                self.db.add(group)
+                self.session.add(group)
 
-            await self.db.flush()
+            await self.session.flush()
 
             return InstanceResult(id = group.id)

@@ -2,7 +2,8 @@ import * as React from "react";
 import Clock from "../../widgets/Clock";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import TimerPage from "./TimerPage";
+import Dashboard from "./Dashboard";
+import TimerDialog from "./TimerDialog";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -22,7 +23,8 @@ export default () => {
     return (
         <div className={classes.root} style={{width: 800, height: 480}}>
             {/*<Clock onClick={onClick} />*/}
-            <TimerPage />
+            <Dashboard />
+            <TimerDialog />
         </div>
     );
 }

@@ -1,4 +1,8 @@
-from invoke import Context, Collection as CollectionBase, Task
+import multiprocessing
+from typing import Callable
+
+from invoke import Context, Collection as CollectionBase
+from invoke import Task
 
 from buck.components.folders import Folders
 
@@ -51,3 +55,34 @@ def apollo_query_typedefs(context: Context, watch: bool = False):
 
     with context.cd(Folders.frontend.__str__()):
         context.run(' '.join(command))
+
+
+class MultiprocessTask(Task):
+    _tasks: list[Callable]
+
+    def __init__(self, name: str):
+        self._tasks = []
+        super().__init__(self._handler, name = name)
+
+    def add(self, func):
+        self._tasks.append(func)
+        return func
+
+    def add_to_collection(self, coll: Collection):
+        for task in self._tasks:
+            coll.add_task(Task(task))
+        coll.add_task(self)
+
+    def _handler(self, c, **kwargs):
+        for task in self._tasks:
+            name = task.__name__
+            if kwargs.get(name):
+                multiprocessing.Process(target = task, args = (c,)).start()
+
+    def argspec(self, body):
+        spec_dict = {}
+
+        for task in self._tasks:
+            spec_dict[task.__name__] = True
+
+        return list(spec_dict.keys()), spec_dict

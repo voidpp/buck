@@ -1,10 +1,10 @@
 import * as React from "react";
 import {useState} from "react";
-import {Dialog, DialogActions, DialogContent, TextField} from "@material-ui/core";
+import {Dialog, DialogContent} from "@material-ui/core";
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import {gql, useMutation} from "@apollo/client";
 import {StartTimerMutation, StartTimerMutationVariables} from "./__generated__/StartTimerMutation";
-import {FormattedButton, FormattedMessage} from "../../../translations";
+import {FormattedMessage} from "../../../translations";
 import {ErrorList} from "../../../forms";
 import {FormErrorHelper} from "../../../../forms/formErrorHelper";
 import PredefinedTimers from "./PredefinedTimers";
@@ -26,9 +26,8 @@ const startTimerMutation = gql`
 `;
 
 
-
 const defaultFormData: StartTimerMutationVariables = {
-    length: '10m',
+    length: '10s, 20s',
     name: "",
 }
 
@@ -80,7 +79,7 @@ export default ({show, close}: TimerPageDialogProps) => {
                 />
                 <PredefinedTimers onSelect={onSelectPredefinedTimer}/>
             </DialogContent>
-            <DialogActionButtons onSubmit={submit} onCancel={close} />
+            <DialogActionButtons onSubmit={submit} onCancel={close}/>
         </Dialog>
     );
 }

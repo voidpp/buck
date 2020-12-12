@@ -19,7 +19,7 @@ class PredefinedTimersNode(NodeBase):
         if is_in_string_list('.group.', field_names):
             stmt = stmt.options(selectinload(models.PredefinedTimer.group))
 
-        result = await self.db.execute(stmt)
+        result = await self.session.execute(stmt)
 
         rows = result.all()
 

@@ -1,5 +1,5 @@
 database: postgresql+asyncpg://voidpp:teve@localhost/buck
-redis: ""
+redis: redis://localhost:6379/11
 logger:
   disable_existing_loggers: false
   formatters:

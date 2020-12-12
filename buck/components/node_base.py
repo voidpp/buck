@@ -8,7 +8,9 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .graphene_pydantic import create_class_property_dict
+from .injection_middleware import RequestContext
 from .keys import Keys
+from ..celery.scheduler import Scheduler
 
 InputType = TypeVar('InputType', BaseModel, object)
 
@@ -42,8 +44,16 @@ class NodeBase(ABC, Generic[InputType]):
         pass
 
     @property
-    def db(self) -> AsyncSession:
+    def session(self) -> AsyncSession:
         return self._info.context[Keys.API_CONTEXT_SESSION]
+
+    @property
+    def scheduler(self) -> Scheduler:
+        return self.request_context.scheduler
+
+    @property
+    def request_context(self) -> RequestContext:
+        return self._info.context["request"].scope[Keys.HTTP_REQUEST_CONTEXT]
 
     @property
     def args(self) -> InputType:

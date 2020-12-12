@@ -3,14 +3,14 @@ from sqlalchemy import select
 
 from buck import models
 from buck.components.node_base import NodeBase
-from ..models import Group
+from buck.api.models import Group
 
 
 class GroupsNode(NodeBase):
     result_type = List(Group)
 
     async def resolve(self):
-        result = await self.db.execute(select(models.Group))
+        result = await self.session.execute(select(models.Group))
 
         rows = result.all()
 

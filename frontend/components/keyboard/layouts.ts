@@ -15,14 +15,14 @@ export const layouts: { [K in TranslationKey]?: Layout } = {
         ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-        [SpecialKeys.CapsLock, 'z', 'x', 'c', 'v', 'b', 'n', 'm', '.', '-', '_'],
+        [SpecialKeys.CapsLock, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', '_'],
         [SpecialKeys.Space]
     ],
     hungarian: [
         ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
         ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ő', 'ú'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'é', 'á', 'ű'],
-        [SpecialKeys.CapsLock, 'í', 'y', 'x', 'c', 'v', 'b', 'n', 'm', '.', '-', '_'],
+        [SpecialKeys.CapsLock, 'í', 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', '_'],
         [SpecialKeys.Space]
     ],
     numeric: [

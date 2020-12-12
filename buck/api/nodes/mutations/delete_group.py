@@ -15,14 +15,14 @@ class DeleteGroupNode(NodeBase[DeleteGroupValidator]):
     input_validator = DeleteGroupValidator
 
     async def resolve(self):
-        async with self.db.begin():
-            result = await self.db.execute(select(models.Group).filter(models.Group.id == self.args.id))
+        async with self.session.begin():
+            result = await self.session.execute(select(models.Group).filter(models.Group.id == self.args.id))
             rows = result.first()
             if not rows:
                 return InstanceResult(errors = [Error(field_name = 'id', message = 'unknown')])
 
-            self.db.delete(rows.Group)
+            self.session.delete(rows.Group)
 
-            await self.db.flush()
+            await self.session.flush()
 
             return InstanceResult(id = self.args.id)

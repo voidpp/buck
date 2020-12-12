@@ -25,11 +25,13 @@ class Timer(Base):
     id = Column(Integer, primary_key = True)
     length = Column(String, nullable = False)
     name = Column(String)
+    predefined_timer_id = Column(Integer, ForeignKey('predefined_timer.id'))
 
 
 class TimerEventType(enum.Enum):
     START = 'START'
     PAUSE = 'PAUSE'
+    ALARM = 'ALARM'
     STOP = 'STOP'
 
 
@@ -41,7 +43,7 @@ class TimerEvent(Base):
     type = Column(Enum(TimerEventType), nullable = False)
     time = Column(DateTime, default = datetime.now)
 
-    timer = relationship("Timer", backref = "events")
+    timer: Timer = relationship("Timer", backref = "events")
 
 
 class Group(Base):

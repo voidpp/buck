@@ -6,6 +6,7 @@ const messages = {
         name: "Name",
         length: "Length (eg 30m)",
         lengthHeader: "Length",
+        "value_error.timedelta": "Invalid timedelta",
         "value_error.not_unique": "Not unique",
         "value_error.any_str.min_length": "Must be at least {limit_value, number} {limit_value, plural, one {character} other {characters}}",
         "value_error.number.not_gt": "Must be greater than {limit_value}",
@@ -26,6 +27,7 @@ const messages = {
         latin: "Latin",
         hungarian: "Hungarian",
         numeric: "Numeric",
+        timerHistory: "History",
     },
 }
 

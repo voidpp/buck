@@ -17,7 +17,7 @@ class SaveTimerNode(NodeBase[SaveTimerValidator]):
     input_validator = SaveTimerValidator
 
     async def resolve(self):
-        result = await self.db.execute(select(Timer).filter(Timer.id == self.args.timer_id))
+        result = await self.session.execute(select(Timer).filter(Timer.id == self.args.timer_id))
 
         rows = result.first()
 
@@ -29,12 +29,12 @@ class SaveTimerNode(NodeBase[SaveTimerValidator]):
         if not self.args.name or not timer.name:
             return InstanceResult(errors = [Error(field_name = "name", message = "mandatory")])
 
-        async with self.db.begin():
+        async with self.session.begin():
             predefined_timer = PredefinedTimer(
                 length = timer.length,
                 name = self.args.name or timer.name,
                 group_id = self.args.group_id,
             )
-            self.db.add(predefined_timer)
+            self.session.add(predefined_timer)
 
         return InstanceResult(id = predefined_timer.id)

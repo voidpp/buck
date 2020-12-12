@@ -1,7 +1,13 @@
 import * as React from "react";
 
 
-export const If = ({condition, children}: {condition: boolean, children: React.ReactNode}) => (
-    condition ? <React.Fragment>{children}</React.Fragment> : null
+type IfCompProps = {
+    condition: boolean,
+    children: React.ReactNode,
+    else_?: React.ReactNode,
+}
+
+export const If = ({condition, children, else_ = null}: IfCompProps) => (
+    condition ? <React.Fragment>{children}</React.Fragment> : <React.Fragment>{else_}</React.Fragment>
 );
 

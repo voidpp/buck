@@ -4,8 +4,8 @@ from sqlalchemy.orm import selectinload
 
 from buck import models
 from buck.components.node_base import NodeBase
-from ..models import Timer
-from ..tools import get_field_name_list, is_in_string_list
+from buck.api.models import Timer
+from buck.api.tools import get_field_name_list, is_in_string_list
 
 
 class TimersNode(NodeBase):
@@ -19,7 +19,7 @@ class TimersNode(NodeBase):
         if is_in_string_list('.events.', field_names):
             stmt = stmt.options(selectinload(models.Timer.events))
 
-        result = await self.db.execute(stmt)
+        result = await self.session.execute(stmt)
 
         rows = result.all()
 

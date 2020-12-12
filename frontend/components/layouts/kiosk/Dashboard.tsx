@@ -12,6 +12,8 @@ import {Button, Icon} from "@material-ui/core";
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import HistoryIcon from '@material-ui/icons/History';
+import TimerHistoryDialog from "./TimerHistoryDialog";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -55,6 +57,10 @@ const dialogRenderers: DialogRenderer[] = [{
     name: "predefinedTimerManager",
     icon: ViewListIcon,
     dialog: PredefinedTimerManagerDialog,
+}, {
+    name: "timerHistory",
+    icon: HistoryIcon,
+    dialog: TimerHistoryDialog,
 }];
 
 const defaultDialogState = dialogRenderers.reduce((res, cur) => {
