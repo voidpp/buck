@@ -77,7 +77,6 @@ class RunningTimersSubscription:
                         task.cancel()
 
                 new_result = timer_fetcher.calculate()
-                print(new_result)
                 refresh = calc_refresh(new_result)
                 if new_result != result:
                     logger.debug("yield list %s", new_result)

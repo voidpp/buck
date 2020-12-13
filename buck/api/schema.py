@@ -1,3 +1,4 @@
+import logging
 import time
 
 from graphene import ObjectType, Field, String, Schema as BaseSchema
@@ -19,6 +20,8 @@ from .nodes.queries.running_timers import RunningTimersNode
 from .nodes.queries.timer_events import TimerEventsNode
 from .nodes.queries.timers import TimersNode
 from .nodes.subscriptions import Subscription
+
+logger = logging.getLogger(__name__)
 
 
 class Query(ObjectType):
@@ -55,7 +58,7 @@ class Schema(BaseSchema):
             result = await super().execute(*args, **kwargs)
 
         duration = round((time.perf_counter() - start) * 1000, 2)
-        print("Processed GraphQL query (%s ms):\n%s\nVariables: %s" % (duration, args[0], kwargs.get("variables")))
+        logger.info("Processed GraphQL query (%s ms):\n%s\nVariables: %s" % (duration, args[0], kwargs.get("variables")))
 
         return result
 
