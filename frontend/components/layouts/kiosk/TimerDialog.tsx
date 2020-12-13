@@ -1,11 +1,7 @@
 import * as React from "react";
-import {useState} from "react";
 import {Dialog, DialogContent, IconButton} from "@material-ui/core";
-import {gql, useMutation, useQuery, useSubscription} from "@apollo/client";
-import {RunningTimersQuery, RunningTimersQuery_runningTimers} from "./__generated__/RunningTimersQuery";
-import {useInterval} from "../../../hooks";
+import {gql, useMutation, useSubscription} from "@apollo/client";
 import {TimerOperation, TimerState} from "../../../__generated__/globalTypes";
-import {TimerEventsSubscription} from "./__generated__/TimerEventsSubscription";
 import StopIcon from '@material-ui/icons/Stop';
 import PauseIcon from '@material-ui/icons/Pause';
 import {TimerOperationMutation, TimerOperationMutationVariables} from "./__generated__/TimerOperationMutation";
@@ -24,19 +20,6 @@ const timerEventsSubscription = gql`
                 length
                 name
             }
-        }
-    }
-`;
-
-const runningTimersQuery = gql`
-    query RunningTimersQuery {
-        runningTimers {
-            id
-            name
-            state
-            elapsedTime
-            lengths
-            remainingTimes
         }
     }
 `;
@@ -76,25 +59,7 @@ const timerOperationMutation = gql`
 
 const Countdown = ({timer}: { timer: RunningTimer }) => {
 
-    // const [remainingTimes, setRemainingTimes] = useState<number[]>(timer.remainingTimes);
-
     const [operateTimer] = useMutation<TimerOperationMutation, TimerOperationMutationVariables>(timerOperationMutation);
-
-    // useInterval(() => {
-    //     if (timer.state == "PAUSED")
-    //         return
-    //
-    //     const times = [];
-    //     const now_ = now();
-    //
-    //     for (const endTime of timer.endTimes) {
-    //         const time = endTime - now_;
-    //         if (time >= 0)
-    //             times.push(time);
-    //     }
-    //     setRemainingTimes(times);
-    //
-    // }, 1000);
 
     return (
         <div>
@@ -123,21 +88,6 @@ const Countdown = ({timer}: { timer: RunningTimer }) => {
     );
 }
 
-// function calcEndTimes(timers: RunningTimersQuery_runningTimers[]): RunningTimer[] {
-//     const now_ = now();
-//     const res: RunningTimer[] = [];
-//
-//     for (const timer of timers) {
-//         const endTimes = [];
-//         for (const length of timer.remainingTimes) {
-//             endTimes.push(now_ + length);
-//         }
-//         res.push({...timer, endTimes});
-//     }
-//
-//     return res;
-// }
-
 const runningTimersSubscription = gql`
     subscription RunningTimersSubscription {
         runningTimers {
@@ -146,36 +96,12 @@ const runningTimersSubscription = gql`
             state
             elapsedTime
             lengths
-            remainingTimes            
+            remainingTimes
         }
     }
-    
 `;
 
 export default () => {
-    // const [runningTimers, setRunningTimers] = useState<RunningTimer[]>([]);
-
-    // const {refetch} = useQuery<RunningTimersQuery>(runningTimersQuery, {
-    //     onCompleted: data => {
-    //         console.debug("RunningTimersQuery arrived");
-    //         setRunningTimers(calcEndTimes(data.runningTimers));
-    //     },
-    //     fetchPolicy: "cache-and-network",
-    // });
-    //
-    // useSubscription<TimerEventsSubscription>(timerEventsSubscription, {
-    //     onSubscriptionData: ({subscriptionData: {data: {timerEvents}}}) => {
-    //         console.debug("TimerEventsSubscription onData");
-    //         // refetch();
-    //     }
-    // });
-    //
-    // useSubscription<RunningTimersSubscription>(runningTimersSubscription, {
-    //     onSubscriptionData: ({subscriptionData: {data}}) => {
-    //         setRunningTimers(data.runningTimers);
-    //     }
-    // });
-
     const {data} = useSubscription<RunningTimersSubscription>(runningTimersSubscription);
 
     const runningTimers = data?.runningTimers ?? [];

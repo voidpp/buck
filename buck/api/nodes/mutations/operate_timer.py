@@ -44,17 +44,16 @@ class OperateTimerNode(NodeBase[OperateTimerValidator]):
 
             timer: Timer = row[0]
 
-            self.session.add(TimerEvent(
-                timer_id = self.args.id,
-                type = operation_to_event_type[self.args.operation],
-            ))
-            await self.session.flush()
+            event = TimerEvent(timer_id = self.args.id, type = operation_to_event_type[self.args.operation])
 
-            self.request_context.broker.publish.timer_events()
+            self.session.add(event)
+            await self.session.flush()
 
             if self.args.operation == TimerOperation.UNPAUSE:
                 await self.scheduler.set_alarm(timer.id, timer.length, self.session)
             else:
                 self.scheduler.remove_alarm(self.args.id)
 
-            return {}
+        self.request_context.broker.publish.timer_events()
+
+        return {}

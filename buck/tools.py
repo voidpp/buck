@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Callable
 
 from pytimeparse.timeparse import timeparse
 
@@ -81,3 +82,15 @@ def calc_countdowns(lengths: list[int], total_elapsed_time: int) -> list[int]:
         prev_len += length
 
     return res
+
+
+class LazyString:
+
+    def __init__(self, resolver: Callable):
+        self._resolver = resolver
+        self._value = None
+
+    def __str__(self):
+        if not self._value:
+            self._value = str(self._resolver())
+        return self._value

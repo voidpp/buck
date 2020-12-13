@@ -15,9 +15,10 @@ class IncrementalTimerEventFetcher:
 
     async def initialize(self):
         result = await self.session.execute(select(TimerEvent.id).order_by(desc(TimerEvent.id)))
-        self.last_id = result.first().id
+        event = result.first()
+        self.last_id = event.id if event else 0
 
-    async def fetch_next(self) -> list:
+    async def fetch_next(self) -> list[TimerEvent]:
         qs = select(TimerEvent).filter(TimerEvent.id > self.last_id)
 
         if is_in_string_list('.timer.', self.field_names):

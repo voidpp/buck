@@ -12,6 +12,7 @@ from buck.tools import calc_elapsed_time, parse_timer_lengths, calc_countdowns
 
 logger = logging.getLogger(__name__)
 
+
 @dataclass
 class RunningTimersFetcherData:
     timers: dict[int, Timer]

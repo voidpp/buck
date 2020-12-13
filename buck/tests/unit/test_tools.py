@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
+from unittest.mock import MagicMock
 
 import pytest
 from pytest import raises
 
 from buck.models import TimerEventType, TimerEvent
-from buck.tools import calc_elapsed_time, CountdownCalcError, calc_countdowns
+from buck.tools import calc_elapsed_time, CountdownCalcError, calc_countdowns, LazyString
 from buck.tools import parse_timer_lengths, TimeLengthParseError
 
 
@@ -87,7 +88,17 @@ def test_calc_countdowns(msg, lengths, elapsed, result):
     assert res == result
 
 
-class TestGetRunningTimers:
+class TestLazyString:
 
-    def test_one_started(self):
-        pass
+    def test_serializing(self):
+        ls = LazyString(lambda: 1 + 1)
+
+        assert str(ls) == "2"
+
+    def test_only_called_once(self):
+        mock = MagicMock()
+        mock.return_value = "1"
+        ls = LazyString(mock)
+
+        assert f"{ls}{ls}{ls}" == "111"
+        assert mock.call_count == 1

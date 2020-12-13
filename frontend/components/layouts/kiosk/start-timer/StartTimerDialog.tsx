@@ -27,7 +27,7 @@ const startTimerMutation = gql`
 
 
 const defaultFormData: StartTimerMutationVariables = {
-    length: '10s, 20s',
+    length: '10m',
     name: "",
 }
 
