@@ -64,6 +64,7 @@ class RunningTimer(ObjectType):
     elapsed_time = Int()
     lengths = List(Int)
     remaining_times = List(Int)
+    orig_length = String()
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

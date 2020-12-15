@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from buck.api.models import RunningTimer, TimerState
 from buck.models import TimerEvent, TimerEventType, Timer
-from buck.tools import calc_elapsed_time, parse_timer_lengths, calc_countdowns
+from buck.tools import calc_elapsed_time, parse_timer_lengths, calc_remaining_times
 
 logger = logging.getLogger(__name__)
 
@@ -95,13 +95,15 @@ class RunningTimersFetcher:
             if elapsed_time > sum(lengths):
                 continue
             last_event = events[-1:][0]
+            remaining_times = calc_remaining_times(lengths, elapsed_time)
             res.append(RunningTimer(
                 id = timer.id,
                 name = timer.name or timer.length,
                 elapsed_time = elapsed_time,
                 lengths = lengths,
                 state = TimerState.STARTED if last_event.type == TimerEventType.START else TimerState.PAUSED,
-                remaining_times = calc_countdowns(lengths, elapsed_time),
+                remaining_times = remaining_times,
+                orig_length = timer.length,
             ))
 
         return res

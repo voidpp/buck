@@ -84,6 +84,20 @@ def calc_countdowns(lengths: list[int], total_elapsed_time: int) -> list[int]:
     return res
 
 
+def calc_remaining_times(lengths: list[int], total_elapsed_time: int) -> list[int]:
+    res = []
+    elapsed_time = total_elapsed_time
+
+    for length in lengths:
+        res.append(length - elapsed_time)
+
+        elapsed_time -= length
+        if elapsed_time < 0:
+            elapsed_time = 0
+
+    return list(filter(lambda i: i > 0, res))
+
+
 class LazyString:
 
     def __init__(self, resolver: Callable):

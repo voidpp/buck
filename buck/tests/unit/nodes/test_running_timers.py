@@ -108,3 +108,16 @@ class TestGetRunningTimers:
         assert len(timers) == 1
         assert timers[0].elapsed_time == 80
         assert timers[0].state == TimerState.STARTED
+
+    def test_remaining_times_multiple(self, past_factory):
+        events = [
+            TimerEvent(type = TimerEventType.START, timer_id = 1, time = past_factory()),
+        ]
+        timers = {
+            1: Timer(name = "t1", length = '1m, 2m, 2m'),
+        }
+
+        fetcher = RunningTimersFetcher.create(timers, events)
+        timers = fetcher.calculate()
+
+        assert timers[0].remaining_times == [60, 120, 120]

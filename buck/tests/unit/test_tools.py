@@ -5,7 +5,7 @@ import pytest
 from pytest import raises
 
 from buck.models import TimerEventType, TimerEvent
-from buck.tools import calc_elapsed_time, CountdownCalcError, calc_countdowns, LazyString
+from buck.tools import calc_elapsed_time, CountdownCalcError, calc_countdowns, LazyString, calc_remaining_times
 from buck.tools import parse_timer_lengths, TimeLengthParseError
 
 
@@ -75,19 +75,6 @@ class TestCalcElapsedTime:
             ])
 
 
-@pytest.mark.parametrize('msg, lengths, elapsed, result', [
-    ("simple time, no elapsed", [60], 0, [60]),
-    ("simple time, some elapsed", [60], 15, [45]),
-    ('multiple_time_zero_elapsed', [20, 30], 0, [20, 50]),
-    ('multiple_time_some_elapsed', [20, 30], 10, [10, 40]),
-    ('multiple_time_elapsed_over_the_first', [20, 30], 35, [15]),
-
-])
-def test_calc_countdowns(msg, lengths, elapsed, result):
-    res = calc_countdowns(lengths, elapsed)
-    assert res == result
-
-
 class TestLazyString:
 
     def test_serializing(self):
@@ -102,3 +89,28 @@ class TestLazyString:
 
         assert f"{ls}{ls}{ls}" == "111"
         assert mock.call_count == 1
+
+
+@pytest.mark.parametrize('msg, lengths, elapsed, result', [
+    ("simple time, no elapsed", [60], 0, [60]),
+    ("simple time, some elapsed", [60], 15, [45]),
+    ('multiple_time_zero_elapsed', [20, 30], 0, [20, 50]),
+    ('multiple_time_some_elapsed', [20, 30], 10, [10, 40]),
+    ('multiple_time_elapsed_over_the_first', [20, 30], 35, [15]),
+
+])
+def test_calc_countdowns(msg, lengths, elapsed, result):
+    res = calc_countdowns(lengths, elapsed)
+    assert res == result
+
+
+@pytest.mark.parametrize('msg, lengths, elapsed, result', [
+    ("simple time, no elapsed", [60], 0, [60]),
+    ("simple time, some elapsed", [60], 15, [45]),
+    ('multiple time zero elapsed', [20, 30], 0, [20, 30]),
+    ('multiple time some elapsed', [20, 30], 10, [10, 30]),
+    ('multiple time elapsed over the first', [20, 30], 35, [15]),
+
+])
+def test_calc_remaining_times(msg, lengths, elapsed, result):
+    assert calc_remaining_times(lengths, elapsed) == result

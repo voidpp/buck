@@ -6,8 +6,11 @@ mp_tasks = MultiprocessTask('all')
 
 
 @mp_tasks.add
-def uvicorn(c):
-    c.run(f"uvicorn buck.app:app --host 0.0.0.0 --port 9000 --reload")
+def uvicorn(c, reload = True):
+    cmd = ""
+    if reload:
+        cmd += " --reload "
+    c.run(f"uvicorn buck.app:app --host 0.0.0.0 --port 9000 " + cmd)
 
 
 @mp_tasks.add

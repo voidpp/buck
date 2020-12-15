@@ -1,23 +1,15 @@
 import * as React from "react";
 import {useState} from "react";
 import {useBoolState} from "../../hooks";
-import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Slide, TextField, TextFieldProps} from "@material-ui/core";
+import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, TextField, TextFieldProps} from "@material-ui/core";
 import Keyboard from "./Keyboard";
-import {TransitionProps} from "@material-ui/core/transitions";
 import {FormattedButton, FormattedMessage} from "../translations";
 import {LayoutName, layouts} from "./layouts";
 import {objectKeys} from "../../tools";
+import {SlideUp} from "../tools";
 
 
 type Props = TextFieldProps;
-
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
 
 type ContentProps = {
     setEdited: () => void,
@@ -95,7 +87,7 @@ export default (props: Props) => {
             <Dialog
                 open={isShowDialog}
                 fullScreen
-                TransitionComponent={Transition}
+                TransitionComponent={SlideUp}
                 // keepMounted
             >
                 <Content
