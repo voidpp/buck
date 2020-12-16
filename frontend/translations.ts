@@ -28,6 +28,8 @@ const messages = {
         hungarian: "Hungarian",
         numeric: "Numeric",
         timerHistory: "History",
+        clock: "clock",
+        timer: "timer",
     },
 }
 

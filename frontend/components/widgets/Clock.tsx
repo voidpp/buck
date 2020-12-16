@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const now = () => dayjs(new Date()).format('HH:mm');
 
-export default ({onClick}: {onClick?: () => void}) => {
+export default () => {
     const classes = useStyles();
     const [time, setTime] = useState<string>(now());
     const containerRef = useRef<HTMLDivElement>(null);
@@ -30,11 +30,11 @@ export default ({onClick}: {onClick?: () => void}) => {
     }, 1000);
 
     useEffect(() => {
-        setFontSize(containerRef.current.offsetHeight * 0.6);
+        setFontSize(containerRef.current.offsetHeight * 0.5);
     }, []);
 
     return (
-        <div className={classes.root} ref={containerRef} style={{fontSize}} onClick={onClick}>
+        <div className={classes.root} ref={containerRef} style={{fontSize}}>
             {time}
         </div>
     );
