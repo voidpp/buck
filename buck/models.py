@@ -14,6 +14,7 @@ class PredefinedTimer(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False, unique = True)
     length = Column(String, nullable = False)
+    sound_file = Column(String)
     group_id = Column(Integer, ForeignKey('group.id', ondelete = 'CASCADE'))
 
     group = relationship("Group")
@@ -25,6 +26,7 @@ class Timer(Base):
     id = Column(Integer, primary_key = True)
     length = Column(String, nullable = False)
     name = Column(String)
+    sound_file = Column(String)
     predefined_timer_id = Column(Integer, ForeignKey('predefined_timer.id'))
 
 

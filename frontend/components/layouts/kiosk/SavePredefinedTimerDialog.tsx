@@ -11,10 +11,11 @@ import GroupSelectInput from "./GroupSelectInput";
 import DialogActionButtons from "../../DialogActionButtons";
 import {SavePredefinedTimerMutation, SavePredefinedTimerMutationVariables} from "./__generated__/SavePredefinedTimerMutation";
 import {TimerPageDialogProps} from "./types";
+import SoundSelector from "./SoundSelector";
 
 const saveTimerMutation = gql`
-    mutation SavePredefinedTimerMutation($name: String!, $length: String!, $groupName: String, $id: Int) {
-        savePredefinedTimer(name: $name length: $length groupName: $groupName id: $id) {
+    mutation SavePredefinedTimerMutation($name: String!, $length: String!, $groupName: String, $id: Int, $soundFile: String) {
+        savePredefinedTimer(name: $name length: $length groupName: $groupName id: $id soundFile: $soundFile) {
             id
             errors {
                 context
@@ -29,12 +30,15 @@ const defaultFormData: SavePredefinedTimerMutationVariables = {
     name: "",
     length: "10m",
     groupName: "",
+    soundFile: "",
 };
 
 type Props = {
     data?: SavePredefinedTimerMutationVariables,
     onSuccess?: () => void,
 } & TimerPageDialogProps;
+
+const fieldSpacing = "0.4em";
 
 export default ({show, close, data, onSuccess}: Props) => {
 
@@ -70,7 +74,7 @@ export default ({show, close, data, onSuccess}: Props) => {
                     error={errors.hasError("name")}
                     value={formData.name}
                     onChange={ev => setFormData({...formData, name: ev.target.value})}
-                    style={{marginBottom: '0.7em'}}
+                    style={{marginBottom: fieldSpacing}}
                 />
                 <TextFieldDialog
                     label={<FormattedMessage id="length"/>}
@@ -80,7 +84,12 @@ export default ({show, close, data, onSuccess}: Props) => {
                     error={errors.hasError("length")}
                     value={formData.length}
                     onChange={ev => setFormData({...formData, length: ev.target.value})}
-                    style={{marginBottom: '0.7em'}}
+                    style={{marginBottom: fieldSpacing}}
+                />
+                <SoundSelector
+                    value={formData.soundFile}
+                    onChange={val => setFormData({...formData, soundFile: val})}
+                    style={{marginBottom: fieldSpacing}}
                 />
                 <GroupSelectInput
                     value={formData.groupName}

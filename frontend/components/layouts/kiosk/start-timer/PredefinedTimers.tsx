@@ -5,7 +5,7 @@ import {FormattedButton} from "../../../translations";
 import {useGroupedPredefinedTimerList} from "../hooks";
 
 type Props = {
-    onSelect: (length: string, name: string, id: number) => void,
+    onSelect: (length: string, name: string, id: number, soundFile: string) => void,
 };
 
 export default ({onSelect}: Props) => {
@@ -29,7 +29,7 @@ export default ({onSelect}: Props) => {
                         >
                             {grp.predefinedTimers.map(t => (
                                 <ListItem button key={t.id} onClick={() => {
-                                    onSelect(t.length, t.name, t.id);
+                                    onSelect(t.length, t.name, t.id, t.soundFile);
                                     hideDialog();
                                 }}>
                                     <ListItemText>{t.name} ({t.length})</ListItemText>

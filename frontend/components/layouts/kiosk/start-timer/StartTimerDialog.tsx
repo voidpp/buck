@@ -11,10 +11,11 @@ import PredefinedTimers from "./PredefinedTimers";
 import DialogActionButtons from "../../../DialogActionButtons";
 import TextFieldDialog from "../../../keyboard/TextFieldDialog";
 import {TimerPageDialogProps} from "../types";
+import SoundSelector from "../SoundSelector";
 
 const startTimerMutation = gql`
-    mutation StartTimerMutation($name: String, $length: String!, $predefinedTimerId: Int) {
-        startTimer(name: $name length: $length predefinedTimerId: $predefinedTimerId) {
+    mutation StartTimerMutation($name: String, $length: String!, $predefinedTimerId: Int, $soundFile: String!) {
+        startTimer(name: $name length: $length predefinedTimerId: $predefinedTimerId soundFile: $soundFile) {
             id
             errors {
                 path
@@ -29,7 +30,10 @@ const startTimerMutation = gql`
 const defaultFormData: StartTimerMutationVariables = {
     length: '10m',
     name: "",
+    soundFile: "",
 }
+
+const fieldSpacing = "0.5em";
 
 export default ({show, close}: TimerPageDialogProps) => {
 
@@ -50,8 +54,8 @@ export default ({show, close}: TimerPageDialogProps) => {
         errors.resetErrors();
     }
 
-    const onSelectPredefinedTimer = (length: string, name: string, id: number) => {
-        setFormData({length, name, predefinedTimerId: id});
+    const onSelectPredefinedTimer = (length: string, name: string, id: number, soundFile: string) => {
+        setFormData({length, name, predefinedTimerId: id, soundFile});
     }
 
     return (
@@ -66,7 +70,11 @@ export default ({show, close}: TimerPageDialogProps) => {
                     error={errors.hasError("length")}
                     value={formData.length}
                     onChange={ev => setFormData({...formData, length: ev.target.value})}
-                    style={{marginBottom: '0.7em'}}
+                    style={{marginBottom: fieldSpacing}}
+                />
+                <SoundSelector
+                    value={formData.soundFile}
+                    onChange={val => setFormData({...formData, soundFile: val})}
                 />
                 <TextFieldDialog
                     label={<FormattedMessage id="name"/>}
@@ -75,7 +83,7 @@ export default ({show, close}: TimerPageDialogProps) => {
                     error={errors.hasError("name")}
                     value={formData.name}
                     onChange={ev => setFormData({...formData, name: ev.target.value})}
-                    style={{marginBottom: '0.7em'}}
+                    style={{marginBottom: fieldSpacing, marginTop: fieldSpacing}}
                 />
                 <PredefinedTimers onSelect={onSelectPredefinedTimer}/>
             </DialogContent>

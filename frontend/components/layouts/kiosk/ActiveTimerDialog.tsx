@@ -7,23 +7,9 @@ import {useBoolState} from "../../../hooks";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 import CloseIcon from '@material-ui/icons/Close';
-import {If, SlideDown, SlideUp} from "../../tools";
+import {If, SlideDown} from "../../tools";
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
 
-const timerEventsSubscription = gql`
-    subscription TimerEventsSubscription {
-        timerEvents {
-            id
-            time
-            type
-            timer {
-                id
-                length
-                name
-            }
-        }
-    }
-`;
 
 const runningTimersSubscription = gql`
     subscription RunningTimersSubscription {

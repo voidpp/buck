@@ -15,13 +15,14 @@ class DeletePredefinedTimerNode(NodeBase[DeletePredefinedTimerValidator]):
     input_validator = DeletePredefinedTimerValidator
 
     async def resolve(self):
-        result = await self.session.execute(select(models.PredefinedTimer).filter(models.PredefinedTimer.id == self.args.id))
-        rows = result.first()
-        if not rows:
-            return InstanceResult(errors = [Error(field_name = 'id', message = 'unknown')])
+        async with self.session.begin():
+            result = await self.session.execute(select(models.PredefinedTimer).filter(models.PredefinedTimer.id == self.args.id))
+            rows = result.first()
+            if not rows:
+                return InstanceResult(errors = [Error(field_name = 'id', message = 'unknown')])
 
-        self.session.delete(rows.PredefinedTimer)
+            self.session.delete(rows.PredefinedTimer)
 
-        await self.session.flush()
+            await self.session.flush()
 
-        return InstanceResult(id = self.args.id)
+            return InstanceResult(id = self.args.id)

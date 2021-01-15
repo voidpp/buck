@@ -17,6 +17,7 @@ from .nodes.mutations.start_timer import StartTimerNode
 from .nodes.queries.groups import GroupsNode
 from .nodes.queries.predefined_timers import PredefinedTimersNode
 from .nodes.queries.running_timers import RunningTimersNode
+from .nodes.queries.sounds import SoundsNode
 from .nodes.queries.timer_events import TimerEventsNode
 from .nodes.queries.timers import TimersNode
 from .nodes.subscriptions import Subscription
@@ -31,6 +32,7 @@ class Query(ObjectType):
     timers = TimersNode.field()
     timer_events = TimerEventsNode.field()
     running_timers = RunningTimersNode.field()
+    sounds = SoundsNode.field()
 
 
 class Mutation(ObjectType):

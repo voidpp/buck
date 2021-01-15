@@ -11,6 +11,7 @@ from buck.tools import parse_timer_lengths, TimeLengthParseError
 class StartTimerValidator(BaseModel):
     length: str
     name: str = None
+    sound_file: str = None
     predefined_timer_id: int = None  # TODO
 
     @validator('length')

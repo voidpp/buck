@@ -30,6 +30,10 @@ const messages = {
         timerHistory: "History",
         clock: "clock",
         timer: "timer",
+        dashboard: "dashboard",
+        stopAlarm: "stop alarm",
+        alarmCounterMsg: "The alarm is running since:",
+        alarmSoundFile: "Alarm sound",
     },
 }
 

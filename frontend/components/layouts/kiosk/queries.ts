@@ -6,6 +6,7 @@ export const predefinedTimerListQuery = gql`
             name
             length
             id
+            soundFile
             group {
                 id
                 name

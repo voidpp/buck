@@ -2,18 +2,24 @@ import * as React from "react";
 import {useState} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import {Icon, IconProps, SvgIcon, SvgIconProps, Tab, Tabs} from "@material-ui/core";
+import {Icon, IconProps, Tab, Tabs} from "@material-ui/core";
 import Clock from "../../widgets/Clock";
-import Dashboard from "./Dashboard";
-import TimerDialog from "./TimerDialog";
+import TimerDashboard from "./TimerDashboard";
+import ActiveTimerDialog from "./ActiveTimerDialog";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import TimerIcon from '@material-ui/icons/Timer';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import {FormattedMessage} from "../../translations";
 import {TranslationKey} from "../../../translations";
+import ActiveAlarmPage from "./ActiveAlarmPage";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         display: "flex",
+        // transform: "scaleX(0.95)",
+        '& *': {
+            cursor: "none",
+        }
     } as CreateCSSProperties,
 }));
 
@@ -27,22 +33,6 @@ const TabPanel = ({children, value, index}: { children: React.ReactNode, value: 
         </div>
     );
 }
-
-const KioskTab = ({icon}: {icon: any}) => {
-    const margin = "0.5em";
-    const iconProps: SvgIconProps = {
-        style: {
-            marginTop: margin,
-        },
-        fontSize: "large",
-    }
-
-    const Icon = icon;
-
-    return (
-        <Tab icon={<Icon {...iconProps} />} label={<span style={{marginBottom: margin}}>clock</span>}/>
-    )
-};
 
 function createTab(icon: React.Factory<IconProps>, labelId: TranslationKey) {
     const margin = "0.5em";
@@ -79,14 +69,19 @@ export default () => {
             >
                 {createTab(AccessTimeIcon, "clock")}
                 {createTab(TimerIcon, "timer")}
+                {/*{createTab(DashboardIcon, "dashboard")}*/}
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Clock/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Dashboard/>
-                <TimerDialog/>
+                <TimerDashboard/>
+                <ActiveTimerDialog/>
             </TabPanel>
+            <TabPanel value={value} index={2}>
+                dashboard
+            </TabPanel>
+            <ActiveAlarmPage />
         </div>
     );
 }

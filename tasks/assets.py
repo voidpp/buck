@@ -16,7 +16,7 @@ class Frontend:
         if watch:
             command.append('--watch')
 
-        command.append('--output-path ./buck/static')
+        command.append('--output-path ./buck/static/js')
 
         context.run(' '.join(command))
 

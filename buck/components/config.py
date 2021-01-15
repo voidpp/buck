@@ -1,8 +1,9 @@
 import logging
 import logging.config
+from typing import List
 
 from configpp.soil import Config
-from configpp.tree import Tree, Settings, DatabaseLeaf
+from configpp.tree import Tree, Settings, DatabaseLeaf, NodeBase
 
 logger = logging.getLogger(__name__)
 
@@ -12,11 +13,17 @@ tree = Tree(Settings(
 ))
 
 
+class Sound(NodeBase):
+    filename: str
+    title: str
+
+
 @tree.root()
 class AppConfig:
     database: DatabaseLeaf
     logger: dict
     redis: str
+    sounds: List[Sound]
 
 
 def load() -> AppConfig:

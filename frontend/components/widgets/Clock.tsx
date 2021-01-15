@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         alignItems: "center",
         justifyContent: "center",
         userSelect: "none",
+        paddingTop: ".15em",
     } as CreateCSSProperties,
 }));
 
@@ -30,7 +31,7 @@ export default () => {
     }, 1000);
 
     useEffect(() => {
-        setFontSize(containerRef.current.offsetHeight * 0.5);
+        setFontSize(containerRef.current.offsetHeight * 0.48);
     }, []);
 
     return (

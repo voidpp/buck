@@ -1,5 +1,24 @@
 database: postgresql+asyncpg://voidpp:teve@localhost/buck
 redis: redis://localhost:6379/11
+sounds:
+  - filename: another-bullfrog-451.mp3
+    title: Bullfrog
+  - filename: horse-whinnies-476.mp3
+    title: Horse whinnies
+  - filename: lovingly-618.mp3
+    title: Lovingly
+  - filename: open-your-eyes-and-see-323.mp3
+    title: Open your eyes and see
+  - filename: rush-532.mp3
+    title: Rush
+  - filename: siren-air-raid-205.mp3
+    title: Siren air raid
+  - filename: telephone-busy-signal-269.mp3
+    title: Telephone busy signal
+  - filename: that-was-quick-606.mp3
+    title: That was quick
+  - filename: theres-a-fire-somewhere-87.mp3
+    title: There's a fire somewhere
 logger:
   disable_existing_loggers: false
   formatters:
