@@ -24,6 +24,7 @@ class AppConfig:
     logger: dict
     redis: str
     sounds: List[Sound]
+    claude_api_url: str = ""
 
 
 def load() -> AppConfig:

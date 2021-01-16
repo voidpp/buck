@@ -27,3 +27,14 @@ export interface State {
     notification: Notification;
     backendError: BackendError;
 }
+
+export class LocalStorageSchema {
+    selectedKioskTab: number = 0;
+    claudeDashboardWeatherCity: string = null;
+}
+
+declare global {
+    interface Window {
+        claudeApiUrl: string;
+    }
+}

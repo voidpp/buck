@@ -4,13 +4,13 @@ import {Slide} from "@material-ui/core";
 
 
 type IfCompProps = {
-    condition: boolean,
+    condition: any,
     children: React.ReactNode,
     else_?: React.ReactNode,
 }
 
 export const If = ({condition, children, else_ = null}: IfCompProps) => (
-    condition ? <React.Fragment>{children}</React.Fragment> : <React.Fragment>{else_}</React.Fragment>
+    (!!condition) ? <React.Fragment>{children}</React.Fragment> : <React.Fragment>{else_}</React.Fragment>
 );
 
 

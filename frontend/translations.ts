@@ -34,6 +34,7 @@ const messages = {
         stopAlarm: "stop alarm",
         alarmCounterMsg: "The alarm is running since:",
         alarmSoundFile: "Alarm sound",
+        city: "City name",
     },
 }
 

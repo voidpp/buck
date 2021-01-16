@@ -3,7 +3,7 @@ import {useState} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 import {Icon, IconProps, Tab, Tabs} from "@material-ui/core";
-import Clock from "../../widgets/Clock";
+import {ClockPanel} from "../../widgets/Clock";
 import TimerDashboard from "./TimerDashboard";
 import ActiveTimerDialog from "./ActiveTimerDialog";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -12,6 +12,9 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import {FormattedMessage} from "../../translations";
 import {TranslationKey} from "../../../translations";
 import ActiveAlarmPage from "./ActiveAlarmPage";
+import {buckLocalStorage} from "../../../tools";
+import CaludeDashboard from "./calude-dashboard/Container";
+import {If} from "../../tools";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -24,12 +27,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 const TabPanel = ({children, value, index}: { children: React.ReactNode, value: number, index: number }) => {
+    const show = value === index;
+
     return (
         <div
-            hidden={value !== index}
+            hidden={!show}
             style={{height: "100%", flexGrow: 1}}
         >
-            {children}
+            {show ? children : null}
         </div>
     );
 }
@@ -46,7 +51,7 @@ function createTab(icon: React.Factory<IconProps>, labelId: TranslationKey) {
     const Icon = icon;
 
     const label = (
-        <div style={{marginBottom: margin}}><FormattedMessage id={labelId} /></div>
+        <div style={{marginBottom: margin}}><FormattedMessage id={labelId}/></div>
     );
 
     return (
@@ -56,32 +61,37 @@ function createTab(icon: React.Factory<IconProps>, labelId: TranslationKey) {
 
 export default () => {
     const classes = useStyles();
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(buckLocalStorage.selectedKioskTab);
 
     return (
-        <div className={classes.root} style={{width: 800, height: 480}}>
+        <div className={classes.root} style={{width: 800, height: 480, overflow: "hidden"}}>
             <Tabs
                 orientation="vertical"
                 value={value}
                 indicatorColor="primary"
-                onChange={(event, newValue) => setValue(newValue)}
+                onChange={(event, newValue) => {
+                    setValue(newValue);
+                    buckLocalStorage.selectedKioskTab = newValue;
+                }}
                 style={{borderRight: "1px solid rgba(255,255,255,0.2)"}}
             >
                 {createTab(AccessTimeIcon, "clock")}
                 {createTab(TimerIcon, "timer")}
-                {/*{createTab(DashboardIcon, "dashboard")}*/}
+                {window.claudeApiUrl ? createTab(DashboardIcon, "dashboard") : null}
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Clock/>
+                <ClockPanel/>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <TimerDashboard/>
-                <ActiveTimerDialog/>
             </TabPanel>
-            <TabPanel value={value} index={2}>
-                dashboard
-            </TabPanel>
-            <ActiveAlarmPage />
+            <If condition={window.claudeApiUrl}>
+                <TabPanel value={value} index={2}>
+                    <CaludeDashboard/>
+                </TabPanel>
+            </If>
+            <ActiveTimerDialog/>
+            <ActiveAlarmPage/>
         </div>
     );
 }

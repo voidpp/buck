@@ -19,6 +19,8 @@ sounds:
     title: That was quick
   - filename: theres-a-fire-somewhere-87.mp3
     title: There's a fire somewhere
+#claude-api-url: http://claude.manfred.mag/api/
+claude-api-url: http://localhost:9001/api/
 logger:
   disable_existing_loggers: false
   formatters:

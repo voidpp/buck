@@ -1,9 +1,39 @@
 import * as React from "react";
+import {useEffect, useRef, useState} from "react";
 import {useInterval} from "../../hooks";
 import dayjs from 'dayjs';
-import {useEffect, useRef, useState} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
+
+const now = () => {
+    const time = dayjs(new Date());
+    return {
+        hours: time.format('HH'),
+        minutes: time.format('mm'),
+        seconds: time.second(),
+    }
+}
+
+export const ClockWidget = ({style, className}: { style?: React.CSSProperties, className?: string }) => {
+    const [time, setTime] = useState(now());
+
+    useInterval(() => {
+        setTime(now());
+    }, 1000);
+
+    const colonStyle = {
+        opacity: time.seconds % 2 ? 0.3 : 1,
+        transition: "opacity 0.3s",
+    } as React.CSSProperties;
+
+    return (
+        <div style={style} className={className}>
+            {time.hours}
+            <span style={colonStyle}>:</span>
+            {time.minutes}
+        </div>
+    );
+}
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -18,17 +48,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 
-const now = () => dayjs(new Date()).format('HH:mm');
-
-export default () => {
+export const ClockPanel = () => {
     const classes = useStyles();
-    const [time, setTime] = useState<string>(now());
     const containerRef = useRef<HTMLDivElement>(null);
     const [fontSize, setFontSize] = useState(10);
-
-    useInterval(() => {
-        setTime(now());
-    }, 1000);
 
     useEffect(() => {
         setFontSize(containerRef.current.offsetHeight * 0.48);
@@ -36,7 +59,7 @@ export default () => {
 
     return (
         <div className={classes.root} ref={containerRef} style={{fontSize}}>
-            {time}
+            <ClockWidget />
         </div>
     );
 }
