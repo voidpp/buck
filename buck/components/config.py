@@ -1,8 +1,9 @@
 import logging
 import logging.config
+import os
 from typing import List
 
-from configpp.soil import Config
+from configpp.soil import Config, Transport, Location
 from configpp.tree import Tree, Settings, DatabaseLeaf, NodeBase
 
 logger = logging.getLogger(__name__)
@@ -27,8 +28,14 @@ class AppConfig:
     claude_api_url: str = ""
 
 
+# TODO: move to configpp
+class EnvOnlyTransport(Transport):
+    def __init__(self, env_var_name: str):
+        super().__init__(locations = [Location(os.environ.get(env_var_name))])
+
+
 def load() -> AppConfig:
-    config_loader = Config('buck.yaml')
+    config_loader = Config('buck.yaml', transport = EnvOnlyTransport("BUCK_CONFIG_FOLDER"))
 
     if not config_loader.load():
         raise Exception("config not loaded")

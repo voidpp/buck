@@ -12,8 +12,9 @@ from buck.models import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-# app_config = load()
-# config.set_main_option("sqlalchemy.url", str(app_config.database))
+app_config = load()
+app_config.database.driver = "postgresql"
+config.set_main_option("sqlalchemy.url", str(app_config.database))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
