@@ -58,8 +58,6 @@ export default ({show, close}: TimerPageDialogProps) => {
         setFormData({length, name, predefinedTimerId: id, soundFile});
     }
 
-    console.debug(formData);
-
     return (
         <Dialog open={show} onClose={close} onExited={resetForm}>
             <FormattedDialogTitle msgId="startTimer" onCloseIconClick={close}>
