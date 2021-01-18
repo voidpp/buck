@@ -35,7 +35,7 @@ const messages = {
         alarmCounterMsg: "The alarm is running since:",
         alarmSoundFile: "Alarm sound",
         city: "City name",
-        noPredefinedTimers: "There are no predefined timers!"
+        soundSelectorTitle: "Select a sound",
     },
 }
 
