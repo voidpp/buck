@@ -11,7 +11,7 @@ const messages = {
         "value_error.any_str.min_length": "Must be at least {limit_value, number} {limit_value, plural, one {character} other {characters}}",
         "value_error.number.not_gt": "Must be greater than {limit_value}",
         group: "Group",
-        predefinedTimersSelect: "Select a predefined timer",
+        predefinedTimersSelect: "load",
         cancel: "Cancel",
         submit: "Submit",
         newGroup: "New group",
@@ -35,6 +35,7 @@ const messages = {
         alarmCounterMsg: "The alarm is running since:",
         alarmSoundFile: "Alarm sound",
         city: "City name",
+        noPredefinedTimers: "There are no predefined timers!"
     },
 }
 

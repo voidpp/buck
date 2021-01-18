@@ -60,7 +60,9 @@ export default ({show, close}: TimerPageDialogProps) => {
 
     return (
         <Dialog open={show} onClose={close} onExited={resetForm}>
-            <FormattedDialogTitle msgId="startTimer" onCloseIconClick={close}/>
+            <FormattedDialogTitle msgId="startTimer" onCloseIconClick={close}>
+                <PredefinedTimers onSelect={onSelectPredefinedTimer} style={{marginLeft: "1em"}}/>
+            </FormattedDialogTitle>
             <DialogContent>
                 <TextFieldDialog
                     label={<FormattedMessage id="length"/>}
@@ -85,7 +87,6 @@ export default ({show, close}: TimerPageDialogProps) => {
                     onChange={ev => setFormData({...formData, name: ev.target.value})}
                     style={{marginBottom: fieldSpacing, marginTop: fieldSpacing}}
                 />
-                <PredefinedTimers onSelect={onSelectPredefinedTimer}/>
             </DialogContent>
             <DialogActionButtons onSubmit={submit} onCancel={close}/>
         </Dialog>
