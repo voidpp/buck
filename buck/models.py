@@ -27,7 +27,7 @@ class Timer(Base):
     length = Column(String, nullable = False)
     name = Column(String)
     sound_file = Column(String)
-    predefined_timer_id = Column(Integer, ForeignKey('predefined_timer.id'))
+    predefined_timer_id = Column(Integer, ForeignKey('predefined_timer.id', ondelete = "SET NULL"))
 
 
 class TimerEventType(enum.Enum):
