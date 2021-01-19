@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             cursor: "none",
         }
     } as CreateCSSProperties,
-    panels: {
+    volume: {
         display: "flex",
         width: 800,
         height: 480,
@@ -47,9 +47,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         left: 0,
     } as CreateCSSProperties,
     dashboardContainer: {
-        position: "fixed",
-        top: 0,
-        left: 0,
         width: "100%",
         height: "100%",
     } as CreateCSSProperties,
@@ -120,7 +117,7 @@ export default () => {
                     </MenuItem>
                 ))}
             </Menu>
-            <div className={classes.panels}>
+            <div className={classes.volume}>
                 <ActiveTimerDialog/>
                 <ActiveAlarmPage/>
                 {dashboards.map((desc, idx) => {

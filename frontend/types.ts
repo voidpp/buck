@@ -31,6 +31,7 @@ export interface State {
 export class LocalStorageSchema {
     selectedKioskTab: number = 0;
     claudeDashboardWeatherCity: string = null;
+    volume: number = 100;
 }
 
 declare global {

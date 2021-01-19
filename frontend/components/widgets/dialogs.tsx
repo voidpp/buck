@@ -1,5 +1,5 @@
 import * as React from "react";
-import {DialogTitle, IconButton} from "@material-ui/core";
+import {DialogTitle, Divider, IconButton} from "@material-ui/core";
 import {FormattedMessage} from "../translations";
 import {TranslationKey} from "../../translations";
 import CloseIcon from '@material-ui/icons/Close';

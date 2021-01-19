@@ -38,6 +38,10 @@ const messages = {
         city: "City name",
         soundSelectorTitle: "Select a sound",
         misc: "Misc",
+        appReload: "Reload the app",
+        reload: "reload",
+        settings: "Settings",
+        volume: "Volume",
     },
 }
 

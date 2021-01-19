@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Divider, IconButton, Typography} from "@material-ui/core";
+import {Divider, IconButton} from "@material-ui/core";
 import {gql, useMutation} from "@apollo/client";
 import {TimerOperation, TimerState} from "../../../__generated__/globalTypes";
 import StopIcon from '@material-ui/icons/Stop';

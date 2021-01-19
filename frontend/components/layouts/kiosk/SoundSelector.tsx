@@ -9,6 +9,7 @@ import {FormattedDialogTitle} from "../../widgets/dialogs";
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import {If} from "../../tools";
 import CloseIcon from '@material-ui/icons/Close';
+import Audio from "./Audio";
 
 const soundSelectorQuery = gql`
     query SoundSelectorQuery {
@@ -37,7 +38,7 @@ export default ({value, onChange, style}: Props) => {
     return (
         <React.Fragment>
             <If condition={audioFile}>
-                <audio src={`/static/audio/${audioFile}`} autoPlay loop/>
+                <Audio src={`/static/audio/${audioFile}`}/>
             </If>
             <div style={{display: "flex", width: "100%", alignItems: "flex-end", ...style}}>
                 <TextField

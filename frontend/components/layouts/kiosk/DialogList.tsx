@@ -12,6 +12,8 @@ import ViewListIcon from "@material-ui/icons/ViewList";
 import PredefinedTimerManagerDialog from "./predefined-timers-manager/Dialog";
 import HistoryIcon from "@material-ui/icons/History";
 import TimerHistoryDialog from "./TimerHistoryDialog";
+import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsDialog from "./SettingsDialog";
 
 type DialogState = Record<string, boolean>;
 
@@ -37,6 +39,10 @@ const dialogs: DialogRenderer[] = [{
     name: "timerHistory",
     icon: HistoryIcon,
     dialog: TimerHistoryDialog,
+}, {
+    name: "settings",
+    icon: SettingsIcon,
+    dialog: SettingsDialog,
 }];
 
 const defaultDialogState = dialogs.reduce((res, cur) => {

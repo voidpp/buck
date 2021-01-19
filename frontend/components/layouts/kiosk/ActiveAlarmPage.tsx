@@ -10,6 +10,7 @@ import {FormattedMessage} from "../../translations";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {TimerEventType} from "../../../__generated__/globalTypes";
 import {useInterval} from "../../../hooks";
+import Audio from "./Audio";
 
 const timerEventsSubscription = gql`
     subscription TimerEventsSubscription {
@@ -79,7 +80,7 @@ const ActiveAlarm = ({event, onStop}: ActiveAlarmProps) => {
     return (
         <div className={classes.content}>
             <If condition={!!event.timer.soundFile}>
-                <audio src={`/static/audio/${event.timer.soundFile}`} autoPlay loop/>
+                <Audio src={`/static/audio/${event.timer.soundFile}`} />
             </If>
             <div style={{paddingBottom: "1em"}}>
                 <FormattedMessage id="alarmCounterMsg"/>
