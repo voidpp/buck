@@ -13,3 +13,10 @@ def clean(c):
         shutil.rmtree(path)
 
     print("*.pyc and __generated__ directories deleted")
+
+
+@task
+def build(c):
+    from tasks.typescript import build
+    build(c, "production")
+    c.run("poetry build")

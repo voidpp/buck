@@ -1,3 +1,4 @@
+import os
 from time import time
 
 from starlette.requests import Request
@@ -17,7 +18,7 @@ async def index_endpoint(request: Request):
         name = "index.jinja2",
         context = {
             "request": request,
-            "is_dev": True,
+            "is_dev": bool(os.environ.get(Keys.DEV_MODE, 0)),
             "bundle_version": time(),
             "script_lib_files": [],
             "claude_api_url": context.config.claude_api_url,

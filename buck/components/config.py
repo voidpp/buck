@@ -6,6 +6,8 @@ from typing import List
 from configpp.soil import Config, Transport, Location
 from configpp.tree import Tree, Settings, DatabaseLeaf, NodeBase
 
+from buck.components.keys import Keys
+
 logger = logging.getLogger(__name__)
 
 tree = Tree(Settings(
@@ -35,7 +37,7 @@ class EnvOnlyTransport(Transport):
 
 
 def load() -> AppConfig:
-    config_loader = Config('buck.yaml', transport = EnvOnlyTransport("BUCK_CONFIG_FOLDER"))
+    config_loader = Config('buck.yaml', transport = EnvOnlyTransport(Keys.CONFIG_FOLDER))
 
     if not config_loader.load():
         raise Exception("config not loaded")

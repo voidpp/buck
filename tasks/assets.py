@@ -10,13 +10,15 @@ from buck.components.folders import Folders
 class Frontend:
 
     @staticmethod
-    def transpile(context: Context, watch: bool):
+    def transpile(context: Context, watch: bool, mode = "development"):
         command = ['npx', 'webpack']
 
         if watch:
             command.append('--watch')
 
         command.append('--output-path ./buck/static/js')
+
+        command.append(f'--mode {mode}')
 
         context.run(' '.join(command))
 

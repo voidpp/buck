@@ -6,10 +6,10 @@ generate = Collection('generate')
 
 
 @task
-def build(c):
+def build(c, mode = "development"):
     from .assets import Frontend
     all(c)
-    Frontend.transpile(c, False)
+    Frontend.transpile(c, False, mode)
 
 
 @generate.task()

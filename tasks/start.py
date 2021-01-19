@@ -1,4 +1,7 @@
+import os
+
 from invoke import Collection
+
 
 from tasks.assets import Frontend, MultiprocessTask
 
@@ -7,9 +10,11 @@ mp_tasks = MultiprocessTask('all')
 
 @mp_tasks.add
 def uvicorn(c, reload = True):
+    from buck.components.keys import Keys
     cmd = ""
     if reload:
         cmd += " --reload "
+    os.environ[Keys.DEV_MODE] = "1"
     c.run(f"uvicorn buck.app:app --host 0.0.0.0 --port 9000 " + cmd)
 
 
