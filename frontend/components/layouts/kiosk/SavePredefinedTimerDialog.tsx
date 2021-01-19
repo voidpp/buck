@@ -10,7 +10,7 @@ import TextFieldDialog from "../../keyboard/TextFieldDialog";
 import GroupSelectInput from "./GroupSelectInput";
 import DialogActionButtons from "../../DialogActionButtons";
 import {SavePredefinedTimerMutation, SavePredefinedTimerMutationVariables} from "./__generated__/SavePredefinedTimerMutation";
-import {TimerPageDialogProps} from "./types";
+import {DialogProps} from "./types";
 import SoundSelector from "./SoundSelector";
 
 const saveTimerMutation = gql`
@@ -36,7 +36,7 @@ const defaultFormData: SavePredefinedTimerMutationVariables = {
 type Props = {
     data?: SavePredefinedTimerMutationVariables,
     onSuccess?: () => void,
-} & TimerPageDialogProps;
+} & DialogProps;
 
 const fieldSpacing = "0.4em";
 

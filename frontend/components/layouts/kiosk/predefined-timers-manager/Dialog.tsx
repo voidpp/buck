@@ -26,7 +26,7 @@ import {useBoolState} from "../../../../hooks";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import UpdateButton from "./UpdateButton";
 import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
-import {TimerPageDialogProps} from "../types";
+import {DialogProps} from "../types";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -111,7 +111,7 @@ const Content = ({close}: { close: () => void }) => {
     );
 }
 
-export default ({show, close}: TimerPageDialogProps) => {
+export default ({show, close}: DialogProps) => {
     return (
         <Dialog open={show} onClose={close}>
             <Content close={close}/>

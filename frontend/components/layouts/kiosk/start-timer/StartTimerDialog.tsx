@@ -10,7 +10,7 @@ import {FormErrorHelper} from "../../../../forms/formErrorHelper";
 import PredefinedTimers from "./PredefinedTimers";
 import DialogActionButtons from "../../../DialogActionButtons";
 import TextFieldDialog from "../../../keyboard/TextFieldDialog";
-import {TimerPageDialogProps} from "../types";
+import {DialogProps} from "../types";
 import SoundSelector from "../SoundSelector";
 
 const startTimerMutation = gql`
@@ -35,7 +35,7 @@ const defaultFormData: StartTimerMutationVariables = {
 
 const fieldSpacing = "0.5em";
 
-export default ({show, close}: TimerPageDialogProps) => {
+export default ({show, close, onDone}: DialogProps) => {
 
     const [formData, setFormData] = useState<StartTimerMutationVariables>(defaultFormData);
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);
@@ -45,8 +45,10 @@ export default ({show, close}: TimerPageDialogProps) => {
     const submit = async () => {
         const result = await startTimer({variables: formData});
         errors.setErrors(result.data.startTimer.errors);
-        if (result.data.startTimer.id)
+        if (result.data.startTimer.id) {
             close();
+            onDone();
+        }
     }
 
     const resetForm = () => {

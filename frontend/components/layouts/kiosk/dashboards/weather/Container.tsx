@@ -1,7 +1,7 @@
 import * as React from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import {ClockWidget} from "../../../widgets/Clock";
+import {ClockWidget} from "../Clock";
 import CurrentWeather from "./CurrentWeather";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({

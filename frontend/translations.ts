@@ -28,14 +28,16 @@ const messages = {
         hungarian: "Hungarian",
         numeric: "Numeric",
         timerHistory: "History",
-        clock: "clock",
+        clock: "Clock",
         timer: "timer",
         dashboard: "dashboard",
+        dashboards: "Dashboards",
         stopAlarm: "stop alarm",
         alarmCounterMsg: "The alarm is running since:",
         alarmSoundFile: "Alarm sound",
         city: "City name",
         soundSelectorTitle: "Select a sound",
+        misc: "Misc",
     },
 }
 

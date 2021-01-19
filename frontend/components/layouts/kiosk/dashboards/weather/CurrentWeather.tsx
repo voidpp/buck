@@ -1,14 +1,14 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {useBoolState, useInterval} from "../../../../hooks";
+import {useBoolState, useInterval} from "../../../../../hooks";
 import {claudeApi, IdokepCurrentResponse} from "./claude";
 import {Dialog, DialogContent, Typography} from "@material-ui/core";
-import DialogActionButtons from "../../../DialogActionButtons";
-import {buckLocalStorage} from "../../../../tools";
-import TextFieldDialog from "../../../keyboard/TextFieldDialog";
-import {FormattedMessage} from "../../../translations";
-import {If} from "../../../tools";
+import DialogActionButtons from "../../../../DialogActionButtons";
+import {buckLocalStorage} from "../../../../../tools";
+import TextFieldDialog from "../../../../keyboard/TextFieldDialog";
+import {FormattedMessage} from "../../../../translations";
+import {If} from "../../../../tools";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     body: {

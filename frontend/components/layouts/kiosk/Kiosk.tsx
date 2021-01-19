@@ -2,21 +2,31 @@ import * as React from "react";
 import {useState} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import {Drawer, Icon, IconButton, IconProps, Tab, Tabs} from "@material-ui/core";
-import {ClockPanel} from "../../widgets/Clock";
-import TimerDashboard from "./TimerDashboard";
+import {
+    Divider,
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemSecondaryAction,
+    ListItemText,
+    Menu,
+    MenuItem
+} from "@material-ui/core";
+import {ClockPanel} from "./dashboards/Clock";
 import ActiveTimerDialog from "./ActiveTimerDialog";
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import TimerIcon from '@material-ui/icons/Timer';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import {FormattedMessage} from "../../translations";
 import {TranslationKey} from "../../../translations";
 import ActiveAlarmPage from "./ActiveAlarmPage";
 import {buckLocalStorage} from "../../../tools";
-import CaludeDashboard from "./calude-dashboard/Container";
-import {If} from "../../tools";
+import CaludeDashboard from "./dashboards/weather/Container";
 import {useBoolState} from "../../../hooks";
 import MenuIcon from '@material-ui/icons/Menu';
+import DialogList from "./DialogList";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
@@ -36,83 +46,100 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         top: 0,
         left: 0,
     } as CreateCSSProperties,
+    dashboardContainer: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+    } as CreateCSSProperties,
 }));
 
-const TabPanel = ({children, value, index}: { children: React.ReactNode, value: number, index: number }) => {
-    const show = value === index;
-
-    return (
-        <div
-            hidden={!show}
-            style={{height: "100%", flexGrow: 1}}
-        >
-            {show ? children : null}
-        </div>
-    );
+type DashboardDescriptor = {
+    name: TranslationKey,
+    component: () => JSX.Element,
 }
 
-function createTab(icon: React.Factory<IconProps>, labelId: TranslationKey) {
-    const margin = "0.5em";
-    const iconProps: IconProps = {
-        style: {
-            marginTop: margin,
-        },
-        fontSize: "large",
-    }
-
-    const Icon = icon;
-
-    const label = (
-        <div style={{marginBottom: margin}}><FormattedMessage id={labelId}/></div>
-    );
-
-    return (
-        <Tab icon={<Icon {...iconProps} />} label={label}/>
-    )
-}
+const dashboards: DashboardDescriptor[] = [{
+    name: "clock",
+    component: ClockPanel,
+}, {
+    name: "misc",
+    component: CaludeDashboard,
+}];
 
 export default () => {
     const classes = useStyles();
-    const [value, setValue] = useState(buckLocalStorage.selectedKioskTab);
-    const [isShow, show, hide] = useBoolState();
+    const [selectedKioskTab, setSelectedKioskTab] = useState(buckLocalStorage.selectedKioskTab);
+    const [isShowDrawer, showDrawer, hideDrawer] = useBoolState();
+    const [dashboardMenuAnchorEl, setDashboardMenuAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const closeDashboardMenu = () => {
+        setDashboardMenuAnchorEl(null);
+    }
 
     return (
         <div className={classes.root}>
-            <div className={classes.menu}>
-                <IconButton onClick={show}>
-                    <MenuIcon/>
-                </IconButton>
-            </div>
-            <Drawer anchor="left" open={isShow} onClose={hide}>
-                <Tabs
-                    orientation="vertical"
-                    value={value}
-                    indicatorColor="primary"
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                        buckLocalStorage.selectedKioskTab = newValue;
-                    }}
-                    style={{borderRight: "1px solid rgba(255,255,255,0.2)"}}
-                >
-                    {createTab(AccessTimeIcon, "clock")}
-                    {createTab(TimerIcon, "timer")}
-                    {window.claudeApiUrl ? createTab(DashboardIcon, "dashboard") : null}
-                </Tabs>
+            <Drawer anchor="left" open={isShowDrawer} onClose={hideDrawer}>
+                <List>
+                    <ListItem button onClick={ev => setDashboardMenuAnchorEl(ev.currentTarget)}>
+                        <ListItemIcon>
+                            <DashboardIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={<FormattedMessage id="dashboards"/>}/>
+                        <ListItemSecondaryAction style={{display: "flex"}}>
+                            <ArrowRightIcon/>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                </List>
+                <Divider/>
+                <DialogList onDone={hideDrawer}/>
             </Drawer>
+            <Menu
+                anchorEl={dashboardMenuAnchorEl}
+                open={!!dashboardMenuAnchorEl}
+                onClose={closeDashboardMenu}
+                anchorOrigin={{
+                    horizontal: "right",
+                    vertical: "top",
+                }}
+                onExited={hideDrawer}
+            >
+                {dashboards.map((desc, idx) => (
+                    <MenuItem onClick={() => {
+                        closeDashboardMenu();
+                        setSelectedKioskTab(idx);
+                        buckLocalStorage.selectedKioskTab = idx;
+                    }} key={desc.name}>
+                        <ListItemIcon>
+                            <CheckIcon style={{opacity: selectedKioskTab == idx ? 1 : 0}}/>
+                        </ListItemIcon>
+                        <ListItemText style={{paddingRight: "1em"}}>
+                            <FormattedMessage id={desc.name}/>
+                        </ListItemText>
+                    </MenuItem>
+                ))}
+            </Menu>
             <div className={classes.panels}>
-                <TabPanel value={value} index={0}>
-                    <ClockPanel/>
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <TimerDashboard/>
-                </TabPanel>
-                <If condition={window.claudeApiUrl}>
-                    <TabPanel value={value} index={2}>
-                        <CaludeDashboard/>
-                    </TabPanel>
-                </If>
                 <ActiveTimerDialog/>
                 <ActiveAlarmPage/>
+                {dashboards.map((desc, idx) => {
+                    if (idx !== selectedKioskTab)
+                        return null;
+                    const Component = desc.component;
+                    return (
+                        <div
+                            className={classes.dashboardContainer}
+                            key={desc.name}>
+                            <Component/>
+                        </div>
+                    );
+                })}
+            </div>
+            <div className={classes.menu}>
+                <IconButton onClick={showDrawer}>
+                    <MenuIcon/>
+                </IconButton>
             </div>
         </div>
     );
