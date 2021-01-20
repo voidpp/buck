@@ -8,6 +8,7 @@ import Brightness from "./Brightness";
 import Volume from "./Volume";
 import {gql, useQuery} from "@apollo/client";
 import {SettingVersionQuery} from "./__generated__/SettingVersionQuery";
+import DebugInfoDialog from "./DebugInfoDialog";
 
 const FormRow = ({labelId, children}: { labelId: TranslationKey, children: React.ReactNode }) => (
     <tr>
@@ -29,7 +30,9 @@ const Version = () => {
 export default ({show, close, onDone}: DialogProps) => {
     return (
         <Dialog open={show} onClose={close}>
-            <FormattedDialogTitle msgId="settings" onCloseIconClick={close} style={{padding: "0.5em 1em"}}/>
+            <FormattedDialogTitle msgId="settings" onCloseIconClick={close} style={{padding: "0.5em 1em"}}>
+                <DebugInfoDialog buttonStyle={{marginLeft: "0.5em"}} />
+            </FormattedDialogTitle>
             <Divider/>
             <DialogContent style={{padding: "1em"}}>
                 <table>
@@ -50,7 +53,6 @@ export default ({show, close, onDone}: DialogProps) => {
                     <FormRow labelId="brightness">
                         <Brightness/>
                     </FormRow>
-
                     </tbody>
                 </table>
             </DialogContent>

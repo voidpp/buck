@@ -44,6 +44,10 @@ const messages = {
         volume: "Volume",
         brightness: "Brightness",
         version: "App version",
+        debugInfo: "Debug and system info",
+        memory: "Memory",
+        load: "Load",
+        uptime: "Uptime",
     },
 }
 
