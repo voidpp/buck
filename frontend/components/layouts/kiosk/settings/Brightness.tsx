@@ -21,6 +21,7 @@ const setBrightnessMutation = gql`
     }
 `;
 
+const minValue = 5;
 
 export default () => {
     const [brightness, setBrightness] = useState(0);
@@ -34,7 +35,7 @@ export default () => {
         }).then(res => setBrightness(res.data.brightness));
     }, []);
 
-    const updateBrightness = (val: number) => {
+    const updateValue = (val: number) => {
         setBrightness(val);
         apolloClient.mutate<SetBrightnessMutation, SetBrightnessMutationVariables>({
             mutation: setBrightnessMutation,
@@ -44,15 +45,15 @@ export default () => {
 
     return (
         <div className={classes.slider}>
-            <IconButton onClick={() => updateBrightness(5)}>
+            <IconButton onClick={() => updateValue(minValue)}>
                 <BrightnessLowIcon fontSize="small"/>
             </IconButton>
             <Slider
                 value={brightness}
-                onChange={(ev, val) => updateBrightness(val as number)}
-                min={5}
+                onChange={(ev, val) => updateValue(val as number)}
+                min={minValue}
             />
-            <IconButton onClick={() => updateBrightness(100)}>
+            <IconButton onClick={() => updateValue(100)}>
                 <Brightness7Icon fontSize="small"/>
             </IconButton>
         </div>

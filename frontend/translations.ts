@@ -43,6 +43,7 @@ const messages = {
         settings: "Settings",
         volume: "Volume",
         brightness: "Brightness",
+        version: "App version",
     },
 }
 

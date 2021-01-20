@@ -1,8 +1,12 @@
+import os
 from datetime import datetime
+from importlib.metadata import version
+from time import time
 from typing import Callable
 
 from pytimeparse.timeparse import timeparse
 
+from buck.components.keys import Keys
 from buck.models import TimerEventType, TimerEvent
 
 
@@ -12,6 +16,15 @@ class TimeLengthParseError(Exception):
 
 class CountdownCalcError(Exception):
     pass
+
+
+def is_dev_mode() -> bool:
+    return bool(os.environ.get(Keys.DEV_MODE, 0))
+
+
+def get_app_version() -> str:
+    pkg_version = version("buck")
+    return f"{pkg_version}-{time()}" if is_dev_mode() else pkg_version
 
 
 def calc_elapsed_time(events: list[TimerEvent]) -> int:
