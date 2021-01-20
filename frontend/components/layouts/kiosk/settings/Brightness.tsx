@@ -28,8 +28,11 @@ export default () => {
     const apolloClient = useApolloClient();
 
     useEffect(() => {
-        apolloClient.query<GetBrightnessQuery>({query: getBrightnessQuery}).then(res => setBrightness(res.data.brightness));
-    }, [])
+        apolloClient.query<GetBrightnessQuery>({
+            query: getBrightnessQuery,
+            fetchPolicy: "no-cache",
+        }).then(res => setBrightness(res.data.brightness));
+    }, []);
 
     const updateBrightness = (val: number) => {
         setBrightness(val);
