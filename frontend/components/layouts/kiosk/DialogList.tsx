@@ -13,7 +13,7 @@ import PredefinedTimerManagerDialog from "./predefined-timers-manager/Dialog";
 import HistoryIcon from "@material-ui/icons/History";
 import TimerHistoryDialog from "./TimerHistoryDialog";
 import SettingsIcon from '@material-ui/icons/Settings';
-import SettingsDialog from "./SettingsDialog";
+import SettingsDialog from "./settings/Dialog";
 
 type DialogState = Record<string, boolean>;
 

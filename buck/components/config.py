@@ -27,6 +27,7 @@ class AppConfig:
     logger: dict
     redis: str
     sounds: List[Sound]
+    backlight_sysfs_path: str = ""
     claude_api_url: str = ""
 
 

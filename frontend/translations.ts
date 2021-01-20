@@ -42,6 +42,7 @@ const messages = {
         reload: "reload",
         settings: "Settings",
         volume: "Volume",
+        brightness: "Brightness",
     },
 }
 
