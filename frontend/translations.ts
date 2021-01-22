@@ -29,7 +29,7 @@ const messages = {
         numeric: "Numeric",
         timerHistory: "History",
         clock: "Clock",
-        timer: "timer",
+        timer: "Timer",
         dashboard: "dashboard",
         dashboards: "Dashboards",
         stopAlarm: "stop alarm",
@@ -48,6 +48,12 @@ const messages = {
         memory: "Memory",
         load: "Load",
         uptime: "Uptime",
+        system: "System",
+        celery: "Celery",
+        noTasks: "No tasks found",
+        eta: "ETA",
+        last: "Last",
+        revoked: "Revoked",
     },
 }
 

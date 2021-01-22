@@ -25,6 +25,10 @@ class ValidationError(Exception):
         self.result = result
 
 
+def get_request_context(info: ResolveInfo) -> RequestContext:
+    return info.context["request"].scope[Keys.HTTP_REQUEST_CONTEXT]
+
+
 class NodeBase(ABC, Generic[InputType]):
     result_type: OrderedType
     input_validator: Type[BaseModel] = None
@@ -53,7 +57,7 @@ class NodeBase(ABC, Generic[InputType]):
 
     @property
     def request_context(self) -> RequestContext:
-        return self._info.context["request"].scope[Keys.HTTP_REQUEST_CONTEXT]
+        return get_request_context(self._info)
 
     @property
     def args(self) -> InputType:

@@ -1,62 +1,45 @@
 import * as React from "react";
+import {useState} from "react";
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import {gql, useQuery} from "@apollo/client";
-import {DebugInfoQuery} from "./__generated__/DebugInfoQuery";
 import {useBoolState} from "../../../../hooks";
-import {Dialog, DialogContent, Divider, IconButton, LinearProgress, Table, TableBody, TableCell, TableRow} from "@material-ui/core";
+import {Dialog, DialogContent, Divider, IconButton, Tab, Tabs} from "@material-ui/core";
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
-import {TranslationKey} from "../../../../translations";
+import System from "./debug-info-tabs/System";
+import Celery from "./debug-info-tabs/Celery";
 import {FormattedMessage} from "../../../translations";
-import dayjs from 'dayjs';
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 
-const query = gql`
-    query DebugInfoQuery {
-        debugInfo {
-            systemStats {
-                load
-                memory {
-                    percent
-                }
-                uptime
-            }
-        }
-    }
-`;
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
 
-const FormattedFieldRow = ({labelId, children}: { labelId: TranslationKey, children: React.ReactNode }) => (
-    <TableRow>
-        <TableCell style={{textAlign: "right"}}>
-            <FormattedMessage id={labelId} />:
-        </TableCell>
-        <TableCell>
-            {children}
-        </TableCell>
-    </TableRow>
-);
+function TabPanel(props: TabPanelProps) {
+    const {children, value, index, ...other} = props;
 
-const DebugInfoPanel = () => {
-    const {data} = useQuery<DebugInfoQuery>(query);
-    if (!data)
-        return null;
     return (
-        <Table size="small">
-            <TableBody>
-                <FormattedFieldRow labelId="load">
-                    {data.debugInfo.systemStats.load.map(l => l.toFixed(2)).join(", ")}
-                </FormattedFieldRow>
-                <FormattedFieldRow labelId="memory">
-                    <LinearProgress variant="determinate" value={data.debugInfo.systemStats.memory.percent} />
-                </FormattedFieldRow>
-                <FormattedFieldRow labelId="uptime">
-                    {dayjs.duration(data.debugInfo.systemStats.uptime * 1000).humanize()}
-                </FormattedFieldRow>
-            </TableBody>
-        </Table>
+        <div
+            hidden={value !== index}
+            {...other}
+        >
+            {value == index ? children : null}
+        </div>
     );
 }
 
-export default ({buttonStyle}: {buttonStyle?: React.CSSProperties}) => {
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    tabHeader: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    } as CreateCSSProperties,
+}));
+
+
+export default ({buttonStyle}: { buttonStyle?: React.CSSProperties }) => {
     const [isShow, show, hide] = useBoolState();
+    const [tabIndex, setTabIndex] = useState(0);
+    const classes = useStyles();
 
     return (
         <React.Fragment>
@@ -67,7 +50,21 @@ export default ({buttonStyle}: {buttonStyle?: React.CSSProperties}) => {
                 <FormattedDialogTitle msgId="debugInfo" onCloseIconClick={hide} style={{padding: "0.5em 1em"}}/>
                 <Divider/>
                 <DialogContent>
-                    <DebugInfoPanel/>
+                    <Tabs
+                        value={tabIndex}
+                        onChange={(ev, index) => setTabIndex(index)}
+                        indicatorColor="primary"
+                        className={classes.tabHeader}
+                    >
+                        <Tab label={<FormattedMessage id="system" />} style={{textTransform: "none"}}/>
+                        <Tab label={<FormattedMessage id="celery" />} style={{textTransform: "none"}}/>
+                    </Tabs>
+                    <TabPanel value={tabIndex} index={0}>
+                        <System />
+                    </TabPanel>
+                    <TabPanel value={tabIndex} index={1}>
+                        <Celery />
+                    </TabPanel>
                 </DialogContent>
             </Dialog>
         </React.Fragment>

@@ -2,10 +2,13 @@ import os
 import time
 
 import psutil
-from graphene import ObjectType, Field, String, Int, List, Float
+from graphene import ObjectType, Field, String, Int, List, Float, Boolean
+from graphql import ResolveInfo
 
 from buck.api.types import Long
-from buck.components.node_base import NodeBase
+from buck.celery.scheduler import Tasks
+from buck.celery.tools import get_task_info_list
+from buck.components.node_base import NodeBase, get_request_context
 from buck.tools import get_app_version
 
 
@@ -42,9 +45,24 @@ class SystemStats(ObjectType):
         )
 
 
+class CeleryTask(ObjectType):
+    eta = String()
+    is_revoked = Boolean()
+
+
+class AlarmTask(CeleryTask):
+    timer_id = Int()
+    is_last = Boolean()
+
+
+class CeleryTaskList(ObjectType):
+    alarm = List(AlarmTask)
+
+
 class DebugInfo(ObjectType):
     version = String()
     system_stats = Field(SystemStats)
+    celery_tasks = Field(CeleryTaskList)
 
     @staticmethod
     def resolve_version(root, info):
@@ -53,6 +71,21 @@ class DebugInfo(ObjectType):
     @staticmethod
     def resolve_system_stats(root, info):
         return SystemStats()
+
+    @staticmethod
+    def resolve_celery_tasks(root, info: ResolveInfo):
+        req_context = get_request_context(info)
+        task_list = get_task_info_list(req_context.scheduler.celery_app)
+        alarm_tasks = []
+        for task in task_list:
+            if task.name == Tasks.ALARM.name.lower():
+                alarm_tasks.append(AlarmTask(
+                    timer_id = task.args[0],
+                    is_last = task.args[3],
+                    eta = task.eta,
+                    is_revoked = task.is_revoked,
+                ))
+        return CeleryTaskList(alarm = alarm_tasks)
 
 
 class DebugInfoNode(NodeBase):
