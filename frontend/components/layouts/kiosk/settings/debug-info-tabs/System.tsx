@@ -15,6 +15,7 @@ const query = gql`
                     percent
                 }
                 uptime
+                cpuTemp
             }
         }
     }
@@ -46,6 +47,9 @@ export default () => {
                 </FormattedFieldRow>
                 <FormattedFieldRow labelId="uptime">
                     {dayjs.duration(data.debugInfo.systemStats.uptime * 1000).humanize()}
+                </FormattedFieldRow>
+                <FormattedFieldRow labelId="cpuTemp">
+                    {data.debugInfo.systemStats.cpuTemp}°C
                 </FormattedFieldRow>
             </TableBody>
         </Table>

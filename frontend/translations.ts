@@ -54,6 +54,7 @@ const messages = {
         eta: "ETA",
         last: "Last",
         revoked: "Revoked",
+        cpuTemp: "CPU",
     },
 }
 

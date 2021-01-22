@@ -2,6 +2,7 @@ import os
 import time
 
 import psutil
+from gpiozero import CPUTemperature, BadPinFactory
 from graphene import ObjectType, Field, String, Int, List, Float, Boolean
 from graphql import ResolveInfo
 
@@ -24,6 +25,7 @@ class SystemStats(ObjectType):
     uptime = Int()
     load = List(Float)
     memory = Field(Memory)
+    cpu_temp = Float()
 
     @staticmethod
     def resolve_uptime(root, info):
@@ -43,6 +45,14 @@ class SystemStats(ObjectType):
             percent = mem_data.percent,
             free = mem_data.free,
         )
+
+    @staticmethod
+    def resolve_cpu_temp(root, info):
+        try:
+            cpu_temp = CPUTemperature()
+        except BadPinFactory:
+            return None
+        return cpu_temp.cpu
 
 
 class CeleryTask(ObjectType):
