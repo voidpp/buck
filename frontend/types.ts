@@ -37,5 +37,6 @@ export class LocalStorageSchema {
 declare global {
     interface Window {
         claudeApiUrl: string;
+        bundleVersion: string;
     }
 }

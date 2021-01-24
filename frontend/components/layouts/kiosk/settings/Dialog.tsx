@@ -6,8 +6,6 @@ import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import {TranslationKey} from "../../../../translations";
 import Brightness from "./Brightness";
 import Volume from "./Volume";
-import {gql, useQuery} from "@apollo/client";
-import {SettingVersionQuery} from "./__generated__/SettingVersionQuery";
 import DebugInfoDialog from "./DebugInfoDialog";
 
 const FormRow = ({labelId, children}: { labelId: TranslationKey, children: React.ReactNode }) => (
@@ -22,16 +20,14 @@ const FormRow = ({labelId, children}: { labelId: TranslationKey, children: React
 )
 
 const Version = () => {
-    const {data} = useQuery<SettingVersionQuery>(gql`query SettingVersionQuery { debugInfo { version } }`);
-    const version = data?.debugInfo.version ?? "";
-    return <span>v{version.substring(0, 10)}</span>;
+    return <span>v{window.bundleVersion}</span>;
 }
 
 export default ({show, close, onDone}: DialogProps) => {
     return (
         <Dialog open={show} onClose={close}>
             <FormattedDialogTitle msgId="settings" onCloseIconClick={close} style={{padding: "0.5em 1em"}}>
-                <DebugInfoDialog buttonStyle={{marginLeft: "0.5em"}} />
+                <DebugInfoDialog buttonStyle={{marginLeft: "0.5em"}}/>
             </FormattedDialogTitle>
             <Divider/>
             <DialogContent style={{padding: "1em"}}>

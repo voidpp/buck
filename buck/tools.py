@@ -24,7 +24,7 @@ def is_dev_mode() -> bool:
 
 def get_app_version() -> str:
     pkg_version = version("buck")
-    return f"{pkg_version}-{time()}" if is_dev_mode() else pkg_version
+    return f"{pkg_version}-{int(time())}" if is_dev_mode() else pkg_version
 
 
 def calc_elapsed_time(events: list[TimerEvent]) -> int:
