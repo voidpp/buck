@@ -45,7 +45,7 @@ const Content = ({onDone}: {onDone: () => void}) => {
     return (
         <List>
             {data.predefinedTimers.slice(0, 8).map(timer => (
-                <ListItem button dense key={timer.id} onClick={createStartTimer(timer)}>
+                <ListItem button key={timer.id} onClick={createStartTimer(timer)}>
                     {timer.group ? (timer.group.name + " / ") : ""}{timer.name} ({timer.length})
                 </ListItem>
             ))}

@@ -49,7 +49,7 @@ export default () => {
                     {dayjs.duration(data.debugInfo.systemStats.uptime * 1000).humanize()}
                 </FormattedFieldRow>
                 <FormattedFieldRow labelId="cpuTemp">
-                    {data.debugInfo.systemStats.cpuTemp}°C
+                    {Math.round(data.debugInfo.systemStats.cpuTemp)}°C
                 </FormattedFieldRow>
             </TableBody>
         </Table>

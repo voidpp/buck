@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 
@@ -11,6 +12,8 @@ from buck.celery.scheduler import Tasks
 from buck.celery.tools import get_task_info_list
 from buck.components.node_base import NodeBase, get_request_context
 from buck.tools import get_app_version
+
+logger = logging.getLogger(__name__)
 
 
 class Memory(ObjectType):
@@ -50,9 +53,10 @@ class SystemStats(ObjectType):
     def resolve_cpu_temp(root, info):
         try:
             cpu_temp = CPUTemperature()
-        except BadPinFactory:
+        except BadPinFactory as e:
+            logger.warning(e)
             return None
-        return cpu_temp.cpu
+        return cpu_temp.temperature
 
 
 class CeleryTask(ObjectType):
