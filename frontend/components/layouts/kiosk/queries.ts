@@ -14,3 +14,17 @@ export const predefinedTimerListQuery = gql`
         }
     }
 `;
+
+
+export const startTimerMutation = gql`
+    mutation StartTimerMutation($name: String, $length: String!, $predefinedTimerId: Int, $soundFile: String!) {
+        startTimer(name: $name length: $length predefinedTimerId: $predefinedTimerId soundFile: $soundFile) {
+            id
+            errors {
+                path
+                type
+                context
+            }
+        }
+    }
+`;

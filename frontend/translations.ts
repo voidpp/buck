@@ -55,6 +55,7 @@ const messages = {
         last: "Last",
         revoked: "Revoked",
         cpuTemp: "CPU",
+        quickStartTitle: "Quick start",
     },
 }
 

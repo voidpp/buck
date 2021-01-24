@@ -8,7 +8,12 @@ export type GroupedPredefinedTimer = {
     predefinedTimers: Omit<PredefinedTimer, "__typename" | "group" | "groupId">[],
 };
 
-export const useGroupedPredefinedTimerList = (): { timers: GroupedPredefinedTimer[], refetch: Function } => {
+type GroupedPredefinedTimerList = {
+    timers: GroupedPredefinedTimer[],
+    refetch: () => void,
+}
+
+export const useGroupedPredefinedTimerList = (): GroupedPredefinedTimerList => {
     const {data, refetch} = useQuery<PredefinedTimerList>(predefinedTimerListQuery, {fetchPolicy: "cache-and-network"});
 
     if (!data)

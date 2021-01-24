@@ -3,19 +3,17 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 import {ClockWidget} from "../Clock";
 import CurrentWeather from "./CurrentWeather";
+import QuickStartTimer from "./QuickStartTimer";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     container: {
-        padding: "1em",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
         height: "100%",
+        position: "relative",
     } as CreateCSSProperties,
     clock: {
-        fontSize: "6em",
-        alignSelf: "flex-end",
-        marginBottom: "-0.4em",
+    } as CreateCSSProperties,
+    widget: {
+        position: "absolute",
     } as CreateCSSProperties,
 }));
 
@@ -24,8 +22,9 @@ export default () => {
 
     return (
         <div className={classes.container}>
-            <CurrentWeather style={{alignSelf: "flex-end"}} />
-            <ClockWidget className={classes.clock} />
+            <CurrentWeather style={{top: "1em", right: "1em", position: "absolute"}} />
+            <ClockWidget style={{fontSize: "6em", right: 20, bottom: -30, position: "absolute"}} />
+            <QuickStartTimer style={{left: 5, bottom: 5, position: "absolute"}} />
         </div>
     )
 }
