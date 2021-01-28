@@ -1,14 +1,15 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {useBoolState, useInterval} from "../../../../../hooks";
-import {claudeApi, IdokepCurrentResponse} from "./claude";
+import {useBoolState} from "../../../../../hooks";
 import {Dialog, DialogContent, Typography} from "@material-ui/core";
 import DialogActionButtons from "../../../../DialogActionButtons";
 import {buckLocalStorage} from "../../../../../tools";
 import TextFieldDialog from "../../../../keyboard/TextFieldDialog";
 import {FormattedMessage} from "../../../../translations";
 import {If} from "../../../../tools";
+import {gql, useQuery} from "@apollo/client";
+import {CurrentWeatherQuery, CurrentWeatherQueryVariables} from "./__generated__/CurrentWeatherQuery";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     body: {
@@ -43,7 +44,7 @@ type SettingsDialogProps = {
 const SettingsDialog = ({hide, isShow, setValue, value}: SettingsDialogProps) => {
     const [formValue, setFormValue] = useState(value || "");
 
-    return(
+    return (
         <Dialog open={isShow} onClose={hide}>
             <DialogContent>
                 <TextFieldDialog
@@ -61,19 +62,21 @@ const SettingsDialog = ({hide, isShow, setValue, value}: SettingsDialogProps) =>
     )
 }
 
-export default ({style}: {style?: React.CSSProperties}) => {
-    const [data, setData] = useState<IdokepCurrentResponse>();
+const currentWeatherQuery = gql`
+    query CurrentWeatherQuery($city: String!) {
+        weather(city: $city) {
+            temperature
+            conditionsImageUrl
+        }
+    }
+`;
+
+export default ({style}: { style?: React.CSSProperties }) => {
     const classes = useStyles();
-    const [city, setCity] = useState(buckLocalStorage.claudeDashboardWeatherCity);
+    const [city, setCity] = useState(buckLocalStorage.weatherCity);
     const [isShow, show, hide] = useBoolState();
 
-    const fetchData = () => {
-        if (city)
-            claudeApi.idokep.current(city).then(setData);
-    }
-
-    useInterval(fetchData, 60 * 1000);
-    useEffect(fetchData, [city]);
+    const {data} = useQuery<CurrentWeatherQuery, CurrentWeatherQueryVariables>(currentWeatherQuery, {variables: {city}});
 
     return (
         <React.Fragment>
@@ -86,10 +89,10 @@ export default ({style}: {style?: React.CSSProperties}) => {
                 {data ? (
                     <React.Fragment>
                         <div className={classes.text}>
-                            <div className={classes.value}>{data.value}°C</div>
+                            <div className={classes.value}>{Math.round(data.weather.temperature)}°C</div>
                             <div className={classes.city}>{city}</div>
                         </div>
-                        <img src={data.img} alt={data.img}/>
+                        <img src={data.weather.conditionsImageUrl} alt={data.weather.conditionsImageUrl}/>
                     </React.Fragment>
                 ) : null}
             </div>
@@ -99,7 +102,7 @@ export default ({style}: {style?: React.CSSProperties}) => {
                 value={city}
                 setValue={val => {
                     setCity(val);
-                    buckLocalStorage.claudeDashboardWeatherCity = val;
+                    buckLocalStorage.weatherCity = val;
                 }}
             />
         </React.Fragment>

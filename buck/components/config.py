@@ -21,6 +21,11 @@ class Sound(NodeBase):
     title: str
 
 
+class Weather(NodeBase):
+    type: str
+    config: dict
+
+
 @tree.root()
 class AppConfig:
     database: DatabaseLeaf
@@ -28,7 +33,7 @@ class AppConfig:
     redis: str
     sounds: List[Sound]
     backlight_sysfs_path: str = ""
-    claude_api_url: str = ""
+    weather: Weather = None
 
 
 # TODO: move to configpp

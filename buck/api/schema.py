@@ -23,6 +23,7 @@ from .nodes.queries.running_timers import RunningTimersNode
 from .nodes.queries.sounds import SoundsNode
 from .nodes.queries.timer_events import TimerEventsNode
 from .nodes.queries.timers import TimersNode
+from .nodes.queries.weather import WeatherNode
 from .nodes.subscriptions import Subscription
 
 logger = logging.getLogger(__name__)
@@ -38,6 +39,7 @@ class Query(ObjectType):
     sounds = SoundsNode.field()
     brightness = BrightnessNode.field()
     debug_info = DebugInfoNode.field()
+    weather = WeatherNode.field()
 
 
 class Mutation(ObjectType):

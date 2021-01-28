@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
-from buck.components.broker import Broker
 from starlette.types import ASGIApp, Scope, Receive, Send
 
+from buck.components.broker import Broker
 from .config import AppConfig
 from .database import Database
+from .weather_provider import WeatherProviderBase
 from ..celery.scheduler import Scheduler
 
 
@@ -14,6 +15,7 @@ class RequestContext:
     db: Database
     scheduler: Scheduler
     broker: Broker
+    weather_provider: WeatherProviderBase
 
 
 class InjectionMiddleware:

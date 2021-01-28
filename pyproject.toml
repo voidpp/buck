@@ -29,6 +29,7 @@ graphql-ws = "^0.3.1"
 rpi-backlight = "^2.2.0"
 psutil = "^5.8.0"
 gpiozero = "^1.5.1"
+httpx = "^0.16.1"
 
 [tool.poetry.dev-dependencies]
 invoke = "^1.4.1"

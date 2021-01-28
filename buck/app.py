@@ -14,6 +14,7 @@ from .components.database import Database
 from .components.folders import Folders
 from .components.injection_middleware import InjectionMiddleware, RequestContext
 from .components.keys import Keys
+from .components.weather_provider import create_weather_provider
 from .index import index_endpoint
 
 config = load()
@@ -22,7 +23,8 @@ context = RequestContext(
     config,
     Database(str(config.database)),
     Scheduler(config),
-    Broker(config.redis)
+    Broker(config.redis),
+    create_weather_provider(config.weather),
 )
 
 app = Starlette(
