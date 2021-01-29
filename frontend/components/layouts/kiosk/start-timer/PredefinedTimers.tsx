@@ -37,7 +37,7 @@ export default ({onSelect, style}: Props) => {
                         >
                             {grp.predefinedTimers.map(t => (
                                 <ListItem button key={t.id} onClick={() => {
-                                    onSelect(t.length, t.name, t.id, t.soundFile);
+                                    onSelect(t.length, (grp.group ? grp.group.name + " / " : "") + t.name, t.id, t.soundFile);
                                     hideDialog();
                                 }}>
                                     <ListItemText>{t.name} ({t.length})</ListItemText>

@@ -34,7 +34,7 @@ const Content = ({onDone}: {onDone: () => void}) => {
             soundFile: timer.soundFile,
             length: timer.length,
             predefinedTimerId: timer.id,
-            name: timer.name,
+            name: (timer.group ? timer.group.name + " / " : "") + timer.name,
         }});
         if (res.data.startTimer.errors)
             alert("wut? (TODO)");

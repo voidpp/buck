@@ -12,7 +12,7 @@ class StartTimerValidator(BaseModel):
     length: str
     name: str = None
     sound_file: str = None
-    predefined_timer_id: int = None  # TODO
+    predefined_timer_id: int = None
 
     @validator('length')
     def validate_length(cls, value: str):
