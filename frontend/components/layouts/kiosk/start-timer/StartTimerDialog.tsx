@@ -16,9 +16,9 @@ import {StartTimerMutation, StartTimerMutationVariables} from "../__generated__/
 
 
 const defaultFormData: StartTimerMutationVariables = {
-    length: '10m',
+    length: "10m",
     name: "",
-    soundFile: "",
+    soundFile: "that-was-quick-606.mp3", // TODO: fix this shit
 }
 
 const fieldSpacing = "0.5em";
