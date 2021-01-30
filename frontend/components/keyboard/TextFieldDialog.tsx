@@ -1,12 +1,24 @@
 import * as React from "react";
 import {useState} from "react";
 import {useBoolState} from "../../hooks";
-import {Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, TextField, TextFieldProps} from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    MenuItem,
+    Select,
+    TextField,
+    TextFieldProps
+} from "@material-ui/core";
 import Keyboard from "./Keyboard";
 import {FormattedButton, FormattedMessage} from "../translations";
 import {LayoutName, layouts} from "./layouts";
 import {objectKeys} from "../../tools";
 import {SlideUp} from "../tools";
+import CloseIcon from '@material-ui/icons/Close';
 
 
 type Props = TextFieldProps;
@@ -27,7 +39,12 @@ const Content = ({hideDialog, label, setEdited, value, onChange}: ContentProps) 
     return (
         <React.Fragment>
             <DialogTitle>
-                <TextField value={text} fullWidth label={label}/>
+                <div style={{display: "flex"}}>
+                    <TextField value={text} fullWidth label={label}/>
+                    <IconButton style={{marginBottom: -20, marginLeft: -50}} onClick={() => setText("")}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
             </DialogTitle>
             <DialogContent>
                 <Keyboard value={text} onChange={setText} layout={layouts[layoutName]}/>
