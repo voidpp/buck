@@ -26,12 +26,20 @@ class Weather(NodeBase):
     config: dict
 
 
+class AutoBacklight(NodeBase):
+    light_max: int
+    brightness_min: int
+    fade_duration: float
+    refresh: float
+
+
 @tree.root()
 class AppConfig:
     database: DatabaseLeaf
     logger: dict
     redis: str
     sounds: List[Sound]
+    auto_backlight: AutoBacklight
     backlight_sysfs_path: str = ""
     weather: Weather = None
 
