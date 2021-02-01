@@ -11,9 +11,10 @@ import {If} from "../../../../tools";
 import {gql, useQuery} from "@apollo/client";
 import {CurrentWeatherQuery, CurrentWeatherQueryVariables} from "./__generated__/CurrentWeatherQuery";
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     body: {
         display: "flex",
+        fontFamily: "Josefin Sans",
         '& img': {
             width: "7em",
         },
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         flexDirection: "column",
         marginRight: "0.5em",
     }
-}));
+});
 
 type SettingsDialogProps = {
     isShow: boolean,
