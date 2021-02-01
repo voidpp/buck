@@ -1,7 +1,7 @@
 import * as React from "react";
 import {colors, createMuiTheme, CssBaseline, MuiThemeProvider} from "@material-ui/core";
 import {BrowserRouter as Router} from "react-router-dom";
-import messages from "../translations";
+import {messages} from "../translations/tools";
 import {IntlProvider} from "react-intl";
 import Kiosk from "./layouts/kiosk/Kiosk";
 import {createClient} from "../apollo-client/factory";

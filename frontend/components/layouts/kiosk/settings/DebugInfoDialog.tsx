@@ -6,7 +6,7 @@ import {Dialog, DialogContent, Divider, IconButton, Tab, Tabs} from "@material-u
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import System from "./debug-info-tabs/System";
 import Celery from "./debug-info-tabs/Celery";
-import {FormattedMessage} from "../../../translations";
+import {FormattedMessage} from "react-intl";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 
@@ -56,14 +56,14 @@ export default ({buttonStyle}: { buttonStyle?: React.CSSProperties }) => {
                         indicatorColor="primary"
                         className={classes.tabHeader}
                     >
-                        <Tab label={<FormattedMessage id="system" />} style={{textTransform: "none"}}/>
-                        <Tab label={<FormattedMessage id="celery" />} style={{textTransform: "none"}}/>
+                        <Tab label={<FormattedMessage id="system"/>} style={{textTransform: "none"}}/>
+                        <Tab label={<FormattedMessage id="celery"/>} style={{textTransform: "none"}}/>
                     </Tabs>
                     <TabPanel value={tabIndex} index={0}>
-                        <System />
+                        <System/>
                     </TabPanel>
                     <TabPanel value={tabIndex} index={1}>
-                        <Celery />
+                        <Celery/>
                     </TabPanel>
                 </DialogContent>
             </Dialog>

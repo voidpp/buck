@@ -7,7 +7,6 @@ import SpaceBarIcon from '@material-ui/icons/SpaceBar';
 import KeyboardCapslockIcon from '@material-ui/icons/KeyboardCapslock';
 import {Button, ButtonProps} from "@material-ui/core";
 import {Context} from "./types";
-import {FormattedMessage} from "../translations";
 
 
 export type KeyProps = {
@@ -31,17 +30,17 @@ type Formatter = (k: string, c: Context, t: Theme) => {
     buttonProps?: ButtonProps;
 };
 
-const formatters: {[s: string]: Formatter} = {
+const formatters: { [s: string]: Formatter } = {
     generic: k => ({text: k}),
     [SpecialKeys.Placeholder]: k => ({text: ''}),
-    [SpecialKeys.Backspace]: k => ({text: <BackspaceIcon />}),
+    [SpecialKeys.Backspace]: k => ({text: <BackspaceIcon/>}),
     [SpecialKeys.Space]: k => ({
-        text: <SpaceBarIcon />,
+        text: <SpaceBarIcon/>,
         style: {
             flexGrow: 1,
         },
     }),
-    [SpecialKeys.CapsLock]: k => ({text: <KeyboardCapslockIcon />}),
+    [SpecialKeys.CapsLock]: k => ({text: <KeyboardCapslockIcon/>}),
 };
 
 export default ({keyString, onClick, context}: KeyProps) => {

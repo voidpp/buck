@@ -16,8 +16,7 @@ import {
 } from "@material-ui/core";
 import {ClockPanel} from "./dashboards/Clock";
 import ActiveTimerDialog from "./ActiveTimerDialog";
-import {FormattedMessage} from "../../translations";
-import {TranslationKey} from "../../../translations";
+import {FormattedMessage} from "react-intl";
 import ActiveAlarmPage from "./ActiveAlarmPage";
 import {buckLocalStorage} from "../../../tools";
 import CaludeDashboard from "./dashboards/weather/Container";
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 type DashboardDescriptor = {
-    name: TranslationKey,
+    name: string,
     component: () => JSX.Element,
 }
 

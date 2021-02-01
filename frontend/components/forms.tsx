@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Error} from "../api";
-import {FormattedMessage} from "./translations";
-import {TranslationKey} from "../translations";
+import {FormattedMessage} from "react-intl";
 
 export const ErrorList = ({errors}: { errors: Error[] }) => {
     if (!errors.length)
@@ -11,7 +10,7 @@ export const ErrorList = ({errors}: { errors: Error[] }) => {
         <span>
             {errors.map(err => (
                 <span key={err.type}>
-                    <FormattedMessage id={err.type as TranslationKey} values={JSON.parse(err.context)}/>
+                    <FormattedMessage id={err.type} values={JSON.parse(err.context)}/>
                 </span>
             ))}
         </span>

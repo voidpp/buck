@@ -22,7 +22,7 @@ const quickTimerListQuery = gql`
     }
 `;
 
-const Content = ({onDone}: {onDone: () => void}) => {
+const Content = ({onDone}: { onDone: () => void }) => {
     const {data} = useQuery<QuickTimerList>(quickTimerListQuery, {fetchPolicy: "cache-and-network"});
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);
 
@@ -30,12 +30,14 @@ const Content = ({onDone}: {onDone: () => void}) => {
         return null;
 
     const createStartTimer = (timer: QuickTimerList_predefinedTimers) => async () => {
-        const res = await startTimer({variables: {
-            soundFile: timer.soundFile,
-            length: timer.length,
-            predefinedTimerId: timer.id,
-            name: (timer.group ? timer.group.name + " / " : "") + timer.name,
-        }});
+        const res = await startTimer({
+            variables: {
+                soundFile: timer.soundFile,
+                length: timer.length,
+                predefinedTimerId: timer.id,
+                name: (timer.group ? timer.group.name + " / " : "") + timer.name,
+            }
+        });
         if (res.data.startTimer.errors)
             alert("wut? (TODO)");
         else
@@ -59,13 +61,13 @@ export default ({style, className}: { style?: React.CSSProperties, className?: s
     return (
         <div style={style} className={className}>
             <IconButton onClick={show}>
-                <AlarmAddIcon />
+                <AlarmAddIcon/>
             </IconButton>
             <Dialog open={isShow} onClose={hide}>
-                <FormattedDialogTitle msgId="quickStartTitle" style={{paddingBottom: "0.4em"}} />
-                <Divider />
+                <FormattedDialogTitle msgId="quickStartTitle" style={{paddingBottom: "0.4em"}}/>
+                <Divider/>
                 <DialogContent>
-                    <Content onDone={hide} />
+                    <Content onDone={hide}/>
                 </DialogContent>
             </Dialog>
         </div>

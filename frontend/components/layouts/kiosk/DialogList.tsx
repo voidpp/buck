@@ -1,9 +1,8 @@
 import {Icon, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
-import {FormattedMessage} from "../../translations";
+import {FormattedMessage} from "react-intl";
 import * as React from "react";
 import {useState} from "react";
-import {TranslationKey} from "../../../translations";
 import {DialogProps} from "./types";
 import StartTimerDialog from "./start-timer/StartTimerDialog";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -18,7 +17,7 @@ import SettingsDialog from "./settings/Dialog";
 type DialogState = Record<string, boolean>;
 
 type DialogRenderer = {
-    name: TranslationKey,
+    name: string,
     icon: typeof Icon,
     dialog: (props: DialogProps) => JSX.Element,
 };
@@ -51,7 +50,7 @@ const defaultDialogState = dialogs.reduce((res, cur) => {
 }, {} as DialogState);
 
 
-export default ({onDone}: {onDone: () => void}) => {
+export default ({onDone}: { onDone: () => void }) => {
     const [dialogState, setDialogState] = useState<DialogState>(defaultDialogState);
 
     const showDialog = (key: string) => () => {

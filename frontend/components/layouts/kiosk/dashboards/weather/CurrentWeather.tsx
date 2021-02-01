@@ -6,7 +6,7 @@ import {Dialog, DialogContent, Typography} from "@material-ui/core";
 import DialogActionButtons from "../../../../DialogActionButtons";
 import {buckLocalStorage} from "../../../../../tools";
 import TextFieldDialog from "../../../../keyboard/TextFieldDialog";
-import {FormattedMessage} from "../../../../translations";
+import {FormattedMessage} from "react-intl";
 import {If} from "../../../../tools";
 import {gql, useQuery} from "@apollo/client";
 import {CurrentWeatherQuery, CurrentWeatherQueryVariables} from "./__generated__/CurrentWeatherQuery";

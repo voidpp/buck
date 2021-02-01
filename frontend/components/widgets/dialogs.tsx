@@ -1,12 +1,11 @@
 import * as React from "react";
-import {DialogTitle, Divider, IconButton} from "@material-ui/core";
-import {FormattedMessage} from "../translations";
-import {TranslationKey} from "../../translations";
+import {DialogTitle, IconButton} from "@material-ui/core";
+import {FormattedMessage} from "react-intl";
 import CloseIcon from '@material-ui/icons/Close';
 import {If} from "../tools";
 
 type FormattedDialogTitleProps = {
-    msgId: TranslationKey,
+    msgId: string,
     onCloseIconClick?: () => void,
     children?: React.ReactNode,
     style?: React.CSSProperties,

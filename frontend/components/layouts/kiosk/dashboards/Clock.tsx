@@ -59,7 +59,7 @@ export const ClockPanel = () => {
 
     return (
         <div className={classes.root} ref={containerRef} style={{fontSize}}>
-            <ClockWidget />
+            <ClockWidget/>
         </div>
     );
 }

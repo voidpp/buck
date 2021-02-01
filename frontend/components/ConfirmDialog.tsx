@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Dialog, DialogActions, DialogContent, DialogTitle} from "@material-ui/core";
-import {TranslationKey} from "../translations";
-import {FormattedButton, FormattedMessage} from "./translations";
+import {FormattedButton} from "./translations";
 import HelpIcon from '@material-ui/icons/Help';
+import {FormattedMessage} from "react-intl";
 
 type MessageValues = { [key: string]: any };
 
 export type ContentProps = {
-    messageId?: TranslationKey,
+    messageId?: string,
     messageVars?: MessageValues,
 };
 
@@ -16,10 +16,10 @@ type Props = {
     close: () => void,
     isOpen: boolean,
     onCancel?: () => void,
-    titleId?: TranslationKey,
+    titleId?: string,
 } & ContentProps;
 
-const defaultMessage: TranslationKey = "areYouSure";
+const defaultMessage: string = "areYouSure";
 
 export const ConfirmDialogContent = ({messageId = defaultMessage, messageVars}: ContentProps) => (
     <DialogContent style={{padding: "0.5em 1em", display: "flex", alignItems: "center"}}>

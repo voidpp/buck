@@ -2,7 +2,7 @@ import * as React from "react";
 import {useState} from "react";
 import {gql, useQuery} from "@apollo/client";
 import {Dialog, DialogContent, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, TextField} from "@material-ui/core";
-import {FormattedMessage} from "../../translations";
+import {FormattedMessage} from "react-intl";
 import {SoundSelectorQuery} from "./__generated__/SoundSelectorQuery";
 import {useBoolState} from "../../../hooks";
 import {FormattedDialogTitle} from "../../widgets/dialogs";

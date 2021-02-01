@@ -1,7 +1,6 @@
 import {createErrorHandlerLink} from "./errors";
 import {ApolloClient, from, HttpLink, InMemoryCache, split} from "@apollo/client";
 import {TStore} from "../types";
-import apolloLogger from 'apollo-link-logger';
 import {getMainDefinition} from "@apollo/client/utilities";
 import {WebSocketLink} from "@apollo/client/link/ws";
 

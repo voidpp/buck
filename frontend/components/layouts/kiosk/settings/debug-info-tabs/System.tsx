@@ -1,8 +1,7 @@
 import {gql, useQuery} from "@apollo/client";
-import {TranslationKey} from "../../../../../translations";
 import * as React from "react";
 import {LinearProgress, Table, TableBody, TableCell, TableRow} from "@material-ui/core";
-import {FormattedMessage} from "../../../../translations";
+import {FormattedMessage} from "react-intl";
 import {DebugInfoQuery} from "./__generated__/DebugInfoQuery";
 import dayjs from "dayjs";
 
@@ -21,7 +20,7 @@ const query = gql`
     }
 `;
 
-const FormattedFieldRow = ({labelId, children}: { labelId: TranslationKey, children: React.ReactNode }) => (
+const FormattedFieldRow = ({labelId, children}: { labelId: string, children: React.ReactNode }) => (
     <TableRow>
         <TableCell style={{textAlign: "right"}}>
             <FormattedMessage id={labelId}/>:

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {Dialog, DialogContent} from "@material-ui/core";
-import {FormattedMessage} from "../../translations";
+import {FormattedMessage} from "react-intl";
 import {FormattedDialogTitle} from "../../widgets/dialogs";
 import {gql, useMutation} from "@apollo/client";
 import {FormErrorHelper} from "../../../forms/formErrorHelper";

@@ -2,10 +2,11 @@ import * as React from "react";
 import {gql, useQuery} from "@apollo/client";
 import {GroupList} from "./__generated__/GroupList";
 import TextFieldDialog from "../../keyboard/TextFieldDialog";
-import {FormattedButton, FormattedMessage} from "../../translations";
+import {FormattedButton} from "../../translations";
 import {useBoolState} from "../../../hooks";
 import {Dialog, DialogContent, List, ListItem} from "@material-ui/core";
 import {FormattedDialogTitle} from "../../widgets/dialogs";
+import {FormattedMessage} from "react-intl";
 
 const groupListQuery = gql`
     query GroupList {

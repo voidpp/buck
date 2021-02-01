@@ -20,13 +20,14 @@ import {
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import {useGroupedPredefinedTimerList} from "../hooks";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {FormattedMessage, FormattedTableCell} from "../../../translations";
+import {FormattedTableCell} from "../../../translations";
 import DeleteButton from "./DeleteButton";
 import {useBoolState} from "../../../../hooks";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import UpdateButton from "./UpdateButton";
 import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
 import {DialogProps} from "../types";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

@@ -1,11 +1,9 @@
 import * as React from "react";
 import {TransitionProps} from "@material-ui/core/transitions";
-import {Slide} from "@material-ui/core";
+import {Slide, TableCell, TableCellProps, TableHead, TableRow, Typography} from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
-import {TableCell, TableCellProps, TableHead, TableRow, Typography} from "@material-ui/core";
 import {FormattedMessage} from "react-intl";
-import {TranslationKey} from "../translations";
 
 
 type IfCompProps = {
@@ -36,7 +34,7 @@ export const BoolIcon = ({value}: { value: boolean }) => (value ? <CheckIcon/> :
 
 
 type FormattedTableHeadProps = {
-    labels: TranslationKey[],
+    labels: string[],
     cellProps?: Record<string, TableCellProps>,
     prefix?: string,
     cellRenderer?: { [s: string]: React.Factory<{}> },

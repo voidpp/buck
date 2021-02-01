@@ -6,7 +6,7 @@ import {TimerEventsSubscription, TimerEventsSubscription_timerEvents} from "./__
 import {If, SlideUp} from "../../tools";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import {FormattedMessage} from "../../translations";
+import {FormattedMessage} from "react-intl";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {TimerEventType} from "../../../__generated__/globalTypes";
 import {useInterval} from "../../../hooks";
@@ -80,7 +80,7 @@ const ActiveAlarm = ({event, onStop}: ActiveAlarmProps) => {
     return (
         <div className={classes.content}>
             <If condition={!!event.timer.soundFile}>
-                <Audio src={`/static/audio/${event.timer.soundFile}`} />
+                <Audio src={`/static/audio/${event.timer.soundFile}`}/>
             </If>
             <div style={{paddingBottom: "1em"}}>
                 <FormattedMessage id="alarmCounterMsg"/>

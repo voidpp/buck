@@ -1,14 +1,14 @@
 import * as React from "react";
 import {DialogProps} from "../types";
 import {Dialog, DialogContent, Divider} from "@material-ui/core";
-import {FormattedButton, FormattedMessage} from "../../../translations";
+import {FormattedButton} from "../../../translations";
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
-import {TranslationKey} from "../../../../translations";
 import Brightness from "./Brightness";
 import Volume from "./Volume";
 import DebugInfoDialog from "./DebugInfoDialog";
+import {FormattedMessage} from "react-intl";
 
-const FormRow = ({labelId, children}: { labelId: TranslationKey, children: React.ReactNode }) => (
+const FormRow = ({labelId, children}: { labelId: string, children: React.ReactNode }) => (
     <tr>
         <td style={{textAlign: "right"}}>
             <FormattedMessage id={labelId}/>:
