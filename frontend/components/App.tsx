@@ -26,7 +26,6 @@ const darkTheme = createMuiTheme({
     },
     typography: {
         fontSize: 22,
-        fontFamily: "Josefin Sans",
     }
 });
 

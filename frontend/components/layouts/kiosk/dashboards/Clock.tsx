@@ -27,7 +27,7 @@ export const ClockWidget = ({style, className}: { style?: React.CSSProperties, c
     } as React.CSSProperties;
 
     return (
-        <div style={style} className={className}>
+        <div style={{fontFamily: "Josefin Sans", ...style}} className={className}>
             {time.hours}
             <span style={colonStyle}>:</span>
             {time.minutes}
