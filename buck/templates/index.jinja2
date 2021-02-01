@@ -8,16 +8,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
 
         <style>
-            html, body {
-                cursor: none;
+            html, body, #body {
+                height: 100%;
             }
-            #body {
+            body {
+                cursor: none;
                 font-weight: 400;
+                transform: scaleX(0.95);
+                width: 840px;
             }
         </style>
 
     </head>
-    <body>
+    <body style="margin-left: -20px;">
         <div id="body"></div>
         <script>
             window.bundleVersion = "{{ bundle_version }}";

@@ -1,9 +1,9 @@
 import {gql, useQuery} from "@apollo/client";
 import * as React from "react";
-import {LinearProgress, Table, TableBody, TableCell, TableRow} from "@material-ui/core";
-import {FormattedMessage} from "react-intl";
+import {LinearProgress, Table, TableBody} from "@material-ui/core";
 import {DebugInfoQuery} from "./__generated__/DebugInfoQuery";
 import dayjs from "dayjs";
+import {FormattedFieldRow} from "./tools";
 
 const query = gql`
     query DebugInfoQuery {
@@ -19,17 +19,6 @@ const query = gql`
         }
     }
 `;
-
-const FormattedFieldRow = ({labelId, children}: { labelId: string, children: React.ReactNode }) => (
-    <TableRow>
-        <TableCell style={{textAlign: "right"}}>
-            <FormattedMessage id={labelId}/>:
-        </TableCell>
-        <TableCell>
-            {children}
-        </TableCell>
-    </TableRow>
-);
 
 export default () => {
     const {data} = useQuery<DebugInfoQuery>(query);

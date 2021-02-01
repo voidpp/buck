@@ -27,29 +27,25 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import CheckIcon from '@material-ui/icons/Check';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     root: {
-        // transform: "scaleX(0.95)",
-        '& *': {
-            cursor: "none",
-        }
-    } as CreateCSSProperties,
-    volume: {
+        height: "100%",
+    },
+    main: {
         display: "flex",
-        width: 800,
-        height: 480,
+        height: "100%",
         overflow: "hidden",
-    } as CreateCSSProperties,
+    },
     menu: {
         position: "fixed",
         top: 0,
         left: 0,
-    } as CreateCSSProperties,
+    },
     dashboardContainer: {
         width: "100%",
         height: "100%",
-    } as CreateCSSProperties,
-}));
+    },
+});
 
 type DashboardDescriptor = {
     name: string,
@@ -116,7 +112,7 @@ export default () => {
                     </MenuItem>
                 ))}
             </Menu>
-            <div className={classes.volume}>
+            <div className={classes.main}>
                 <ActiveTimerDialog/>
                 <ActiveAlarmPage/>
                 {dashboards.map((desc, idx) => {

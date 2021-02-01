@@ -2,13 +2,14 @@ import * as React from "react";
 import {useState} from "react";
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import {useBoolState} from "../../../../hooks";
-import {Dialog, DialogContent, Divider, IconButton, Tab, Tabs} from "@material-ui/core";
+import {Dialog, DialogContent, Divider, IconButton, Tab, Tabs, useTheme} from "@material-ui/core";
 import {FormattedDialogTitle} from "../../../widgets/dialogs";
 import System from "./debug-info-tabs/System";
 import Celery from "./debug-info-tabs/Celery";
 import {FormattedMessage} from "react-intl";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
+import Misc from "./debug-info-tabs/Misc";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -35,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     } as CreateCSSProperties,
 }));
 
-
 export default ({buttonStyle}: { buttonStyle?: React.CSSProperties }) => {
     const [isShow, show, hide] = useBoolState();
     const [tabIndex, setTabIndex] = useState(0);
@@ -58,12 +58,16 @@ export default ({buttonStyle}: { buttonStyle?: React.CSSProperties }) => {
                     >
                         <Tab label={<FormattedMessage id="system"/>} style={{textTransform: "none"}}/>
                         <Tab label={<FormattedMessage id="celery"/>} style={{textTransform: "none"}}/>
+                        <Tab label={<FormattedMessage id="misc"/>} style={{textTransform: "none"}}/>
                     </Tabs>
                     <TabPanel value={tabIndex} index={0}>
                         <System/>
                     </TabPanel>
                     <TabPanel value={tabIndex} index={1}>
                         <Celery/>
+                    </TabPanel>
+                    <TabPanel value={tabIndex} index={2}>
+                        <Misc/>
                     </TabPanel>
                 </DialogContent>
             </Dialog>
