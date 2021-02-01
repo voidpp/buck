@@ -28,26 +28,26 @@ const timerEventsSubscription = gql`
     }
 `;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     content: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
         flexDirection: "column",
-    } as CreateCSSProperties,
+    },
     button: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center"
-    } as CreateCSSProperties,
+    },
     description: {
         fontSize: "0.9em",
         opacity: 0.6,
         textTransform: "lowercase",
-    } as CreateCSSProperties,
-}));
+    },
+});
 
 const Counter = ({style}: { style?: React.CSSProperties }) => {
     const [milliSeconds, setMilliSeconds] = useState(0);

@@ -1,20 +1,19 @@
 import * as React from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
+import {makeStyles} from "@material-ui/core/styles";
 import {ClockWidget} from "../Clock";
 import CurrentWeather from "./CurrentWeather";
 import QuickStartTimer from "./QuickStartTimer";
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     container: {
         height: "100%",
         position: "relative",
-    } as CreateCSSProperties,
-    clock: {} as CreateCSSProperties,
+    },
+    clock: {},
     widget: {
         position: "absolute",
-    } as CreateCSSProperties,
-}));
+    },
+});
 
 export default () => {
     const classes = useStyles();

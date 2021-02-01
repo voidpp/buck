@@ -1,8 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {Layout, SpecialKeys} from "./layouts";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
+import {makeStyles} from "@material-ui/core/styles";
 import {Context} from "./types";
 import Key from "./Key";
 
@@ -12,17 +11,17 @@ export type KeyboardProps = {
     layout: Layout,
 };
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     row: {
         display: "flex",
         flexGrow: 1,
-    } as CreateCSSProperties,
+    },
     container: {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-    } as CreateCSSProperties,
-}));
+    },
+});
 
 const defaultContext: Context = {
     capsLock: false,

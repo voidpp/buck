@@ -2,8 +2,7 @@ import * as React from "react";
 import {useEffect, useRef, useState} from "react";
 import {useInterval} from "../../../../hooks";
 import dayjs from 'dayjs';
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
+import {makeStyles} from "@material-ui/core/styles";
 
 const now = () => {
     const time = dayjs(new Date());
@@ -35,7 +34,7 @@ export const ClockWidget = ({style, className}: { style?: React.CSSProperties, c
     );
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     root: {
         display: "flex",
         width: "100%",
@@ -44,8 +43,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         justifyContent: "center",
         userSelect: "none",
         paddingTop: ".15em",
-    } as CreateCSSProperties,
-}));
+    },
+});
 
 
 export const ClockPanel = () => {

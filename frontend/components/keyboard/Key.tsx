@@ -1,6 +1,5 @@
 import * as React from "react";
-import {createStyles, makeStyles, Theme, useTheme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
+import {makeStyles, Theme, useTheme} from "@material-ui/core/styles";
 import {SpecialKeys} from "./layouts";
 import BackspaceIcon from '@material-ui/icons/Backspace';
 import SpaceBarIcon from '@material-ui/icons/SpaceBar';
@@ -15,14 +14,14 @@ export type KeyProps = {
     onClick: (key: string) => void,
 };
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles({
     root: {
         flexGrow: 1,
         margin: 2,
         fontSize: "1.2em",
         fontWeight: "bold",
-    } as CreateCSSProperties,
-}));
+    },
+});
 
 type Formatter = (k: string, c: Context, t: Theme) => {
     text: React.ReactNode,
