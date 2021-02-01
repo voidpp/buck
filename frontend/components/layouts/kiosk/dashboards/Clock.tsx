@@ -23,7 +23,7 @@ export const ClockWidget = ({style, className}: { style?: React.CSSProperties, c
 
     const colonStyle = {
         opacity: time.seconds % 2 ? 0.3 : 1,
-        transition: "opacity 0.3s",
+        transition: "opacity 1s",
     } as React.CSSProperties;
 
     return (
