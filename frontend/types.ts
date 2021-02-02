@@ -28,12 +28,6 @@ export interface State {
     backendError: BackendError;
 }
 
-export class LocalStorageSchema {
-    selectedKioskTab: number = 0;
-    weatherCity: string = null;
-    volume: number = 100;
-}
-
 declare global {
     interface Window {
         bundleVersion: string;

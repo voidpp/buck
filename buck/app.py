@@ -15,7 +15,7 @@ from .components.folders import Folders
 from .components.injection_middleware import InjectionMiddleware, RequestContext
 from .components.keys import Keys
 from .components.weather_provider import create_weather_provider
-from .index import index_endpoint
+from .endpoints import rpi_kiosk, admin, index
 
 config = load()
 
@@ -32,7 +32,9 @@ app = Starlette(
     routes = [
         Mount('/static', app = StaticFiles(directory = Folders.static), name = "static"),
         Route('/api/graphql', GraphQLApp(schema, executor_class = AsyncioExecutor)),
-        Route('/{path:path}', index_endpoint),
+        Route('/rpi-kiosk', rpi_kiosk),
+        Route('/admin/{path:path}', admin),
+        Route('/', index),
         WebSocketRoute('/api/subscribe', SubscriptionApp(schema)),
     ],
     middleware = [

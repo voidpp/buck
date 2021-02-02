@@ -17,9 +17,12 @@ module.exports = {
             '@apollo/react-hooks': path.resolve(__dirname, 'node_modules/@apollo/react-hooks'),
         },
     },
-    entry: "./frontend/index.tsx",
+    entry: {
+        rpiKiosk: "./frontend/rpiKiosk.tsx",
+        admin: "./frontend/admin.tsx",
+    },
     output: {
-        filename: "bundle.js",
+        filename: "[name]-bundle.js",
         libraryTarget: 'umd',
     },
     module: {
