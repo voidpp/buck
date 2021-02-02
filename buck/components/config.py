@@ -1,65 +1,64 @@
 import logging
 import logging.config
 import os
+from pathlib import Path
 from typing import List
 
-from configpp.soil import Config, Transport, Location
-from configpp.tree import Tree, Settings, DatabaseLeaf, NodeBase
+from pydantic import BaseModel
+from ruamel import yaml
 
 from buck.components.keys import Keys
 
 logger = logging.getLogger(__name__)
 
-tree = Tree(Settings(
-    convert_underscores_to_hypens = True,
-    convert_camel_case_to_hypens = True,
-))
+
+def replace_hyphen(name: str) -> str:
+    return name.replace("_", "-")
 
 
-class Sound(NodeBase):
+class AutoDeHyphensModel(BaseModel):
+    class Config:
+        alias_generator = replace_hyphen
+
+
+class Sound(BaseModel):
     filename: str
     title: str
 
 
-class Weather(NodeBase):
+class Weather(BaseModel):
     type: str
     config: dict
 
 
-class AutoBacklight(NodeBase):
+class AutoBacklight(AutoDeHyphensModel):
     light_max: int
     brightness_min: int
     fade_duration: float
     refresh: float
 
 
-@tree.root()
-class AppConfig:
-    database: DatabaseLeaf
+class AppConfig(AutoDeHyphensModel):
+    database: str
     logger: dict
     redis: str
     sounds: List[Sound]
-    auto_backlight: AutoBacklight
+    auto_backlight: AutoBacklight = None
     backlight_sysfs_path: str = ""
     weather: Weather = None
 
 
-# TODO: move to configpp
-class EnvOnlyTransport(Transport):
-    def __init__(self, env_var_name: str):
-        super().__init__(locations = [Location(os.environ.get(env_var_name))])
-
-
 def load() -> AppConfig:
-    config_loader = Config('buck.yaml', transport = EnvOnlyTransport(Keys.CONFIG_FOLDER))
+    config_file_path = Path(os.environ.get(Keys.CONFIG_FILE))
+    if not config_file_path.is_file():
+        raise Exception("could not load the config")
 
-    if not config_loader.load():
-        raise Exception("config not loaded")
+    data = yaml.safe_load(config_file_path.read_bytes())
 
-    app_config: AppConfig = tree.load(config_loader.data)
+    app_config: AppConfig = AppConfig(**data)
 
     logging.config.dictConfig(app_config.logger)
 
-    logger.debug("config loaded from %s", config_loader.path)
+    logger.debug("config loaded from %s", config_file_path)
 
     return app_config
