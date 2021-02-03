@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "buck"
-version = "0.7.1"
+version = "0.8.0"
 description = "The most advanced timer ecosystem in the history"
 authors = ["Lajos Santa <santa.lajos@gmail.com>"]
 include = [
-    "buck/static/js/bundle.js",
+    "buck/static/js/*bundle.js",
     "buck/static/audio/*"
 ]
 

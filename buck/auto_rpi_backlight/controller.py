@@ -27,6 +27,9 @@ class AutoBacklight:
         self._control_task = None
 
     async def run(self):
+        if not self._config.auto_backlight:
+            logger.info("Auto backlight is not configured - exiting...")
+            return
         await self._start_stop()
         await self._wait_for_settings_change()
 
@@ -50,6 +53,7 @@ class AutoBacklight:
         if not is_enabled and self._control_task:
             logger.debug("stopping the control task...")
             self._control_task.cancel()
+            self._control_task = None
 
     async def _control_test(self):
         while True:

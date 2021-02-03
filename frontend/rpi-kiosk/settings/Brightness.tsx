@@ -7,13 +7,16 @@ import {useCommonStyles} from "./styles";
 import {gql, useApolloClient} from "@apollo/client";
 import {GetBrightnessQuery} from "./__generated__/GetBrightnessQuery";
 import {SetBrightnessMutation, SetBrightnessMutationVariables} from "./__generated__/SetBrightnessMutation";
-
-
+import BrightnessAutoIcon from '@material-ui/icons/BrightnessAuto';
+import {SetAutoBacklightEnabledMutation, SetAutoBacklightEnabledMutationVariables} from "./__generated__/SetAutoBacklightEnabledMutation";
 
 
 const getBrightnessQuery = gql`
     query GetBrightnessQuery {
         brightness
+        settings {
+            isAutoBacklightEnabled
+        }
     }
 `;
 
@@ -23,10 +26,18 @@ const setBrightnessMutation = gql`
     }
 `;
 
+const setAutoBacklightEnabledMutation = gql`
+    mutation SetAutoBacklightEnabledMutation($isAutoEnabled: Boolean!) {
+        saveSettings(isAutoBacklightEnabled: $isAutoEnabled)
+    }
+`;
+
+
 const minValue = 5;
 
 export default () => {
     const [brightness, setBrightness] = useState(0);
+    const [isAutoEnabled, setAutoEnabled] = useState(false);
     const classes = useCommonStyles();
     const apolloClient = useApolloClient();
 
@@ -34,10 +45,13 @@ export default () => {
         apolloClient.query<GetBrightnessQuery>({
             query: getBrightnessQuery,
             fetchPolicy: "no-cache",
-        }).then(res => setBrightness(res.data.brightness));
+        }).then(res => {
+            setBrightness(res.data.brightness);
+            setAutoEnabled(res.data.settings.isAutoBacklightEnabled);
+        });
     }, []);
 
-    const updateValue = (val: number) => {
+    const updateBrightness = (val: number) => {
         setBrightness(val);
         apolloClient.mutate<SetBrightnessMutation, SetBrightnessMutationVariables>({
             mutation: setBrightnessMutation,
@@ -45,17 +59,32 @@ export default () => {
         })
     }
 
+    const toggleAutoEnabled = () => {
+        const newVal = !isAutoEnabled;
+        setAutoEnabled(newVal);
+        apolloClient.mutate<SetAutoBacklightEnabledMutation, SetAutoBacklightEnabledMutationVariables>({
+            mutation: setAutoBacklightEnabledMutation,
+            variables: {
+                isAutoEnabled: newVal,
+            },
+        });
+    }
+
     return (
         <div className={classes.slider}>
-            <IconButton onClick={() => updateValue(minValue)}>
+            <IconButton color={isAutoEnabled ? "primary" : "default"} onClick={toggleAutoEnabled}>
+                <BrightnessAutoIcon fontSize="small"/>
+            </IconButton>
+            <IconButton onClick={() => updateBrightness(minValue)} disabled={isAutoEnabled}>
                 <BrightnessLowIcon fontSize="small"/>
             </IconButton>
             <Slider
                 value={brightness}
-                onChange={(ev, val) => updateValue(val as number)}
+                onChange={(ev, val) => updateBrightness(val as number)}
                 min={minValue}
+                disabled={isAutoEnabled}
             />
-            <IconButton onClick={() => updateValue(100)}>
+            <IconButton onClick={() => updateBrightness(100)} disabled={isAutoEnabled}>
                 <Brightness7Icon fontSize="small"/>
             </IconButton>
         </div>
