@@ -45,7 +45,7 @@ class StartTimerNode(NodeBase):
 
         await self.scheduler.set_alarm(timer_id, timer_length, self.session)
 
-        self.request_context.broker.publish.timer_events()
+        await self.request_context.broker.publish.timer_events()
 
         return InstanceResult(id = timer_id)
 

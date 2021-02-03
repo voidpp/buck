@@ -17,7 +17,7 @@ async def do_alarm(timer_id: int, db_url: str, redis_url: str, is_last: bool):
         session.add_all(events)
 
     broker = Broker(redis_url)
-    broker.publish.timer_events()
+    await broker.publish.timer_events()
 
 
 def alarm(timer_id: int, db_url: str, redis_url: str, is_last: bool):

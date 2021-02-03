@@ -5,6 +5,7 @@ from starlette.types import ASGIApp, Scope, Receive, Send
 from buck.components.broker import Broker
 from .config import AppConfig
 from .database import Database
+from .settings import SettingsManager
 from .weather_provider import WeatherProviderBase
 from ..celery.scheduler import Scheduler
 
@@ -16,6 +17,7 @@ class RequestContext:
     scheduler: Scheduler
     broker: Broker
     weather_provider: WeatherProviderBase
+    settings_manager: SettingsManager
 
 
 class InjectionMiddleware:

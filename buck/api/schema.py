@@ -12,6 +12,7 @@ from .nodes.mutations.delete_predefined_timer import DeletePredefinedTimerNode
 from .nodes.mutations.operate_timer import OperateTimerNode
 from .nodes.mutations.save_group import SaveGroupNode
 from .nodes.mutations.save_predefined_timer import SavePredefinedTimerNode
+from .nodes.mutations.save_settings import SaveSettingsNode
 from .nodes.mutations.save_timer import SaveTimerNode
 from .nodes.mutations.set_brightness import SetBrightnessNode
 from .nodes.mutations.start_timer import StartTimerNode
@@ -20,6 +21,7 @@ from .nodes.queries.debug_info import DebugInfoNode
 from .nodes.queries.groups import GroupsNode
 from .nodes.queries.predefined_timers import PredefinedTimersNode
 from .nodes.queries.running_timers import RunningTimersNode
+from .nodes.queries.settings import SettingsNode
 from .nodes.queries.sounds import SoundsNode
 from .nodes.queries.timer_events import TimerEventsNode
 from .nodes.queries.timers import TimersNode
@@ -40,6 +42,7 @@ class Query(ObjectType):
     brightness = BrightnessNode.field()
     debug_info = DebugInfoNode.field()
     weather = WeatherNode.field()
+    settings = SettingsNode.field()
 
 
 class Mutation(ObjectType):
@@ -51,6 +54,7 @@ class Mutation(ObjectType):
     save_timer = SaveTimerNode.field()
     start_timer = StartTimerNode.field()
     set_brightness = SetBrightnessNode.field()
+    save_settings = SaveSettingsNode.field()
 
 
 class Schema(BaseSchema):

@@ -54,6 +54,6 @@ class OperateTimerNode(NodeBase[OperateTimerValidator]):
             else:
                 self.scheduler.remove_alarm(self.args.id)
 
-        self.request_context.broker.publish.timer_events()
+        await self.request_context.broker.publish.timer_events()
 
         return {}

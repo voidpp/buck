@@ -14,17 +14,21 @@ from .components.database import Database
 from .components.folders import Folders
 from .components.injection_middleware import InjectionMiddleware, RequestContext
 from .components.keys import Keys
+from .components.settings import SettingsManager
 from .components.weather_provider import create_weather_provider
 from .endpoints import rpi_kiosk, admin, index
 
 config = load()
 
+broker = Broker(config.redis)
+
 context = RequestContext(
     config,
     Database(str(config.database)),
     Scheduler(config),
-    Broker(config.redis),
+    broker,
     create_weather_provider(config.weather),
+    SettingsManager(config.redis, broker),
 )
 
 app = Starlette(

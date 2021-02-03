@@ -1,13 +1,17 @@
 import logging
 from typing import List, Union
 
-from aioredis import Channel
+from aioredis import Channel, Redis
+
 from buck.components.redis import create_client
-from redis import Redis
 
 logger = logging.getLogger(__name__)
 
-CHANNEL_KEY_TIMER_EVENTS = 'timer_events'
+
+class ChannelKey:
+    TIMER_EVENTS = 'timer_events'
+    SETTINGS = 'settings'
+
 
 StringList = Union[str, List[str]]
 
@@ -51,7 +55,11 @@ class Subscriber:
                 yield msg
 
     async def timer_events(self):
-        async for msg in self._subscribe(CHANNEL_KEY_TIMER_EVENTS):
+        async for msg in self._subscribe(ChannelKey.TIMER_EVENTS):
+            yield msg
+
+    async def settings(self):
+        async for msg in self._subscribe(ChannelKey.SETTINGS):
             yield msg
 
 
@@ -59,11 +67,17 @@ class Publisher:
 
     def __init__(self, sc: StringChain, url: str):
         self._sc = StringChain("publish", sc)
-        self._redis = Redis.from_url(url)
+        self._url = url
 
-    def timer_events(self):
-        logger.debug(self._sc(CHANNEL_KEY_TIMER_EVENTS))
-        self._redis.publish(CHANNEL_KEY_TIMER_EVENTS, "update")
+    async def timer_events(self):
+        logger.debug(self._sc(ChannelKey.TIMER_EVENTS))
+        async with create_client(self._url) as client:  # type: Redis
+            await client.publish(ChannelKey.TIMER_EVENTS, "update")
+
+    async def settings(self):
+        logger.debug(self._sc(ChannelKey.SETTINGS))
+        async with create_client(self._url) as client:  # type: Redis
+            await client.publish(ChannelKey.SETTINGS, "update")
 
 
 class Broker:
