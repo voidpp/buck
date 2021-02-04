@@ -1,24 +1,14 @@
 import * as React from "react";
 import {useState} from "react";
-import {gql, useQuery} from "@apollo/client";
 import {Dialog, DialogContent, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, TextField} from "@material-ui/core";
 import {FormattedMessage} from "react-intl";
-
 import {useBoolState} from "../hooks";
 import {FormattedDialogTitle} from "./dialogs";
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import {If, Audio} from "./widgets";
+import {Audio, If} from "./widgets";
 import CloseIcon from '@material-ui/icons/Close';
-import {SoundSelectorQuery} from "./__generated__/SoundSelectorQuery";
+import {useConfig} from "../contexts/config";
 
-const soundSelectorQuery = gql`
-    query SoundSelectorQuery {
-        sounds {
-            title
-            fileName
-        }
-    }
-`;
 
 type Props = {
     value: string,
@@ -27,13 +17,13 @@ type Props = {
 }
 
 export default ({value, onChange, style}: Props) => {
-    const {data} = useQuery<SoundSelectorQuery>(soundSelectorQuery);
+    const config = useConfig();
     const [isShow, show, hide] = useBoolState();
     const [audioFile, setAudioFile] = useState<string>();
 
-    const options = data?.sounds ?? [];
+    const options = config.sounds;
 
-    const valueTitle = options.filter(op => op.fileName == value)[0]?.title ?? "";
+    const valueTitle = options.filter(op => op.filename == value)[0]?.title ?? "";
 
     return (
         <React.Fragment>
@@ -76,11 +66,11 @@ export default ({value, onChange, style}: Props) => {
                     <List dense>
                         {options.map(option => (
                             <ListItem
-                                key={option.fileName}
+                                key={option.filename}
                                 button
-                                selected={value === option.fileName}
+                                selected={value === option.filename}
                                 onClick={() => {
-                                    onChange(option.fileName);
+                                    onChange(option.filename);
                                     hide();
                                 }}
                             >
@@ -90,8 +80,8 @@ export default ({value, onChange, style}: Props) => {
                                 <ListItemSecondaryAction>
                                     <IconButton
                                         edge="end"
-                                        onClick={() => setAudioFile(audioFile ? null : option.fileName)}
-                                        disabled={audioFile && audioFile != option.fileName}
+                                        onClick={() => setAudioFile(audioFile ? null : option.filename)}
+                                        disabled={audioFile && audioFile != option.filename}
                                     >
                                         <VolumeUpIcon fontSize="small"/>
                                     </IconButton>

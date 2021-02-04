@@ -7,6 +7,7 @@ import {createClient} from "../apollo-client/factory";
 import {ApolloProvider} from "@apollo/client";
 import {Provider as ReduxStoreProvider} from "react-redux";
 import configureStore from "../store";
+import {ConfigProvider} from "../contexts/config";
 
 const darkTheme = createMuiTheme({
     palette: {
@@ -29,7 +30,9 @@ export default () => {
                 <IntlProvider messages={messages.en} locale="en" defaultLocale="en">
                     <MuiThemeProvider theme={darkTheme}>
                         <CssBaseline/>
-                        <Kiosk/>
+                        <ConfigProvider>
+                            <Kiosk/>
+                        </ConfigProvider>
                     </MuiThemeProvider>
                 </IntlProvider>
             </ReduxStoreProvider>

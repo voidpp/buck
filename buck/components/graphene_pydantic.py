@@ -1,13 +1,12 @@
+import enum
 import inspect
 from datetime import datetime
-import enum
 from ipaddress import IPv4Address
 from typing import Type, get_origin, get_args, Tuple, Union, Dict
 
-from graphene import InputObjectType, List, Int, Float, String, Boolean, DateTime, Enum, ObjectType
+from graphene import InputObjectType, List, Int, Float, String, Boolean, DateTime, Enum, ObjectType, Field
 from graphene.types.base import BaseType
 from pydantic import BaseModel
-
 
 VALIDATOR_CLASS_NAME_PREFIX = "Validator"
 
@@ -27,7 +26,10 @@ def clear_type_registry() -> None:
     _graphene_type_registry.clear()
 
 
-def object_type_from_pydantic(model: Type[BaseModel], name: str = None, base_type: Type[BaseType] = ObjectType) -> type:
+def object_type_from_pydantic(model: Type[BaseModel],
+                              name: str = None,
+                              base_type: Type[BaseType] = ObjectType,
+                              ignored_fields: list[str] = None) -> type:
     model_name = name or model.__name__
 
     type_ = _graphene_type_registry.get(
@@ -35,7 +37,7 @@ def object_type_from_pydantic(model: Type[BaseModel], name: str = None, base_typ
         type(
             model_name,
             (base_type,),
-            create_class_property_dict(model, base_type),
+            create_class_property_dict(model, base_type, ignored_fields),
         )
     )
 
@@ -44,11 +46,14 @@ def object_type_from_pydantic(model: Type[BaseModel], name: str = None, base_typ
     return type_
 
 
-def create_class_property_dict(model: Type[BaseModel], sub_type: Type[BaseType] = ObjectType) -> dict:
+def create_class_property_dict(model: Type[BaseModel], sub_type: Type[BaseType] = ObjectType, ignored_fields: list[str] = None) -> dict:
     properties = {}
     collector = AnnotationsCollector(model)
     collector.collect()
     for property_name, type_ in collector.annotations.items():
+        if ignored_fields and property_name in ignored_fields:
+            continue
+
         description = None
         required = False
 
@@ -75,6 +80,10 @@ def create_class_property_dict(model: Type[BaseModel], sub_type: Type[BaseType] 
             properties[property_name] = _TYPE_MAP_SCALARS[type_base](required = required, description = description)
             continue
 
+        if issubclass(type_, (BaseModel,)):
+            properties[property_name] = Field(object_type_from_pydantic(type_))
+            continue
+
         raise ConversionError(f"Conversion not implemented for type '{type_}'")
 
     return properties
@@ -88,7 +97,6 @@ def create_graphene_enum(type_: Type[enum.Enum]) -> Type[Enum]:
 
 
 def _create_list_item_class(type_: type, sub_type: Type[BaseType] = ObjectType) -> type:
-
     class_ = get_args(type_)[0]
 
     if class_ in _TYPE_MAP_SCALARS:

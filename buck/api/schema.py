@@ -17,12 +17,12 @@ from .nodes.mutations.save_timer import SaveTimerNode
 from .nodes.mutations.set_brightness import SetBrightnessNode
 from .nodes.mutations.start_timer import StartTimerNode
 from .nodes.queries.brightness import BrightnessNode
+from .nodes.queries.config import ConfigNode
 from .nodes.queries.debug_info import DebugInfoNode
 from .nodes.queries.groups import GroupsNode
 from .nodes.queries.predefined_timers import PredefinedTimersNode
 from .nodes.queries.running_timers import RunningTimersNode
 from .nodes.queries.settings import SettingsNode
-from .nodes.queries.sounds import SoundsNode
 from .nodes.queries.timer_events import TimerEventsNode
 from .nodes.queries.timers import TimersNode
 from .nodes.queries.weather import WeatherNode
@@ -38,11 +38,11 @@ class Query(ObjectType):
     timers = TimersNode.field()
     timer_events = TimerEventsNode.field()
     running_timers = RunningTimersNode.field()
-    sounds = SoundsNode.field()
     brightness = BrightnessNode.field()
     debug_info = DebugInfoNode.field()
     weather = WeatherNode.field()
     settings = SettingsNode.field()
+    config = ConfigNode.field()
 
 
 class Mutation(ObjectType):
