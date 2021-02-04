@@ -1,7 +1,7 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {useBoolState} from "../../../hooks";
+import {useBoolState, useInterval} from "../../../hooks";
 import {Dialog, DialogContent, Typography} from "@material-ui/core";
 import {kioskLocalStorage} from "../../tools";
 import TextFieldDialog from "../../virtual-keyboard/TextFieldDialog";
@@ -77,7 +77,9 @@ export default ({style}: { style?: React.CSSProperties }) => {
     const [city, setCity] = useState(kioskLocalStorage.weatherCity);
     const [isShow, show, hide] = useBoolState();
 
-    const {data} = useQuery<CurrentWeatherQuery, CurrentWeatherQueryVariables>(currentWeatherQuery, {variables: {city}});
+    const {data, refetch} = useQuery<CurrentWeatherQuery, CurrentWeatherQueryVariables>(currentWeatherQuery, {variables: {city}});
+
+    useInterval(refetch, 1000 * 60);
 
     return (
         <React.Fragment>
