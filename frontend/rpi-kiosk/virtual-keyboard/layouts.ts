@@ -17,7 +17,7 @@ export const layouts: { [s: string]: Layout } = {
         [SpecialKeys.Space]
     ],
     hungarian: [
-        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
+        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ö', 'ü', 'ó', SpecialKeys.Backspace],
         ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ő', 'ú'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'é', 'á', 'ű'],
         [SpecialKeys.CapsLock, 'í', 'y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-', '_'],
