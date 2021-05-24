@@ -4,13 +4,14 @@ import {gql, useMutation, useQuery} from "@apollo/client";
 import {Dialog, DialogContent, Divider, IconButton, List, ListItem} from "@material-ui/core";
 import AlarmAddIcon from '@material-ui/icons/AlarmAdd';
 import {useBoolState} from "../../../hooks";
-import {FormattedDialogTitle} from "../../dialogs";
 
 import {startTimerMutation} from "../../queries";
 import {QuickTimerList, QuickTimerList_predefinedTimers} from "./__generated__/QuickTimerList";
 import {StartTimerMutation, StartTimerMutationVariables} from "../../__generated__/StartTimerMutation";
 import {makeStyles} from "@material-ui/core/styles";
 import {FormattedMessage} from "react-intl";
+import StartTimerDialog from "../../start-timer/StartTimerDialog";
+import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
 
 const quickTimerListQuery = gql`
     query QuickTimerList {
@@ -26,7 +27,7 @@ const quickTimerListQuery = gql`
     }
 `;
 
-const useStyles = makeStyles({
+const useContentStyles = makeStyles({
     list: {
         fontSize: "1.1em",
         paddingBottom: 9,
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
 const Content = ({onDone}: { onDone: () => void }) => {
     const {data} = useQuery<QuickTimerList>(quickTimerListQuery, {fetchPolicy: "cache-and-network"});
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);
-    const classes = useStyles();
+    const classes = useContentStyles();
 
     if (!data)
         return null;
@@ -68,8 +69,31 @@ const Content = ({onDone}: { onDone: () => void }) => {
     );
 }
 
+const StartTimerDialogButton = () => {
+    const [isShow, show, hide] = useBoolState();
+
+    return (
+        <>
+            <IconButton onClick={show} size="small">
+                <PlayCircleFilledWhiteIcon/>
+            </IconButton>
+            <StartTimerDialog show={isShow} close={hide}/>
+        </>
+    )
+};
+
+const useStyles = makeStyles({
+    title: {
+        padding: "8px 39px",
+        fontSize: "1.2em",
+        display: "flex",
+        alignItems: "center",
+    }
+});
+
 export default ({style, className}: { style?: React.CSSProperties, className?: string }) => {
     const [isShow, show, hide] = useBoolState();
+    const classes = useStyles();
 
     return (
         <div style={style} className={className}>
@@ -77,8 +101,11 @@ export default ({style, className}: { style?: React.CSSProperties, className?: s
                 <AlarmAddIcon fontSize="large"/>
             </IconButton>
             <Dialog open={isShow} onClose={hide}>
-                <div style={{padding: "10px 39px", fontSize: "1.2em"}}>
-                    <FormattedMessage id="quickStartTitle" />
+                <div className={classes.title}>
+                    <span style={{flexGrow: 1}}>
+                        <FormattedMessage id="quickStartTitle"/>
+                    </span>
+                    <StartTimerDialogButton/>
                 </div>
                 <Divider/>
                 <DialogContent>
