@@ -9,6 +9,8 @@ import {FormattedDialogTitle} from "../../dialogs";
 import {startTimerMutation} from "../../queries";
 import {QuickTimerList, QuickTimerList_predefinedTimers} from "./__generated__/QuickTimerList";
 import {StartTimerMutation, StartTimerMutationVariables} from "../../__generated__/StartTimerMutation";
+import {makeStyles} from "@material-ui/core/styles";
+import {FormattedMessage} from "react-intl";
 
 const quickTimerListQuery = gql`
     query QuickTimerList {
@@ -24,9 +26,18 @@ const quickTimerListQuery = gql`
     }
 `;
 
+const useStyles = makeStyles({
+    list: {
+        fontSize: "1.1em",
+        paddingBottom: 9,
+        paddingTop: 9,
+    }
+});
+
 const Content = ({onDone}: { onDone: () => void }) => {
     const {data} = useQuery<QuickTimerList>(quickTimerListQuery, {fetchPolicy: "cache-and-network"});
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);
+    const classes = useStyles();
 
     if (!data)
         return null;
@@ -48,8 +59,8 @@ const Content = ({onDone}: { onDone: () => void }) => {
 
     return (
         <List>
-            {data.predefinedTimers.slice(0, 8).map(timer => (
-                <ListItem button key={timer.id} onClick={createStartTimer(timer)}>
+            {data.predefinedTimers.slice(0, 6).map(timer => (
+                <ListItem button key={timer.id} onClick={createStartTimer(timer)} className={classes.list}>
                     {timer.group ? (timer.group.name + " / ") : ""}{timer.name} ({timer.length})
                 </ListItem>
             ))}
@@ -63,10 +74,12 @@ export default ({style, className}: { style?: React.CSSProperties, className?: s
     return (
         <div style={style} className={className}>
             <IconButton onClick={show}>
-                <AlarmAddIcon/>
+                <AlarmAddIcon fontSize="large"/>
             </IconButton>
             <Dialog open={isShow} onClose={hide}>
-                <FormattedDialogTitle msgId="quickStartTitle" style={{paddingBottom: "0.4em"}}/>
+                <div style={{padding: "10px 39px", fontSize: "1.2em"}}>
+                    <FormattedMessage id="quickStartTitle" />
+                </div>
                 <Divider/>
                 <DialogContent>
                     <Content onDone={hide}/>

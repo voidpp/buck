@@ -38,7 +38,7 @@ export default {
     alarmSoundFile: "Alarm sound",
     city: "City name",
     soundSelectorTitle: "Select a sound",
-    misc: "Misc",
+    main: "Main",
     appReload: "Reload the app",
     reload: "reload",
     settings: "Settings",

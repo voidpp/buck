@@ -18,7 +18,7 @@ import ActiveTimerDialog from "./ActiveTimerDialog";
 import {FormattedMessage} from "react-intl";
 import ActiveAlarmPage from "./ActiveAlarmPage";
 import {kioskLocalStorage} from "./tools";
-import CaludeDashboard from "./dashboards/weather/Container";
+import MainDashboard from "./dashboards/main/Container";
 import {useBoolState} from "../hooks";
 import MenuIcon from '@material-ui/icons/Menu';
 import DialogList from "./DialogList";
@@ -52,11 +52,11 @@ type DashboardDescriptor = {
 }
 
 const dashboards: DashboardDescriptor[] = [{
+    name: "main",
+    component: MainDashboard,
+}, {
     name: "clock",
     component: ClockPanel,
-}, {
-    name: "misc",
-    component: CaludeDashboard,
 }];
 
 export default () => {
