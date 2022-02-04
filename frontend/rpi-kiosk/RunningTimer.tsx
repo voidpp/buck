@@ -5,7 +5,7 @@ import {gql, useMutation} from "@apollo/client";
 import StopIcon from '@material-ui/icons/Stop';
 import PauseIcon from '@material-ui/icons/Pause';
 
-import {If} from "./widgets";
+import {If, Timedelta} from "./widgets";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
@@ -32,17 +32,6 @@ const timerOperationMutation = gql`
         }
     }
 `;
-
-
-const Timedelta = ({value}: { value: number }) => {
-    const hours = Math.floor(value / 3600);
-    const minutes = Math.floor((value - (hours * 3600)) / 60);
-    const seconds = value % 60;
-
-    return (
-        <span>{hours ? `${hours}:` : ''}{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
-    );
-}
 
 const padding = "0.5em";
 

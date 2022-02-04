@@ -51,3 +51,13 @@ export const DialogActionButtons = ({onCancel, onSubmit}: { onSubmit: () => void
         <FormattedButton onClick={onCancel} msgId="cancel" color="secondary"/>
     </DialogActions>
 );
+
+export const Timedelta = ({value}: { value: number }) => {
+    const hours = Math.floor(value / 3600);
+    const minutes = Math.floor((value - (hours * 3600)) / 60);
+    const seconds = value % 60;
+
+    return (
+        <span>{hours ? `${hours}:` : ''}{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
+    );
+}
