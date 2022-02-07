@@ -89,10 +89,10 @@ const useStyles = makeStyles({
         alignItems: "center",
     },
     optionsContainer: {
-        maxWidth: 250,
         display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
+        gridTemplateColumns: "repeat(4, 1fr)",
         gridGap: 10,
+        paddingBottom: 15,
     },
 });
 
@@ -113,8 +113,11 @@ const PickerOption = ({amount, unit, onSelect}: { onSelect: (value: number) => v
             onClick={e => onSelect(amount * units[unit])}
             className={classes.pickerOption}
             variant="contained"
-            size="small"
+            size="large"
             fullWidth
+            style={{
+                padding: "12px 24px",
+            }}
         >
             {amount}{unit}
         </Button>
@@ -176,10 +179,10 @@ const Picker = ({onDone}: { onDone: () => void }) => {
                     <PickerOption {...op} onSelect={val => setValue(value + val)} key={`${op.amount}${op.unit}`}/>
                 )}
             </div>
-            <div style={{fontSize: "1.3em"}}><Timedelta value={value}/></div>
+            <div style={{fontSize: "1.5em"}}><Timedelta value={value}/></div>
             <div>
-                <Button color="primary" onClick={start} disabled={!value}>start</Button>
-                <Button color="secondary" onClick={e => setValue(0)}>clear</Button>
+                <Button size="large" color="primary" onClick={start} disabled={!value}>start</Button>
+                <Button size="large" color="secondary" onClick={e => setValue(0)}>clear</Button>
             </div>
         </div>
     );
@@ -208,7 +211,7 @@ export default ({style, className}: { style?: React.CSSProperties, className?: s
             <IconButton onClick={show}>
                 <AlarmAddIcon fontSize="large"/>
             </IconButton>
-            <Dialog open={isShow} onClose={hide}>
+            <Dialog open={isShow} onClose={hide} maxWidth="md">
                 <div className={classes.title}>
                     <span style={{flexGrow: 1}}>
                         <FormattedMessage id="quickStartTitle"/>
