@@ -5,13 +5,14 @@ from sqlalchemy import select
 
 from buck.api.models import Error, ValidationResult
 from buck.components.node_base import NodeBase
-from buck.models import Timer, TimerEventType, TimerEvent
+from buck.models import Timer, TimerEvent, TimerEventType
 
 
 class TimerOperation(Enum):
     PAUSE = 'PAUSE'
     UNPAUSE = 'UNPAUSE'
     STOP = 'STOP'
+    CLEAR_ALARM = 'CLEAR_ALARM'
 
 
 class OperateTimerValidator(BaseModel):
@@ -23,6 +24,7 @@ operation_to_event_type = {
     TimerOperation.PAUSE: TimerEventType.PAUSE,
     TimerOperation.UNPAUSE: TimerEventType.START,
     TimerOperation.STOP: TimerEventType.STOP,
+    TimerOperation.CLEAR_ALARM: TimerEventType.CLEAR_ALARM,
 }
 
 

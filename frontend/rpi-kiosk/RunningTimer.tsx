@@ -1,16 +1,17 @@
+import { useMutation } from "@apollo/client";
+import { Divider, IconButton } from "@material-ui/core";
 import * as React from "react";
-import {Divider, IconButton} from "@material-ui/core";
-import {gql, useMutation} from "@apollo/client";
 
-import StopIcon from '@material-ui/icons/Stop';
 import PauseIcon from '@material-ui/icons/Pause';
+import StopIcon from '@material-ui/icons/Stop';
 
-import {If, Timedelta} from "./widgets";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { CreateCSSProperties } from "@material-ui/core/styles/withStyles";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import {TimerOperation, TimerState} from "../__generated__/globalTypes";
-import {TimerOperationMutation, TimerOperationMutationVariables} from "./__generated__/TimerOperationMutation";
+import { TimerOperation, TimerState } from "../__generated__/globalTypes";
+import { timerOperationMutation } from "./timerOperationMutation";
+import { If, Timedelta } from "./widgets";
+import { TimerOperationMutation, TimerOperationMutationVariables } from "./__generated__/TimerOperationMutation";
 
 
 type RunningTimer = {
@@ -22,16 +23,6 @@ type RunningTimer = {
     remainingTimes: number[],
     origLength: string,
 }
-
-const timerOperationMutation = gql`
-    mutation TimerOperationMutation($id: Int! $operation: TimerOperation!) {
-        operateTimer(id: $id operation: $operation) {
-            errors {
-                type
-            }
-        }
-    }
-`;
 
 const padding = "0.5em";
 

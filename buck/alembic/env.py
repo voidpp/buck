@@ -1,9 +1,7 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 from buck.components.config import load
 from buck.models import Base
@@ -13,7 +11,7 @@ from buck.models import Base
 config = context.config
 
 app_config = load()
-app_config.database.driver = "postgresql"
+app_config.database = app_config.database.replace("+asyncpg", "")
 config.set_main_option("sqlalchemy.url", str(app_config.database))
 
 # Interpret the config file for Python logging.

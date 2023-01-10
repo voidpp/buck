@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum
+from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -35,6 +35,7 @@ class TimerEventType(enum.Enum):
     PAUSE = 'PAUSE'
     ALARM = 'ALARM'
     STOP = 'STOP'
+    CLEAR_ALARM = 'CLEAR_ALARM'
 
 
 class TimerEvent(Base):

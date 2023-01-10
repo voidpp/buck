@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime
 from importlib.metadata import version
 from time import time
@@ -7,7 +8,7 @@ from typing import Callable
 from pytimeparse.timeparse import timeparse
 
 from buck.components.keys import Keys
-from buck.models import TimerEventType, TimerEvent
+from buck.models import TimerEvent, TimerEventType
 
 
 class TimeLengthParseError(Exception):
@@ -39,6 +40,8 @@ def calc_elapsed_time(events: list[TimerEvent]) -> int:
             start_events.append(event)
         elif event.type == TimerEventType.PAUSE:
             pause_events.append(event)
+        elif event.type == TimerEventType.CLEAR_ALARM:
+            return sys.maxsize
         else:
             raise CountdownCalcError("calc_elapsed_time can handle only start and pause event types, got %s", event.type)
 

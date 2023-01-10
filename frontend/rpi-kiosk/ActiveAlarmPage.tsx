@@ -1,16 +1,18 @@
+import { gql, useMutation, useSubscription } from "@apollo/client";
+import { Button, Dialog } from "@material-ui/core";
 import * as React from "react";
-import {useState} from "react";
-import {gql, useSubscription} from "@apollo/client";
-import {Button, Dialog} from "@material-ui/core";
+import { useState } from "react";
 
-import {If, SlideUp, Audio} from "./widgets";
-import {makeStyles} from "@material-ui/core/styles";
-import {FormattedMessage} from "react-intl";
+import { makeStyles } from "@material-ui/core/styles";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { FormattedMessage } from "react-intl";
+import { Audio, If, SlideUp } from "./widgets";
 
-import {useInterval} from "../hooks";
-import {TimerEventsSubscription, TimerEventsSubscription_timerEvents} from "./__generated__/TimerEventsSubscription";
-import {TimerEventType} from "../__generated__/globalTypes";
+import { useInterval } from "../hooks";
+import { TimerEventType, TimerOperation } from "../__generated__/globalTypes";
+import { timerOperationMutation } from "./timerOperationMutation";
+import { TimerEventsSubscription, TimerEventsSubscription_timerEvents } from "./__generated__/TimerEventsSubscription";
+import { TimerOperationMutation, TimerOperationMutationVariables } from "./__generated__/TimerOperationMutation";
 
 const timerEventsSubscription = gql`
     subscription TimerEventsSubscription {
@@ -88,7 +90,7 @@ const ActiveAlarm = ({event, onStop}: ActiveAlarmProps) => {
             </div>
             <Button size="large" onClick={onStop} color="primary">
                 <div className={classes.button}>
-                    <HighlightOffIcon style={{fontSize: "4em"}}/>
+                    <HighlightOffIcon style={{fontSize: "8em"}}/>
                     <FormattedMessage id="stopAlarm"/>
                 </div>
             </Button>
@@ -116,14 +118,20 @@ const exampleEvent: TimerEventsSubscription_timerEvents = {
 
 export default () => {
     const [activeEvent, setActiveEvent] = useState<TimerEventsSubscription_timerEvents>();
+    const [operateTimer] = useMutation<TimerOperationMutation, TimerOperationMutationVariables>(timerOperationMutation);
 
     useSubscription<TimerEventsSubscription>(timerEventsSubscription, {
         onSubscriptionData: options => {
             for (const event of options.subscriptionData.data.timerEvents) {
-                if (event.type !== "ALARM")
-                    continue
-                setActiveEvent(event);
-                return;
+                switch (event.type) {
+                    case "ALARM":
+                        setActiveEvent(event);
+                        break;
+                    case "CLEAR_ALARM":
+                        setActiveEvent(null);
+                        break;
+                }
+                return
             }
         }
     });
@@ -132,7 +140,10 @@ export default () => {
         <Dialog open={!!activeEvent} fullScreen TransitionComponent={SlideUp}>
             <ActiveAlarm
                 event={activeEvent}
-                onStop={() => setActiveEvent(null)}
+                onStop={() => {
+                    operateTimer({variables: {id: activeEvent.timer.id, operation: TimerOperation.CLEAR_ALARM}})
+                    setActiveEvent(null);
+                }}
             />
         </Dialog>
     );

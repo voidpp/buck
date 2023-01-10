@@ -24,3 +24,4 @@ frontend/api.ts
 htmlcov
 celery.state
 buck.yaml
+celery.state.*
