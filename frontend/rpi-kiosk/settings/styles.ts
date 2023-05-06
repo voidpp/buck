@@ -1,9 +1,9 @@
-import {makeStyles} from "@material-ui/core/styles";
+import { SxProps } from "@mui/material";
 
-export const useCommonStyles = makeStyles({
+export const commonStyles = {
     slider: {
         display: "flex",
         alignItems: "center",
         minWidth: 300,
     },
-});
+} satisfies Record<string, SxProps>;

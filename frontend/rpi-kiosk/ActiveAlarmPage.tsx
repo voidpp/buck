@@ -1,18 +1,17 @@
 import { gql, useMutation, useSubscription } from "@apollo/client";
-import { Button, Dialog } from "@material-ui/core";
+import { Box, Button, Dialog, SxProps } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { FormattedMessage } from "react-intl";
 import { Audio, If, SlideUp } from "./widgets";
 
-import { useInterval } from "../hooks";
 import { TimerEventType, TimerOperation } from "../__generated__/globalTypes";
-import { timerOperationMutation } from "./timerOperationMutation";
+import { useInterval } from "../hooks";
 import { TimerEventsSubscription, TimerEventsSubscription_timerEvents } from "./__generated__/TimerEventsSubscription";
 import { TimerOperationMutation, TimerOperationMutationVariables } from "./__generated__/TimerOperationMutation";
+import { timerOperationMutation } from "./timerOperationMutation";
 
 const timerEventsSubscription = gql`
     subscription TimerEventsSubscription {
@@ -30,7 +29,7 @@ const timerEventsSubscription = gql`
     }
 `;
 
-const useStyles = makeStyles({
+const styles = {
     content: {
         display: "flex",
         alignItems: "center",
@@ -49,7 +48,7 @@ const useStyles = makeStyles({
         opacity: 0.6,
         textTransform: "lowercase",
     },
-});
+} satisfies Record<string, SxProps>;
 
 const Counter = ({style}: { style?: React.CSSProperties }) => {
     const [milliSeconds, setMilliSeconds] = useState(0);
@@ -74,31 +73,30 @@ type ActiveAlarmProps = {
 }
 
 const ActiveAlarm = ({event, onStop}: ActiveAlarmProps) => {
-    const classes = useStyles();
 
     if (!event)
         return null;
 
     return (
-        <div className={classes.content}>
+        <Box sx={styles.content}>
             <If condition={!!event.timer.soundFile}>
                 <Audio src={`/static/audio/${event.timer.soundFile}`}/>
             </If>
-            <div style={{paddingBottom: "1em"}}>
+            <Box style={{paddingBottom: "1em"}}>
                 <FormattedMessage id="alarmCounterMsg"/>
                 <Counter style={{marginLeft: "0.5em"}}/>
-            </div>
+            </Box>
             <Button size="large" onClick={onStop} color="primary">
-                <div className={classes.button}>
+                <Box sx={styles.button}>
                     <HighlightOffIcon style={{fontSize: "8em"}}/>
                     <FormattedMessage id="stopAlarm"/>
-                </div>
+                </Box>
             </Button>
-            <div className={classes.description}>(
+            <Box sx={styles.description}>(
                 <FormattedMessage id="name"/>: {event.timer.name || event.timer.length}
                 , <FormattedMessage id="lengthHeader"/>: {event.timer.length})
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 

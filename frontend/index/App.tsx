@@ -8,7 +8,7 @@ import { createClient } from "../apollo-client/factory";
 import { ConfigProvider } from "../contexts/config";
 import configureStore from "../store";
 import { messages } from "../translations/tools";
-import Kiosk from "./Kiosk";
+import { MainFrame } from "./MainFrame";
 
 const darkTheme = createTheme({
     palette: {
@@ -32,7 +32,7 @@ export default () => {
                     <ThemeProvider theme={darkTheme}>
                         <CssBaseline/>
                         <ConfigProvider>
-                            <Kiosk/>
+                            <MainFrame />
                         </ConfigProvider>
                     </ThemeProvider>
                 </IntlProvider>

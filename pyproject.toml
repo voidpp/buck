@@ -11,7 +11,7 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.9"
 starlette = "^0.14.1"
-uvicorn = {extras = ["standard"], version = "^0.12.3"}
+uvicorn = {extras = ["standard"], version = "^0.22.0"}
 aiofiles = "^0.6.0"
 graphene = "^2.1.8"
 pydantic = "^1.7.2"

@@ -1,8 +1,8 @@
+import CloseIcon from '@mui/icons-material/Close';
+import { DialogTitle, IconButton } from "@mui/material";
 import * as React from "react";
-import {DialogTitle, IconButton} from "@material-ui/core";
-import {FormattedMessage} from "react-intl";
-import CloseIcon from '@material-ui/icons/Close';
-import {If} from "./widgets";
+import { FormattedMessage } from "react-intl";
+import { If } from "./widgets";
 
 type FormattedDialogTitleProps = {
     msgId: string,

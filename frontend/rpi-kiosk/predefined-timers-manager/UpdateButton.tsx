@@ -1,9 +1,9 @@
+import EditIcon from "@mui/icons-material/Edit";
+import { IconButton } from "@mui/material";
 import * as React from "react";
-import {PredefinedTimer} from "../../api";
-import {IconButton} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import { PredefinedTimer } from "../../api";
+import { useBoolState } from "../../hooks";
 import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
-import {useBoolState} from "../../hooks";
 
 
 export default ({timer, onSuccess}: { timer: PredefinedTimer, onSuccess: () => void }) => {

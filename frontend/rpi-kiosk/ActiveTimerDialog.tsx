@@ -1,15 +1,13 @@
+import { gql, useSubscription } from "@apollo/client";
+import { Box, Dialog, Fade, IconButton, SxProps, Theme } from "@mui/material";
 import * as React from "react";
-import {Dialog, Fade, IconButton} from "@material-ui/core";
-import {gql, useSubscription} from "@apollo/client";
 
+import AlarmOnIcon from '@mui/icons-material/AlarmOn';
+import CloseIcon from '@mui/icons-material/Close';
+import { useBoolState } from "../hooks";
 import RunningTimer from "./RunningTimer";
-import {useBoolState} from "../hooks";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
-import CloseIcon from '@material-ui/icons/Close';
-import {If, SlideDown} from "./widgets";
-import AlarmOnIcon from '@material-ui/icons/AlarmOn';
-import {RunningTimersSubscription} from "./__generated__/RunningTimersSubscription";
+import { RunningTimersSubscription } from "./__generated__/RunningTimersSubscription";
+import { If, SlideDown } from "./widgets";
 
 
 const runningTimersSubscription = gql`
@@ -26,29 +24,28 @@ const runningTimersSubscription = gql`
     }
 `;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const styles = {
     button: {
         position: "absolute",
         top: 0,
         right: 0,
-        zIndex: theme.zIndex.modal + 1,
-    } as CreateCSSProperties,
+        zIndex: (theme) => theme.zIndex.modal + 1,
+    },
     container: {
         display: "flex",
         alignItems: "stretch",
         justifyContent: "center",
-        padding: 10,
-    } as CreateCSSProperties,
+        padding: '10px',
+    },
     content: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-    } as CreateCSSProperties,
-}));
+    },
+} satisfies Record<string, SxProps<Theme>>;
 
 export default () => {
-    const classes = useStyles();
     const [isDialogForceOpen, _1, _2, dialogForceToggle] = useBoolState(true);
     const {data} = useSubscription<RunningTimersSubscription>(runningTimersSubscription);
     const runningTimers = data?.runningTimers ?? [];
@@ -63,20 +60,20 @@ export default () => {
     return (
         <React.Fragment>
             <Dialog open={isOpen} fullScreen TransitionComponent={SlideDown}>
-                <div className={classes.content}>
-                    <div className={classes.container}>
+                <Box sx={styles.content}>
+                    <Box sx={styles.container}>
                         {runningTimers.map(timer => <RunningTimer key={timer.id} timer={timer}/>)}
-                    </div>
-                </div>
+                    </Box>
+                </Box>
             </Dialog>
             <Fade in={isTimersRunning}>
-                <div className={classes.button}>
+                <Box sx={styles.button}>
                     <IconButton onClick={dialogForceToggle}>
                         <If condition={isDialogForceOpen} else_={<AlarmOnIcon/>}>
                             <CloseIcon/>
                         </If>
                     </IconButton>
-                </div>
+                </Box>
             </Fade>
         </React.Fragment>
     );

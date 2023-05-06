@@ -1,13 +1,13 @@
+import CloseIcon from '@mui/icons-material/Close';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import { Dialog, DialogContent, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, TextField } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import {Dialog, DialogContent, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, TextField} from "@material-ui/core";
-import {FormattedMessage} from "react-intl";
-import {useBoolState} from "../hooks";
-import {FormattedDialogTitle} from "./dialogs";
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import {Audio, If} from "./widgets";
-import CloseIcon from '@material-ui/icons/Close';
-import {useConfig} from "../contexts/config";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useConfig } from "../contexts/config";
+import { useBoolState } from "../hooks";
+import { FormattedDialogTitle } from "./dialogs";
+import { Audio, If } from "./widgets";
 
 
 type Props = {

@@ -1,17 +1,16 @@
+import { gql, useQuery } from "@apollo/client";
+import { Box, Dialog, DialogContent, SxProps, Typography } from "@mui/material";
 import * as React from "react";
-import {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {useBoolState, useInterval} from "../../../hooks";
-import {Dialog, DialogContent, Typography} from "@material-ui/core";
-import {kioskLocalStorage} from "../../tools";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useBoolState, useInterval } from "../../../hooks";
+import { kioskLocalStorage } from "../../tools";
 import TextFieldDialog from "../../virtual-keyboard/TextFieldDialog";
-import {FormattedMessage} from "react-intl";
-import {DialogActionButtons, If} from "../../widgets";
-import {gql, useQuery} from "@apollo/client";
-import {CurrentWeatherQuery, CurrentWeatherQueryVariables} from "./__generated__/CurrentWeatherQuery";
+import { DialogActionButtons, If } from "../../widgets";
+import { CurrentWeatherQuery, CurrentWeatherQueryVariables } from "./__generated__/CurrentWeatherQuery";
 
 
-const useStyles = makeStyles({
+const styles = {
     body: {
         display: "flex",
         fontFamily: "Josefin Sans",
@@ -33,7 +32,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
         marginRight: "0.5em",
     }
-});
+} satisfies Record<string, SxProps>;
 
 type SettingsDialogProps = {
     isShow: boolean,
@@ -73,7 +72,6 @@ const currentWeatherQuery = gql`
 `;
 
 export default ({style}: { style?: React.CSSProperties }) => {
-    const classes = useStyles();
     const [city, setCity] = useState(kioskLocalStorage.weatherCity);
     const [isShow, show, hide] = useBoolState();
 
@@ -83,7 +81,7 @@ export default ({style}: { style?: React.CSSProperties }) => {
 
     return (
         <React.Fragment>
-            <div className={classes.body} onClick={show} style={style}>
+            <Box sx={styles.body} onClick={show} style={style}>
                 <If condition={!city}>
                     <Typography>
                         Click here to set the city!
@@ -91,14 +89,14 @@ export default ({style}: { style?: React.CSSProperties }) => {
                 </If>
                 {data ? (
                     <React.Fragment>
-                        <div className={classes.text}>
-                            <div className={classes.value}>{Math.round(data.weather.temperature)}°C</div>
-                            <div className={classes.city}>{city}</div>
-                        </div>
+                        <Box sx={styles.text}>
+                            <Box sx={styles.value}>{Math.round(data.weather.temperature)}°C</Box>
+                            <Box sx={styles.city}>{city}</Box>
+                        </Box>
                         <img src={data.weather.conditionsImageUrl} alt={data.weather.conditionsImageUrl}/>
                     </React.Fragment>
                 ) : null}
-            </div>
+            </Box>
             <SettingsDialog
                 isShow={isShow}
                 hide={hide}

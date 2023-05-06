@@ -1,7 +1,9 @@
-import * as React from "react";
-import {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import CheckIcon from '@mui/icons-material/Check';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
+    Box,
     Divider,
     Drawer,
     IconButton,
@@ -12,21 +14,21 @@ import {
     ListItemText,
     Menu,
     MenuItem,
-} from "@material-ui/core";
-import {ClockPanel} from "./dashboards/Clock";
-import ActiveTimerDialog from "./ActiveTimerDialog";
-import {FormattedMessage} from "react-intl";
+    SxProps,
+} from "@mui/material";
+import * as React from "react";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useBoolState } from "../hooks";
 import ActiveAlarmPage from "./ActiveAlarmPage";
-import {kioskLocalStorage} from "./tools";
-import MainDashboard from "./dashboards/main/Container";
-import {useBoolState} from "../hooks";
-import MenuIcon from '@material-ui/icons/Menu';
+import ActiveTimerDialog from "./ActiveTimerDialog";
 import DialogList from "./DialogList";
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import CheckIcon from '@material-ui/icons/Check';
+import { ClockPanel } from "./dashboards/Clock";
+import MainDashboard from "./dashboards/main/Container";
+import { kioskLocalStorage } from "./tools";
 
-const useStyles = makeStyles({
+
+const styles = {
     root: {
         height: "100%",
     },
@@ -44,7 +46,7 @@ const useStyles = makeStyles({
         width: "100%",
         height: "100%",
     },
-});
+} satisfies Record<string, SxProps>;
 
 type DashboardDescriptor = {
     name: string,
@@ -60,7 +62,6 @@ const dashboards: DashboardDescriptor[] = [{
 }];
 
 export default () => {
-    const classes = useStyles();
     const [selectedDashboard, setSelectedDashboard] = useState(kioskLocalStorage.selectedDashboard);
     const [isShowDrawer, showDrawer, hideDrawer] = useBoolState();
     const [dashboardMenuAnchorEl, setDashboardMenuAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -70,7 +71,7 @@ export default () => {
     }
 
     return (
-        <div className={classes.root}>
+        <Box sx={styles.root}>
             <Drawer anchor="left" open={isShowDrawer} onClose={hideDrawer}>
                 <List>
                     <ListItem button onClick={ev => setDashboardMenuAnchorEl(ev.currentTarget)}>
@@ -94,7 +95,7 @@ export default () => {
                     horizontal: "right",
                     vertical: "top",
                 }}
-                onExited={hideDrawer}
+                TransitionProps={{onExited: hideDrawer}}
             >
                 {dashboards.map((desc, idx) => (
                     <MenuItem onClick={() => {
@@ -111,7 +112,7 @@ export default () => {
                     </MenuItem>
                 ))}
             </Menu>
-            <div className={classes.main}>
+            <Box sx={styles.main}>
                 <ActiveTimerDialog/>
                 <ActiveAlarmPage/>
                 {dashboards.map((desc, idx) => {
@@ -119,19 +120,19 @@ export default () => {
                         return null;
                     const Component = desc.component;
                     return (
-                        <div
-                            className={classes.dashboardContainer}
+                        <Box
+                            sx={styles.dashboardContainer}
                             key={desc.name}>
                             <Component/>
-                        </div>
+                        </Box>
                     );
                 })}
-            </div>
-            <div className={classes.menu}>
+            </Box>
+            <Box sx={styles.menu}>
                 <IconButton onClick={showDrawer}>
                     <MenuIcon/>
                 </IconButton>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 }

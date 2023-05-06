@@ -40,7 +40,7 @@ app = Starlette(
         Route("/api/graphql", GraphQLApp(schema, executor_class=AsyncioExecutor)),
         Route("/rpi-kiosk", rpi_kiosk),
         Route("/admin/{path:path}", admin),
-        Route("/", index),
+        Route("/{path:path}", index),
         WebSocketRoute("/api/subscribe", SubscriptionApp(schema)),
     ],
     middleware=[

@@ -1,11 +1,11 @@
+import { colors, createMuiTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {colors, createMuiTheme, CssBaseline, MuiThemeProvider} from "@material-ui/core";
 
 
 const darkTheme = createMuiTheme({
     palette: {
-        type: 'dark',
+        mode: 'dark',
         primary: colors.cyan,
         secondary: colors.pink,
     },
@@ -14,12 +14,12 @@ const darkTheme = createMuiTheme({
 
 const App = () => {
     return (
-        <MuiThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={darkTheme}>
             <CssBaseline/>
             <div style={{padding: 20}}>
                 admin
             </div>
-        </MuiThemeProvider>
+        </ThemeProvider>
     );
 }
 

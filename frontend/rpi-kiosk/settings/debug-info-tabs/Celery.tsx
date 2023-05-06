@@ -1,12 +1,12 @@
+import { gql, useQuery } from "@apollo/client";
 import * as React from "react";
-import {gql, useQuery} from "@apollo/client";
 
-import {LinearProgress, Table, TableBody, TableCell, TableRow} from "@material-ui/core";
-import {FormattedMessage} from "react-intl";
-import {BoolIcon} from "../../widgets";
+import { LinearProgress, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import dayjs from "dayjs";
-import {CeleryInfoQuery} from "./__generated__/CeleryInfoQuery";
+import { FormattedMessage } from "react-intl";
 import FormattedTableHead from "../../FormattedTableHead";
+import { BoolIcon } from "../../widgets";
+import { CeleryInfoQuery } from "./__generated__/CeleryInfoQuery";
 
 const query = gql`
     query CeleryInfoQuery {

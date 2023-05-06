@@ -1,11 +1,11 @@
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { DialogActions, Slide } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
 import * as React from "react";
-import {useEffect, useRef} from "react";
-import {TransitionProps} from "@material-ui/core/transitions";
-import {DialogActions, Slide} from "@material-ui/core";
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/Check';
-import {kioskLocalStorage} from "./tools";
-import {FormattedButton} from "./translations";
+import { useEffect, useRef } from "react";
+import { kioskLocalStorage } from "./tools";
+import { FormattedButton } from "./translations";
 
 
 type IfCompProps = {
@@ -19,14 +19,14 @@ export const If = ({condition, children, else_ = null}: IfCompProps) => (
 );
 
 export const SlideUp = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    props: TransitionProps & { children: React.ReactElement<any, any> },
     ref: React.Ref<unknown>,
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export const SlideDown = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    props: TransitionProps & { children: React.ReactElement<any, any> },
     ref: React.Ref<unknown>,
 ) {
     return <Slide direction="down" ref={ref} {...props} />;

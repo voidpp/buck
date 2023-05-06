@@ -20,6 +20,7 @@ module.exports = {
     entry: {
         rpiKiosk: "./frontend/rpiKiosk.tsx",
         admin: "./frontend/admin.tsx",
+        index: "./frontend/index.tsx",
     },
     output: {
         filename: "[name]-bundle.js",

@@ -1,8 +1,8 @@
-import * as React from "react";
-import {useEffect, useRef, useState} from "react";
-import {useInterval} from "../../hooks";
+import { Box, SxProps } from "@mui/material";
 import dayjs from 'dayjs';
-import {makeStyles} from "@material-ui/core/styles";
+import * as React from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInterval } from "../../hooks";
 
 const now = () => {
     const time = dayjs(new Date());
@@ -34,7 +34,7 @@ export const ClockWidget = ({style, className}: { style?: React.CSSProperties, c
     );
 }
 
-const useStyles = makeStyles({
+const styles = {
     root: {
         display: "flex",
         width: "100%",
@@ -44,11 +44,10 @@ const useStyles = makeStyles({
         userSelect: "none",
         paddingTop: ".15em",
     },
-});
+} satisfies Record<string, SxProps>;
 
 
 export const ClockPanel = () => {
-    const classes = useStyles();
     const containerRef = useRef<HTMLDivElement>(null);
     const [fontSize, setFontSize] = useState(10);
 
@@ -57,8 +56,8 @@ export const ClockPanel = () => {
     }, []);
 
     return (
-        <div className={classes.root} ref={containerRef} style={{fontSize}}>
+        <Box sx={styles.root} ref={containerRef} style={{fontSize}}>
             <ClockWidget/>
-        </div>
+        </Box>
     );
 }

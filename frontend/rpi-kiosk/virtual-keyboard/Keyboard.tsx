@@ -1,9 +1,9 @@
+import { Box, SxProps } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import {Layout, SpecialKeys} from "./layouts";
-import {makeStyles} from "@material-ui/core/styles";
-import {Context} from "./types";
+import { useState } from "react";
 import Key from "./Key";
+import { Layout, SpecialKeys } from "./layouts";
+import { Context } from "./types";
 
 export type KeyboardProps = {
     value: string,
@@ -11,7 +11,7 @@ export type KeyboardProps = {
     layout: Layout,
 };
 
-const useStyles = makeStyles({
+const styles = {
     row: {
         display: "flex",
         flexGrow: 1,
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
     },
-});
+} satisfies Record<string, SxProps>;
 
 const defaultContext: Context = {
     capsLock: false,
@@ -30,7 +30,6 @@ const defaultContext: Context = {
 export default (props: KeyboardProps) => {
     const {value, onChange, layout} = props;
     const [context, setContext] = useState<Context>(defaultContext);
-    const classes = useStyles();
 
     const clickKey = (key: string) => {
         let val = value;
@@ -52,12 +51,12 @@ export default (props: KeyboardProps) => {
     }
 
     return (
-        <div className={classes.container}>
+        <Box sx={styles.container}>
             {layout.map((row, idx) => (
-                <div key={idx} className={classes.row}>
+                <Box key={idx} sx={styles.row}>
                     {row.map(k => <Key context={context} keyString={k} key={k} onClick={clickKey}/>)}
-                </div>
+                </Box>
             ))}
-        </div>
+        </Box>
     );
 }

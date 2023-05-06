@@ -1,10 +1,10 @@
-import {gql, useQuery} from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
+import { LinearProgress, Table, TableBody } from "@mui/material";
 import * as React from "react";
-import {LinearProgress, Table, TableBody} from "@material-ui/core";
 
 import dayjs from "dayjs";
-import {FormattedFieldRow} from "./tools";
-import {DebugInfoQuery} from "./__generated__/DebugInfoQuery";
+import { DebugInfoQuery } from "./__generated__/DebugInfoQuery";
+import { FormattedFieldRow } from "./tools";
 
 const query = gql`
     query DebugInfoQuery {

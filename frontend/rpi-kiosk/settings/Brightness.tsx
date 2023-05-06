@@ -1,14 +1,14 @@
-import {IconButton, Slider} from "@material-ui/core";
-import BrightnessLowIcon from "@material-ui/icons/BrightnessLow";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
+import { gql, useApolloClient } from "@apollo/client";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import BrightnessAutoIcon from '@mui/icons-material/BrightnessAuto';
+import BrightnessLowIcon from "@mui/icons-material/BrightnessLow";
+import { Box, IconButton, Slider } from "@mui/material";
 import * as React from "react";
-import {useEffect, useState} from "react";
-import {useCommonStyles} from "./styles";
-import {gql, useApolloClient} from "@apollo/client";
-import {GetBrightnessQuery} from "./__generated__/GetBrightnessQuery";
-import {SetBrightnessMutation, SetBrightnessMutationVariables} from "./__generated__/SetBrightnessMutation";
-import BrightnessAutoIcon from '@material-ui/icons/BrightnessAuto';
-import {SetAutoBacklightEnabledMutation, SetAutoBacklightEnabledMutationVariables} from "./__generated__/SetAutoBacklightEnabledMutation";
+import { useEffect, useState } from "react";
+import { GetBrightnessQuery } from "./__generated__/GetBrightnessQuery";
+import { SetAutoBacklightEnabledMutation, SetAutoBacklightEnabledMutationVariables } from "./__generated__/SetAutoBacklightEnabledMutation";
+import { SetBrightnessMutation, SetBrightnessMutationVariables } from "./__generated__/SetBrightnessMutation";
+import { commonStyles } from "./styles";
 
 
 const getBrightnessQuery = gql`
@@ -38,7 +38,6 @@ const minValue = 5;
 export default () => {
     const [brightness, setBrightness] = useState(0);
     const [isAutoEnabled, setAutoEnabled] = useState(false);
-    const classes = useCommonStyles();
     const apolloClient = useApolloClient();
 
     useEffect(() => {
@@ -71,7 +70,7 @@ export default () => {
     }
 
     return (
-        <div className={classes.slider}>
+        <Box sx={commonStyles.slider}>
             <IconButton color={isAutoEnabled ? "primary" : "default"} onClick={toggleAutoEnabled}>
                 <BrightnessAutoIcon fontSize="small"/>
             </IconButton>
@@ -87,6 +86,6 @@ export default () => {
             <IconButton onClick={() => updateBrightness(100)} disabled={isAutoEnabled}>
                 <Brightness7Icon fontSize="small"/>
             </IconButton>
-        </div>
+        </Box>
     );
 };

@@ -1,13 +1,13 @@
+import { gql, useQuery } from "@apollo/client";
 import * as React from "react";
-import {gql, useQuery} from "@apollo/client";
 
+import { Dialog, DialogContent, List, ListItem } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+import { useBoolState } from "../hooks";
+import { GroupList } from "./__generated__/GroupList";
+import { FormattedDialogTitle } from "./dialogs";
+import { FormattedButton } from "./translations";
 import TextFieldDialog from "./virtual-keyboard/TextFieldDialog";
-import {FormattedButton} from "./translations";
-import {useBoolState} from "../hooks";
-import {Dialog, DialogContent, List, ListItem} from "@material-ui/core";
-import {FormattedDialogTitle} from "./dialogs";
-import {FormattedMessage} from "react-intl";
-import {GroupList} from "./__generated__/GroupList";
 
 const groupListQuery = gql`
     query GroupList {

@@ -1,8 +1,8 @@
+import { Dialog, DialogContent, List, ListItem, ListItemText, ListSubheader } from "@mui/material";
 import * as React from "react";
-import {useBoolState} from "../../hooks";
-import {Dialog, DialogContent, List, ListItem, ListItemText, ListSubheader} from "@material-ui/core";
-import {FormattedButton} from "../translations";
-import {useGroupedPredefinedTimerList} from "../hooks";
+import { useBoolState } from "../../hooks";
+import { useGroupedPredefinedTimerList } from "../hooks";
+import { FormattedButton } from "../translations";
 
 type Props = {
     onSelect: (length: string, name: string, id: number, soundFile: string) => void,
