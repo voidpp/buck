@@ -18,7 +18,14 @@ const darkTheme = createTheme({
     },
     typography: {
         fontSize: 22,
-    }
+    },
+    components: {
+        MuiTextField: {
+            defaultProps: {
+                variant: 'standard',
+            },
+        },
+    },
 });
 
 const store = configureStore();

@@ -44,6 +44,7 @@ const Content = ({hideDialog, label, setEdited, value, onChange}: ContentProps) 
                     value={layoutName}
                     onChange={ev => setLayoutName(ev.target.value as LayoutName)}
                     style={{minWidth: 150}}
+                    variant='standard'
                 >
                     {objectKeys(layouts).map(name => (
                         <MenuItem key={name} value={name}>

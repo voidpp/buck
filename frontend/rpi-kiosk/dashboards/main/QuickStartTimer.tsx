@@ -90,7 +90,6 @@ const styles = {
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
         gridGap: '10px',
-        paddingBottom: '15px',
     },
 } satisfies Record<string, SxProps>;
 
@@ -175,7 +174,7 @@ const Picker = ({onDone}: { onDone: () => void }) => {
                     <PickerOption {...op} onSelect={val => setValue(value + val)} key={`${op.amount}${op.unit}`}/>
                 )}
             </Box>
-            <Box style={{fontSize: "1.5em"}}><Timedelta value={value}/></Box>
+            <Box sx={{fontSize: "1.5em", pt: 1}}><Timedelta value={value}/></Box>
             <Box>
                 <Button size="large" color="primary" onClick={start} disabled={!value}>start</Button>
                 <Button size="large" color="secondary" onClick={e => setValue(0)}>clear</Button>
@@ -214,7 +213,7 @@ export default ({style, className}: { style?: React.CSSProperties, className?: s
                     <StartTimerDialogButton/>
                 </Box>
                 <Divider/>
-                <DialogContent style={{display: "flex"}}>
+                <DialogContent sx={{display: "flex", py: 1}}>
                     <Content onDone={hide}/>
                     <Box style={{borderRight: "1px solid grey"}}/>
                     <Picker onDone={hide}/>

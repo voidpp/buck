@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import * as React from "react";
 
 
@@ -6,7 +6,7 @@ import * as React from "react";
 export const MainFrame = () => {
     return (
         <Box>
-            <Button>submit</Button>
+            index
         </Box>
     );
 }
