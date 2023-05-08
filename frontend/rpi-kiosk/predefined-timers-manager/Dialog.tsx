@@ -1,14 +1,13 @@
-import * as React from "react";
-import {useState} from "react";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    createStyles,
     Dialog,
     DialogContent,
     IconButton,
-    makeStyles,
+    SxProps,
     Table,
     TableBody,
     TableCell,
@@ -16,41 +15,38 @@ import {
     TableRow,
     Theme,
     Typography
-} from "@material-ui/core";
-import {FormattedDialogTitle} from "../dialogs";
-import {useGroupedPredefinedTimerList} from "../hooks";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {FormattedTableCell} from "../translations";
-import DeleteButton from "./DeleteButton";
-import {useBoolState} from "../../hooks";
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import UpdateButton from "./UpdateButton";
-import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
-import {DialogProps} from "../types";
+} from "@mui/material";
+import * as React from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useBoolState } from "../../hooks";
+import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
+import { FormattedDialogTitle } from "../dialogs";
+import { useGroupedPredefinedTimerList } from "../hooks";
+import { FormattedTableCell } from "../translations";
+import { DialogProps } from "../types";
+import DeleteButton from "./DeleteButton";
+import UpdateButton from "./UpdateButton";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-        },
-        heading: {
-            fontSize: theme.typography.pxToRem(15),
-            flexBasis: '33.33%',
-            flexShrink: 0,
-        },
-        secondaryHeading: {
-            fontSize: theme.typography.pxToRem(15),
-            color: theme.palette.text.secondary,
-        },
-    }),
-);
+const sytles = {
+    root: {
+        width: '100%',
+    },
+    heading: {
+        fontSize: (theme) => theme.typography.pxToRem(15),
+        flexBasis: '33.33%',
+        flexShrink: 0,
+    },
+    secondaryHeading: {
+        fontSize: (theme) => theme.typography.pxToRem(15),
+        color: (theme) => theme.palette.text.secondary,
+    },
+} satisfies Record<string, SxProps<Theme>>;
 
 const Content = ({close}: { close: () => void }) => {
     const {timers, refetch} = useGroupedPredefinedTimerList();
     const [showGrpId, setShowGrpId] = useState<number>();
     const [isShowCreateTimerDialog, showCreateTimerDialog, hideCreateTimerDialog] = useBoolState();
-    const classes = useStyles();
 
     const openGroup = (grpId: number) => (ev, isExpanded: boolean) => {
         setShowGrpId(isExpanded ? grpId : null);
@@ -77,8 +73,8 @@ const Content = ({close}: { close: () => void }) => {
                         elevation={5}
                     >
                         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Typography className={classes.heading}>{grp.group.name}</Typography>
-                            <Typography className={classes.heading}>
+                            <Typography sx={sytles.heading}>{grp.group.name}</Typography>
+                            <Typography sx={sytles.heading}>
                                 <FormattedMessage id="timersCount" values={{cnt: grp.predefinedTimers.length}}/>
                             </Typography>
                         </AccordionSummary>

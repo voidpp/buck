@@ -1,18 +1,18 @@
-import {Icon, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
-import {FormattedMessage} from "react-intl";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import HistoryIcon from "@mui/icons-material/History";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import SettingsIcon from '@mui/icons-material/Settings';
+import ViewListIcon from "@mui/icons-material/ViewList";
+import { Icon, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import {DialogProps} from "./types";
-import StartTimerDialog from "./start-timer/StartTimerDialog";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 import SavePredefinedTimerDialog from "./SavePredefinedTimerDialog";
-import ViewListIcon from "@material-ui/icons/ViewList";
-import PredefinedTimerManagerDialog from "./predefined-timers-manager/Dialog";
-import HistoryIcon from "@material-ui/icons/History";
 import TimerHistoryDialog from "./TimerHistoryDialog";
-import SettingsIcon from '@material-ui/icons/Settings';
+import PredefinedTimerManagerDialog from "./predefined-timers-manager/Dialog";
 import SettingsDialog from "./settings/Dialog";
+import StartTimerDialog from "./start-timer/StartTimerDialog";
+import { DialogProps } from "./types";
 
 type DialogState = Record<string, boolean>;
 

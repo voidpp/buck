@@ -1,10 +1,10 @@
+import { gql, useQuery } from "@apollo/client";
+import { Dialog, DialogContent, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import * as React from "react";
-import {Dialog, DialogContent, Table, TableBody, TableCell, TableRow} from "@material-ui/core";
-import {gql, useQuery} from "@apollo/client";
 
-import {FormattedDialogTitle} from "./dialogs";
-import {Timer} from "../api";
-import {TimerEventsQuery} from "./__generated__/TimerEventsQuery";
+import { Timer } from "../api";
+import { TimerEventsQuery } from "./__generated__/TimerEventsQuery";
+import { FormattedDialogTitle } from "./dialogs";
 
 const timerEventsQuery = gql`
     query TimerEventsQuery {

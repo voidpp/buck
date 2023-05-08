@@ -28,4 +28,4 @@ async def admin(request: Request):
 
 
 async def index(request: Request):
-    return RedirectResponse(url='/admin')
+    return render_template(request, "index.jinja2")

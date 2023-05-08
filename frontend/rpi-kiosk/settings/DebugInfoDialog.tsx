@@ -1,15 +1,13 @@
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import { Dialog, DialogContent, Divider, IconButton, Tab, Tabs } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import {useBoolState} from "../../hooks";
-import {Dialog, DialogContent, Divider, IconButton, Tab, Tabs, useTheme} from "@material-ui/core";
-import {FormattedDialogTitle} from "../dialogs";
-import System from "./debug-info-tabs/System";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useBoolState } from "../../hooks";
+import { FormattedDialogTitle } from "../dialogs";
 import Celery from "./debug-info-tabs/Celery";
-import {FormattedMessage} from "react-intl";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import {CreateCSSProperties} from "@material-ui/core/styles/withStyles";
 import Misc from "./debug-info-tabs/Misc";
+import System from "./debug-info-tabs/System";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -30,16 +28,9 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-    tabHeader: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-    } as CreateCSSProperties,
-}));
-
 export default ({buttonStyle}: { buttonStyle?: React.CSSProperties }) => {
     const [isShow, show, hide] = useBoolState();
     const [tabIndex, setTabIndex] = useState(0);
-    const classes = useStyles();
 
     return (
         <React.Fragment>
@@ -54,7 +45,7 @@ export default ({buttonStyle}: { buttonStyle?: React.CSSProperties }) => {
                         value={tabIndex}
                         onChange={(ev, index) => setTabIndex(index)}
                         indicatorColor="primary"
-                        className={classes.tabHeader}
+                        sx={{borderBottom: theme => `1px solid ${theme.palette.divider}`}}
                     >
                         <Tab label={<FormattedMessage id="system"/>} style={{textTransform: "none"}}/>
                         <Tab label={<FormattedMessage id="celery"/>} style={{textTransform: "none"}}/>

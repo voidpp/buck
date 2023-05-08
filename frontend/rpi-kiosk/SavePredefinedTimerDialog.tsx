@@ -1,18 +1,18 @@
+import { gql, useMutation } from "@apollo/client";
+import { Dialog, DialogContent } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import {Dialog, DialogContent} from "@material-ui/core";
-import {FormattedMessage} from "react-intl";
-import {FormattedDialogTitle} from "./dialogs";
-import {gql, useMutation} from "@apollo/client";
-import {FormErrorHelper} from "../forms/formErrorHelper";
-import {ErrorList} from "./forms";
-import TextFieldDialog from "./virtual-keyboard/TextFieldDialog";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { FormErrorHelper } from "../forms/formErrorHelper";
 import GroupSelectInput from "./GroupSelectInput";
+import { FormattedDialogTitle } from "./dialogs";
+import { ErrorList } from "./forms";
+import TextFieldDialog from "./virtual-keyboard/TextFieldDialog";
 
-import {DialogProps} from "./types";
 import SoundSelector from "./SoundSelector";
-import {SavePredefinedTimerMutation, SavePredefinedTimerMutationVariables} from "./__generated__/SavePredefinedTimerMutation";
-import {DialogActionButtons} from "./widgets";
+import { SavePredefinedTimerMutation, SavePredefinedTimerMutationVariables } from "./__generated__/SavePredefinedTimerMutation";
+import { DialogProps } from "./types";
+import { DialogActionButtons } from "./widgets";
 
 const saveTimerMutation = gql`
     mutation SavePredefinedTimerMutation($name: String!, $length: String!, $groupName: String, $id: Int, $soundFile: String) {
@@ -64,7 +64,7 @@ export default ({show, close, data, onSuccess}: Props) => {
     }
 
     return (
-        <Dialog open={show} onClose={close} onExited={resetForm}>
+        <Dialog open={show} onClose={close} TransitionProps={{onExited: resetForm}}>
             <FormattedDialogTitle msgId={data ? "updateTimer" : "createTimer"} onCloseIconClick={close}/>
             <DialogContent>
                 <TextFieldDialog

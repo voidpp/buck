@@ -1,18 +1,18 @@
+import { useMutation } from "@apollo/client";
+import { Dialog, DialogContent } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import {Dialog, DialogContent} from "@material-ui/core";
-import {FormattedDialogTitle} from "../dialogs";
-import {useMutation} from "@apollo/client";
-import {FormattedMessage} from "react-intl";
-import {ErrorList} from "../forms";
-import {FormErrorHelper} from "../../forms/formErrorHelper";
-import PredefinedTimers from "./PredefinedTimers";
-import TextFieldDialog from "../virtual-keyboard/TextFieldDialog";
-import {DialogProps} from "../types";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { FormErrorHelper } from "../../forms/formErrorHelper";
 import SoundSelector from "../SoundSelector";
-import {startTimerMutation} from "../queries";
-import {StartTimerMutation, StartTimerMutationVariables} from "../__generated__/StartTimerMutation";
-import {DialogActionButtons} from "../widgets";
+import { StartTimerMutation, StartTimerMutationVariables } from "../__generated__/StartTimerMutation";
+import { FormattedDialogTitle } from "../dialogs";
+import { ErrorList } from "../forms";
+import { startTimerMutation } from "../queries";
+import { DialogProps } from "../types";
+import TextFieldDialog from "../virtual-keyboard/TextFieldDialog";
+import { DialogActionButtons } from "../widgets";
+import PredefinedTimers from "./PredefinedTimers";
 
 
 
@@ -50,7 +50,7 @@ export default ({show, close, onDone}: DialogProps) => {
     }
 
     return (
-        <Dialog open={show} onClose={close} onExited={resetForm}>
+        <Dialog open={show} onClose={close} TransitionProps={{onExited: resetForm}} >
             <FormattedDialogTitle msgId="startTimer" onCloseIconClick={close}>
                 <PredefinedTimers onSelect={onSelectPredefinedTimer} style={{marginLeft: "1em"}}/>
             </FormattedDialogTitle>

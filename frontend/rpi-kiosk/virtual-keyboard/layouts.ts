@@ -8,7 +8,7 @@ export enum SpecialKeys {
 
 export type Layout = string[][];
 
-export const layouts: { [s: string]: Layout } = {
+export const layouts = {
     latin: [
         ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SpecialKeys.Backspace],
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -29,6 +29,6 @@ export const layouts: { [s: string]: Layout } = {
         ['1', '2', '3'],
         [SpecialKeys.Placeholder, '0', SpecialKeys.Backspace]
     ]
-}
+} satisfies Record<string, Layout>;
 
 export type LayoutName = keyof typeof layouts;

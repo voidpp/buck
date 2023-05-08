@@ -1,8 +1,8 @@
+import { Dialog, Table, TableBody, useTheme } from "@mui/material";
 import * as React from "react";
-import {Dialog, Table, TableBody, useTheme} from "@material-ui/core";
-import {FormattedFieldRow} from "./tools";
-import {useBoolState} from "../../../hooks";
-import {FormattedButton} from "../../translations";
+import { useBoolState } from "../../../hooks";
+import { FormattedButton } from "../../translations";
+import { FormattedFieldRow } from "./tools";
 
 const size = 350;
 

@@ -1,19 +1,18 @@
+import { gql, useMutation, useQuery } from "@apollo/client";
 import * as React from "react";
-import {useState} from "react";
-import {gql, useMutation, useQuery} from "@apollo/client";
+import { useState } from "react";
 
-import {Button, Dialog, DialogContent, Divider, IconButton, List, ListItem} from "@material-ui/core";
-import AlarmAddIcon from '@material-ui/icons/AlarmAdd';
-import {useBoolState} from "../../../hooks";
+import AlarmAddIcon from '@mui/icons-material/AlarmAdd';
+import { Box, Button, Dialog, DialogContent, Divider, IconButton, List, ListItem, SxProps } from "@mui/material";
+import { useBoolState } from "../../../hooks";
 
-import {startTimerMutation} from "../../queries";
-import {QuickTimerList, QuickTimerList_predefinedTimers} from "./__generated__/QuickTimerList";
-import {StartTimerMutation, StartTimerMutationVariables} from "../../__generated__/StartTimerMutation";
-import {makeStyles} from "@material-ui/core/styles";
-import {FormattedMessage} from "react-intl";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import { FormattedMessage } from "react-intl";
+import { StartTimerMutation, StartTimerMutationVariables } from "../../__generated__/StartTimerMutation";
+import { startTimerMutation } from "../../queries";
 import StartTimerDialog from "../../start-timer/StartTimerDialog";
-import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
-import {Timedelta} from "../../widgets";
+import { Timedelta } from "../../widgets";
+import { QuickTimerList, QuickTimerList_predefinedTimers } from "./__generated__/QuickTimerList";
 
 const quickTimerListQuery = gql`
     query QuickTimerList {
@@ -29,18 +28,17 @@ const quickTimerListQuery = gql`
     }
 `;
 
-const useContentStyles = makeStyles({
+const contentStyles = {
     list: {
         fontSize: "1.1em",
-        paddingBottom: 9,
-        paddingTop: 9,
+        paddingBottom: '9px',
+        paddingTop: '9px',
     }
-});
+} satisfies Record<string, SxProps>;
 
 const Content = ({onDone}: { onDone: () => void }) => {
     const {data} = useQuery<QuickTimerList>(quickTimerListQuery, {fetchPolicy: "cache-and-network"});
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);
-    const classes = useContentStyles();
 
     if (!data)
         return null;
@@ -63,7 +61,7 @@ const Content = ({onDone}: { onDone: () => void }) => {
     return (
         <List>
             {data.predefinedTimers.slice(0, 6).map(timer => (
-                <ListItem button key={timer.id} onClick={createStartTimer(timer)} className={classes.list}>
+                <ListItem button key={timer.id} onClick={createStartTimer(timer)} sx={contentStyles.list}>
                     {timer.group ? (timer.group.name + " / ") : ""}{timer.name} ({timer.length})
                 </ListItem>
             ))}
@@ -71,7 +69,7 @@ const Content = ({onDone}: { onDone: () => void }) => {
     );
 }
 
-const useStyles = makeStyles({
+const styles = {
     title: {
         padding: "8px 39px",
         fontSize: "1.2em",
@@ -82,7 +80,7 @@ const useStyles = makeStyles({
         textTransform: "lowercase",
     },
     picker: {
-        marginLeft: 15,
+        marginLeft: '15px',
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -91,10 +89,9 @@ const useStyles = makeStyles({
     optionsContainer: {
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
-        gridGap: 10,
-        paddingBottom: 15,
+        gridGap: '10px',
     },
-});
+} satisfies Record<string, SxProps>;
 
 type Unit = "s" | "m" | "h";
 
@@ -107,11 +104,10 @@ const units: { [K in Unit]: number } = {
 type Option = { amount: number, unit: Unit };
 
 const PickerOption = ({amount, unit, onSelect}: { onSelect: (value: number) => void } & Option) => {
-    const classes = useStyles();
     return (
         <Button
             onClick={e => onSelect(amount * units[unit])}
-            className={classes.pickerOption}
+            sx={styles.pickerOption}
             variant="contained"
             size="large"
             fullWidth
@@ -155,7 +151,6 @@ function timeToLength(value: number): string {
 }
 
 const Picker = ({onDone}: { onDone: () => void }) => {
-    const classes = useStyles();
     const [value, setValue] = useState(0);
     const [startTimer] = useMutation<StartTimerMutation, StartTimerMutationVariables>(startTimerMutation);
 
@@ -173,18 +168,18 @@ const Picker = ({onDone}: { onDone: () => void }) => {
     }
 
     return (
-        <div className={classes.picker}>
-            <div className={classes.optionsContainer}>
+        <Box sx={styles.picker}>
+            <Box sx={styles.optionsContainer}>
                 {options.map(op =>
                     <PickerOption {...op} onSelect={val => setValue(value + val)} key={`${op.amount}${op.unit}`}/>
                 )}
-            </div>
-            <div style={{fontSize: "1.5em"}}><Timedelta value={value}/></div>
-            <div>
+            </Box>
+            <Box sx={{fontSize: "1.5em", pt: 1}}><Timedelta value={value}/></Box>
+            <Box>
                 <Button size="large" color="primary" onClick={start} disabled={!value}>start</Button>
                 <Button size="large" color="secondary" onClick={e => setValue(0)}>clear</Button>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 
 }
@@ -204,27 +199,26 @@ const StartTimerDialogButton = () => {
 
 export default ({style, className}: { style?: React.CSSProperties, className?: string }) => {
     const [isShow, show, hide] = useBoolState();
-    const classes = useStyles();
 
     return (
-        <div style={style} className={className}>
+        <Box style={style} className={className}>
             <IconButton onClick={show}>
                 <AlarmAddIcon fontSize="large"/>
             </IconButton>
             <Dialog open={isShow} onClose={hide} maxWidth="md">
-                <div className={classes.title}>
+                <Box sx={styles.title}>
                     <span style={{flexGrow: 1}}>
                         <FormattedMessage id="quickStartTitle"/>
                     </span>
                     <StartTimerDialogButton/>
-                </div>
+                </Box>
                 <Divider/>
-                <DialogContent style={{display: "flex"}}>
+                <DialogContent sx={{display: "flex", py: 1}}>
                     <Content onDone={hide}/>
-                    <div style={{borderRight: "1px solid grey"}}/>
+                    <Box style={{borderRight: "1px solid grey"}}/>
                     <Picker onDone={hide}/>
                 </DialogContent>
             </Dialog>
-        </div>
+        </Box>
     );
 };

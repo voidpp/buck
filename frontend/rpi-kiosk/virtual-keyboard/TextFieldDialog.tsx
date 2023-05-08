@@ -1,14 +1,14 @@
+import CloseIcon from '@mui/icons-material/Close';
+import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, MenuItem, Select, TextField, TextFieldProps } from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
-import {useBoolState} from "../../hooks";
-import {Dialog, DialogActions, DialogContent, DialogTitle, IconButton, MenuItem, Select, TextField, TextFieldProps} from "@material-ui/core";
+import { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useBoolState } from "../../hooks";
+import { objectKeys } from "../../tools";
+import { FormattedButton } from "../translations";
+import { SlideUp } from "../widgets";
 import Keyboard from "./Keyboard";
-import {FormattedButton} from "../translations";
-import {LayoutName, layouts} from "./layouts";
-import {objectKeys} from "../../tools";
-import {SlideUp} from "../widgets";
-import CloseIcon from '@material-ui/icons/Close';
-import {FormattedMessage} from "react-intl";
+import { LayoutName, layouts } from "./layouts";
 
 
 type Props = TextFieldProps;
@@ -44,6 +44,7 @@ const Content = ({hideDialog, label, setEdited, value, onChange}: ContentProps) 
                     value={layoutName}
                     onChange={ev => setLayoutName(ev.target.value as LayoutName)}
                     style={{minWidth: 150}}
+                    variant='standard'
                 >
                     {objectKeys(layouts).map(name => (
                         <MenuItem key={name} value={name}>

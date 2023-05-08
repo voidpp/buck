@@ -1,6 +1,6 @@
+import { Button, ButtonProps, TableCell, TableCellProps } from "@mui/material";
 import * as React from "react";
-import {Button, ButtonProps, TableCell, TableCellProps} from "@material-ui/core";
-import {FormattedMessage} from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 type FormattedButtonProps = {
     msgId: string,

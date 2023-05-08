@@ -1,8 +1,8 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton } from "@mui/material";
 import * as React from "react";
-import {IconButton} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import {useBoolState} from "../hooks";
-import ConfirmDialog, {ContentProps} from "./ConfirmDialog";
+import { useBoolState } from "../hooks";
+import ConfirmDialog, { ContentProps } from "./ConfirmDialog";
 
 export default ({onConfirm, messageId, messageVars}: { onConfirm: () => void } & ContentProps) => {
     const [isOpen, open, close] = useBoolState();

@@ -2,7 +2,6 @@ import os
 
 from invoke import Collection
 
-
 from tasks.assets import Frontend, MultiprocessTask
 
 mp_tasks = MultiprocessTask('all')

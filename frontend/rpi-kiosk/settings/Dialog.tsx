@@ -1,12 +1,12 @@
+import { Dialog, DialogContent, Divider } from "@mui/material";
 import * as React from "react";
-import {DialogProps} from "../types";
-import {Dialog, DialogContent, Divider} from "@material-ui/core";
-import {FormattedButton} from "../translations";
-import {FormattedDialogTitle} from "../dialogs";
+import { FormattedMessage } from "react-intl";
+import { FormattedDialogTitle } from "../dialogs";
+import { FormattedButton } from "../translations";
+import { DialogProps } from "../types";
 import Brightness from "./Brightness";
-import Volume from "./Volume";
 import DebugInfoDialog from "./DebugInfoDialog";
-import {FormattedMessage} from "react-intl";
+import Volume from "./Volume";
 
 const FormRow = ({labelId, children}: { labelId: string, children: React.ReactNode }) => (
     <tr>

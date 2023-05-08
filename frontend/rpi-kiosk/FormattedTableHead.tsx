@@ -1,6 +1,6 @@
-import {TableCell, TableCellProps, TableHead, TableRow, Typography} from "@material-ui/core";
+import { TableCell, TableCellProps, TableHead, TableRow, Typography } from "@mui/material";
 import * as React from "react";
-import {FormattedMessage} from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 type FormattedTableHeadProps = {
     labels: string[],

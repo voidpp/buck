@@ -1,8 +1,8 @@
+import HelpIcon from '@mui/icons-material/Help';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import * as React from "react";
-import {Dialog, DialogActions, DialogContent, DialogTitle} from "@material-ui/core";
-import {FormattedButton} from "./translations";
-import HelpIcon from '@material-ui/icons/Help';
-import {FormattedMessage} from "react-intl";
+import { FormattedMessage } from "react-intl";
+import { FormattedButton } from "./translations";
 
 type MessageValues = { [key: string]: any };
 
@@ -45,11 +45,7 @@ export default (props: Props) => {
     }
 
     return (
-        <Dialog
-            open={isOpen}
-            disableBackdropClick
-            onEscapeKeyDown={close}
-        >
+        <Dialog open={isOpen} onClose={close}>
             <DialogTitle>
                 <FormattedMessage id={titleId}/>
             </DialogTitle>
