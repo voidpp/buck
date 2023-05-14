@@ -1,5 +1,5 @@
-import {Error} from "../api";
-import {useState} from "react";
+import { useState } from "react";
+import { Error } from "../graphql-types-and-hooks";
 
 export class FormErrorHelper<TFormData> {
     private readonly errors: Error[];

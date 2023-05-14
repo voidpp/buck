@@ -15,11 +15,10 @@ module.exports = {
             'react-intl': path.resolve(__dirname, 'node_modules/react-intl'),
             '@apollo/react-common': path.resolve(__dirname, 'node_modules/@apollo/react-common'),
             '@apollo/react-hooks': path.resolve(__dirname, 'node_modules/@apollo/react-hooks'),
+            '@': path.resolve(__dirname, 'frontend'),
         },
     },
     entry: {
-        rpiKiosk: "./frontend/rpiKiosk.tsx",
-        admin: "./frontend/admin.tsx",
         index: "./frontend/index.tsx",
     },
     output: {

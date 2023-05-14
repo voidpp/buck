@@ -1,6 +1,6 @@
-import {BackendErrorCode, TStore} from "../types";
-import {setBackendError} from "../actions";
-import {onError} from "@apollo/client/link/error";
+import { BackendErrorCode, TStore } from "@/types";
+import { onError } from "@apollo/client/link/error";
+import { setBackendError } from "../actions";
 
 export const createErrorHandlerLink = (store: TStore) => {
     return onError(({graphQLErrors, networkError, operation, forward}) => {

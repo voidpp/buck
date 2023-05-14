@@ -1,0 +1,27 @@
+
+@keyframes ringing {
+    0% { transform: rotate(0); }
+    1% { transform: rotate(30deg); }
+    5% { transform: rotate(-28deg); }
+    9% { transform: rotate(34deg); }
+    13% { transform: rotate(-32deg); }
+    17% { transform: rotate(30deg); }
+    21% { transform: rotate(-28deg); }
+    25% { transform: rotate(26deg); }
+    29% { transform: rotate(-24deg); }
+    33% { transform: rotate(22deg); }
+    37% { transform: rotate(-20deg); }
+    41% { transform: rotate(18deg); }
+    45% { transform: rotate(-16deg); }
+    49% { transform: rotate(14deg); }
+    53% { transform: rotate(-12deg); }
+    57% { transform: rotate(10deg); }
+    61% { transform: rotate(-8deg); }
+    65% { transform: rotate(6deg); }
+    69% { transform: rotate(-4deg); }
+    73% { transform: rotate(2deg); }
+    77% { transform: rotate(-1deg); }
+    81% { transform: rotate(1deg); }
+    85% { transform: rotate(0); }
+    100% { transform: rotate(0); }
+  }
