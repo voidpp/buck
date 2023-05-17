@@ -25,6 +25,13 @@ const basePalette: ThemeOptions["palette"] = {
 
 const baseTheme = createTheme({
     palette: basePalette,
+    components: {
+        MuiTextField: {
+            defaultProps: {
+                size: "small",
+            },
+        },
+    },
 });
 
 const kioskTheme = createTheme({

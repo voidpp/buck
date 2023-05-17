@@ -7,7 +7,7 @@ import { Box, Dialog, DialogContent, SxProps, Typography } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { TextField } from "../../../../components/virtual-keyboard/TextField";
+import { TextField } from "../../../../components/TextField";
 
 const styles = {
     body: {

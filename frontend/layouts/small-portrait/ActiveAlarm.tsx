@@ -27,6 +27,8 @@ const styles = {
         justifyContent: "center",
         height: "100%",
         flexDirection: "column",
+        backgroundColor: "error.dark",
+        color: "error.contrastText",
     },
     icon: {
         fontSize: "12rem",

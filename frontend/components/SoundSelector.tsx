@@ -6,7 +6,7 @@ import {
     DialogContent,
     IconButton,
     List,
-    ListItem,
+    ListItemButton,
     ListItemSecondaryAction,
     ListItemText,
     TextField,
@@ -69,9 +69,8 @@ export default ({ value, onChange, style }: Props) => {
                 <DialogContent>
                     <List dense>
                         {options.map(option => (
-                            <ListItem
+                            <ListItemButton
                                 key={option.filename}
-                                button
                                 selected={value === option.filename}
                                 onClick={() => {
                                     onChange(option.filename);
@@ -88,7 +87,7 @@ export default ({ value, onChange, style }: Props) => {
                                         <VolumeUpIcon fontSize="small" />
                                     </IconButton>
                                 </ListItemSecondaryAction>
-                            </ListItem>
+                            </ListItemButton>
                         ))}
                     </List>
                 </DialogContent>

@@ -2,33 +2,22 @@ import { Button, ButtonProps, TableCell, TableCellProps } from "@mui/material";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-type FormattedButtonProps = {
-    msgId: string,
-} & ButtonProps;
-
-export const FormattedButton = (props: FormattedButtonProps) => {
-    const props_ = {...props};
-    delete props_.msgId;
-
-    return (
-        <Button color="primary" {...props_}>
-            <FormattedMessage id={props.msgId}/>
-        </Button>
-    )
+type FormattedComponentProps = {
+    msgId: string;
 };
 
-type FormattedTableCellProps = {
-    msgId: string,
-} & TableCellProps;
+type FormattedButtonProps = FormattedComponentProps & ButtonProps;
 
+export const FormattedButton = ({ msgId, ...props }: FormattedButtonProps) => (
+    <Button color="primary" {...props}>
+        <FormattedMessage id={msgId} />
+    </Button>
+);
 
-export const FormattedTableCell = (props: FormattedTableCellProps) => {
-    const props_ = {...props};
-    delete props_.msgId;
+type FormattedTableCellProps = FormattedComponentProps & TableCellProps;
 
-    return (
-        <TableCell {...props_}>
-            <FormattedMessage id={props.msgId}/>
-        </TableCell>
-    )
-}
+export const FormattedTableCell = ({ msgId, ...props }: FormattedTableCellProps) => (
+    <TableCell {...props}>
+        <FormattedMessage id={msgId} />
+    </TableCell>
+);

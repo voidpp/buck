@@ -1,17 +1,16 @@
-import { Dialog, DialogContent } from "@mui/material";
+import { DialogActionButtons } from "@/components/widgets";
+import { SavePredefinedTimerMutationVariables, useSavePredefinedTimerMutation } from "@/graphql-types-and-hooks";
+import { BuckGenericDialogProps } from "@/types";
+import { Dialog, DialogContent, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { FormattedDialogTitle } from "../../components/dialogs";
-import { ErrorList } from "../../components/forms";
-import { TextField } from "../../components/virtual-keyboard/TextField";
-import { FormErrorHelper } from "../../forms/formErrorHelper";
-import GroupSelectInput from "./GroupSelectInput";
-
-import { DialogActionButtons } from "@/components/widgets";
-import { SavePredefinedTimerMutationVariables, useSavePredefinedTimerMutation } from "@/graphql-types-and-hooks";
-import { DialogProps } from "@/types";
-import SoundSelector from "../../components/SoundSelector";
+import { FormErrorHelper } from "../forms/formErrorHelper";
+import { GroupSelectInput } from "./GroupSelectInput";
+import SoundSelector from "./SoundSelector";
+import { TextField } from "./TextField";
+import { FormattedDialogTitle } from "./dialogs";
+import { ErrorList } from "./forms";
 
 const defaultFormData: SavePredefinedTimerMutationVariables = {
     name: "",
@@ -23,13 +22,14 @@ const defaultFormData: SavePredefinedTimerMutationVariables = {
 type Props = {
     data?: SavePredefinedTimerMutationVariables;
     onSuccess?: () => void;
-} & DialogProps;
+} & BuckGenericDialogProps;
 
 const fieldSpacing = "0.4em";
 
 export default ({ show, close, data, onSuccess }: Props) => {
     const [formData, setFormData] = useState<SavePredefinedTimerMutationVariables>({ ...defaultFormData, ...data });
     const [createTimer] = useSavePredefinedTimerMutation();
+    const isTall = useMediaQuery("(min-height: 600px)");
 
     const errors = new FormErrorHelper<SavePredefinedTimerMutationVariables>();
 
@@ -50,7 +50,7 @@ export default ({ show, close, data, onSuccess }: Props) => {
     return (
         <Dialog open={show} onClose={close} TransitionProps={{ onExited: resetForm }}>
             <FormattedDialogTitle msgId={data ? "updateTimer" : "createTimer"} onCloseIconClick={close} />
-            <DialogContent>
+            <DialogContent sx={{ "& > div": { marginTop: isTall ? "1em" : "0.5em" } }}>
                 <TextField
                     label={<FormattedMessage id="name" />}
                     fullWidth

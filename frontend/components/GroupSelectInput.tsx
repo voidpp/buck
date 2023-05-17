@@ -2,25 +2,25 @@ import * as React from "react";
 
 import { useGroupListQuery } from "@/graphql-types-and-hooks";
 import { useBoolState } from "@/hooks";
-import { Dialog, DialogContent, List, ListItem } from "@mui/material";
+import { Dialog, DialogContent, List, ListItemButton } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { FormattedDialogTitle } from "../../components/dialogs";
-import { TextField } from "../../components/virtual-keyboard/TextField";
-import { FormattedButton } from "../../translations";
+import { FormattedButton } from "../translations";
+import { TextField } from "./TextField";
+import { FormattedDialogTitle } from "./dialogs";
 
 type Props = {
     value: string;
     onChange: (val: string) => void;
 };
 
-export default ({ value, onChange }: Props) => {
+export const GroupSelectInput = ({ value, onChange }: Props) => {
     const [isShowDialog, showDialog, hideDialog] = useBoolState();
     const { data } = useGroupListQuery({ fetchPolicy: "cache-and-network" });
 
     const groups = data?.groups ?? [];
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
             <TextField
                 label={<FormattedMessage id="group" />}
                 value={value}
@@ -41,16 +41,15 @@ export default ({ value, onChange }: Props) => {
                 <DialogContent>
                     <List>
                         {groups.map(grp => (
-                            <ListItem
+                            <ListItemButton
                                 key={grp.id}
-                                button
                                 onClick={() => {
                                     onChange(grp.name);
                                     hideDialog();
                                 }}
                             >
                                 {grp.name}
-                            </ListItem>
+                            </ListItemButton>
                         ))}
                     </List>
                 </DialogContent>

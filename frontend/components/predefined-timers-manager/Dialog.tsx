@@ -1,7 +1,7 @@
 import { FormattedDialogTitle } from "@/components/dialogs";
 import { useBoolState, useGroupedPredefinedTimerList } from "@/hooks";
 import { FormattedTableCell } from "@/translations";
-import { DialogProps } from "@/types";
+import { BuckGenericDialogProps } from "@/types";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -107,7 +107,7 @@ const Content = ({ close }: { close: () => void }) => {
     );
 };
 
-export default ({ show, close }: DialogProps) => {
+export const PredefinedTimerManagerDialog = ({ show, close }: BuckGenericDialogProps) => {
     return (
         <Dialog open={show} onClose={close}>
             <Content close={close} />

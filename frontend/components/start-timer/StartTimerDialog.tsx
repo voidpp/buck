@@ -1,14 +1,14 @@
 import { StartTimerMutationVariables, useStartTimerMutation } from "@/graphql-types-and-hooks";
-import { DialogProps } from "@/types";
+import { BuckGenericDialogProps } from "@/types";
 import { Dialog, DialogContent, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FormErrorHelper } from "../../forms/formErrorHelper";
 import SoundSelector from "../SoundSelector";
+import { TextField } from "../TextField";
 import { FormattedDialogTitle } from "../dialogs";
 import { ErrorList } from "../forms";
-import { TextField } from "../virtual-keyboard/TextField";
 import { DialogActionButtons } from "../widgets";
 import PredefinedTimers from "./PredefinedTimers";
 
@@ -18,9 +18,7 @@ const defaultFormData: StartTimerMutationVariables = {
     soundFile: "that-was-quick-606.mp3", // TODO: fix this shit
 };
 
-const fieldSpacing = "0.5em";
-
-export const StartTimerDialog = ({ show, close, onDone }: DialogProps) => {
+export const StartTimerDialog = ({ show, close, onDone, muiDialogProps }: BuckGenericDialogProps) => {
     const [formData, setFormData] = useState<StartTimerMutationVariables>(defaultFormData);
     const [startTimer] = useStartTimerMutation();
     const errors = new FormErrorHelper<StartTimerMutationVariables>();
@@ -45,7 +43,7 @@ export const StartTimerDialog = ({ show, close, onDone }: DialogProps) => {
     };
 
     return (
-        <Dialog open={show} onClose={close} TransitionProps={{ onExited: resetForm }}>
+        <Dialog open={show} onClose={close} TransitionProps={{ onExited: resetForm }} {...muiDialogProps}>
             <FormattedDialogTitle msgId="startTimer" onCloseIconClick={close}>
                 <PredefinedTimers onSelect={onSelectPredefinedTimer} style={{ marginLeft: "1em" }} />
             </FormattedDialogTitle>

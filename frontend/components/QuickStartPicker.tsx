@@ -105,16 +105,18 @@ export const QuickStartPicker = ({ onDone }: { onDone: () => void }) => {
                     <PickerOption {...op} onSelect={val => setValue(value + val)} key={`${op.amount}${op.unit}`} />
                 ))}
             </Box>
-            <Box sx={{ fontSize: "1.5em", pt: 1 }}>
-                <Timedelta value={value} />
-            </Box>
-            <Box>
-                <Button size="large" color="primary" onClick={start} disabled={!value}>
-                    start
-                </Button>
-                <Button size="large" color="secondary" onClick={e => setValue(0)}>
-                    clear
-                </Button>
+            <Box sx={{ display: "flex", mt: 2, justifyContent: "space-around", alignItems: "center", width: "100%" }}>
+                <Box sx={{ fontSize: "1.5em" }}>
+                    <Timedelta value={value} />
+                </Box>
+                <Box>
+                    <Button size="large" color="primary" onClick={start} disabled={!value}>
+                        start
+                    </Button>
+                    <Button size="large" color="secondary" onClick={e => setValue(0)}>
+                        clear
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );

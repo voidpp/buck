@@ -1,4 +1,6 @@
 import { useBoolState } from "@/hooks";
+import { objectKeys } from "@/tools";
+import { FormattedButton } from "@/translations";
 import CloseIcon from "@mui/icons-material/Close";
 import {
     Dialog,
@@ -14,9 +16,6 @@ import {
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useLayoutConfig } from "../../contexts/layoutSettings";
-import { objectKeys } from "../../tools";
-import { FormattedButton } from "../../translations";
 import { SlideUp } from "../widgets";
 import Keyboard from "./Keyboard";
 import { LayoutName, layouts } from "./layouts";
@@ -82,14 +81,6 @@ const Content = ({ hideDialog, label, setEdited, value, onChange }: ContentProps
             </DialogActions>
         </React.Fragment>
     );
-};
-
-export const TextField = (props: Props) => {
-    const { virtualKeyboard } = useLayoutConfig();
-
-    if (virtualKeyboard) return <TextFieldDialog {...props} />;
-
-    return <MUITextField {...props} />;
 };
 
 export const TextFieldDialog = (props: Props) => {

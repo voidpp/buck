@@ -1,3 +1,4 @@
+import { DialogProps } from "@mui/material";
 import configureStore from "./store";
 
 export type TStore = ReturnType<typeof configureStore>;
@@ -40,8 +41,9 @@ export class LocalStorageSchema {
     volume: number = 100;
 }
 
-export type DialogProps = {
+export type BuckGenericDialogProps = {
     show: boolean,
     close: () => void,
     onDone?: () => void,
+    muiDialogProps?: Partial<DialogProps>,
 };

@@ -1,4 +1,4 @@
-import { DialogProps } from "@/types";
+import { BuckGenericDialogProps } from "@/types";
 import { Dialog, DialogContent, Divider } from "@mui/material";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
@@ -21,7 +21,7 @@ const Version = () => {
     return <span>v{window.bundleVersion}</span>;
 };
 
-export default ({ show, close, onDone }: DialogProps) => {
+export default ({ show, close, onDone }: BuckGenericDialogProps) => {
     return (
         <Dialog open={show} onClose={close}>
             <FormattedDialogTitle msgId="settings" onCloseIconClick={close} style={{ padding: "0.5em 1em" }}>

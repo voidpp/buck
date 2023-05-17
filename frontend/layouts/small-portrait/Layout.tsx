@@ -1,8 +1,10 @@
+import { PredefinedTimerManagerDialog } from "@/components/predefined-timers-manager/Dialog";
 import { StartTimerDialog } from "@/components/start-timer/StartTimerDialog";
-import { DialogProps } from "@/types";
+import { BuckGenericDialogProps } from "@/types";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import ViewListIcon from "@mui/icons-material/ViewList";
 import { Box, Icon, SpeedDial, SpeedDialAction, SxProps, Theme, Typography } from "@mui/material";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import * as React from "react";
@@ -30,7 +32,7 @@ type DialogState = Record<string, boolean>;
 type DialogRenderer = {
     name: string;
     icon: typeof Icon;
-    dialog: (props: DialogProps) => JSX.Element;
+    dialog: (props: BuckGenericDialogProps) => JSX.Element;
 };
 
 const dialogs: DialogRenderer[] = [
@@ -43,6 +45,11 @@ const dialogs: DialogRenderer[] = [
         name: "startTimer",
         icon: PlayCircleFilledWhiteIcon,
         dialog: StartTimerDialog,
+    },
+    {
+        name: "predefinedTimerManager",
+        icon: ViewListIcon,
+        dialog: PredefinedTimerManagerDialog,
     },
 ];
 
@@ -100,6 +107,9 @@ export const SmallPortraitLayout = () => {
                         show={dialogState[desc.name]}
                         close={hideDialog(desc.name)}
                         onDone={() => {}}
+                        muiDialogProps={{
+                            disableRestoreFocus: true, // without this the speed dial opens after dialog close
+                        }}
                     />
                 );
             })}

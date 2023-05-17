@@ -1,4 +1,7 @@
-import { DialogProps } from "@/types";
+import SavePredefinedTimerDialog from "@/components/SavePredefinedTimerDialog";
+import { PredefinedTimerManagerDialog } from "@/components/predefined-timers-manager/Dialog";
+import { StartTimerDialog } from "@/components/start-timer/StartTimerDialog";
+import { BuckGenericDialogProps } from "@/types";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import HistoryIcon from "@mui/icons-material/History";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
@@ -8,10 +11,7 @@ import { Icon, List, ListItem, ListItemIcon, ListItemText } from "@mui/material"
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { StartTimerDialog } from "../../components/start-timer/StartTimerDialog";
-import SavePredefinedTimerDialog from "./SavePredefinedTimerDialog";
 import TimerHistoryDialog from "./TimerHistoryDialog";
-import PredefinedTimerManagerDialog from "./predefined-timers-manager/Dialog";
 import SettingsDialog from "./settings/Dialog";
 
 type DialogState = Record<string, boolean>;
@@ -19,7 +19,7 @@ type DialogState = Record<string, boolean>;
 type DialogRenderer = {
     name: string;
     icon: typeof Icon;
-    dialog: (props: DialogProps) => JSX.Element;
+    dialog: (props: BuckGenericDialogProps) => JSX.Element;
 };
 
 const dialogs: DialogRenderer[] = [
