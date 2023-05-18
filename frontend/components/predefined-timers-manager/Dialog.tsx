@@ -27,7 +27,7 @@ import SavePredefinedTimerDialog from "../SavePredefinedTimerDialog";
 import DeleteButton from "./DeleteButton";
 import UpdateButton from "./UpdateButton";
 
-const sytles = {
+const styles = {
     root: {
         width: "100%",
     },
@@ -35,6 +35,10 @@ const sytles = {
         fontSize: theme => theme.typography.pxToRem(15),
         flexBasis: "33.33%",
         flexShrink: 0,
+    },
+    noGroup: {
+        fontStyle: "italic",
+        opacity: 0.5,
     },
     secondaryHeading: {
         fontSize: theme => theme.typography.pxToRem(15),
@@ -72,8 +76,14 @@ const Content = ({ close }: { close: () => void }) => {
                         elevation={5}
                     >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography sx={sytles.heading}>{grp.group.name}</Typography>
-                            <Typography sx={sytles.heading}>
+                            {grp.group.id ? (
+                                <Typography sx={styles.heading}>{grp.group.name}</Typography>
+                            ) : (
+                                <Typography sx={{ ...styles.heading, ...styles.noGroup }}>
+                                    <FormattedMessage id="noGroup" />
+                                </Typography>
+                            )}
+                            <Typography sx={styles.heading}>
                                 <FormattedMessage id="timersCount" values={{ cnt: grp.predefinedTimers.length }} />
                             </Typography>
                         </AccordionSummary>

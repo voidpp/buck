@@ -58,4 +58,5 @@ export default {
     cpuTemp: "CPU",
     quickStartTitle: "Quick start",
     aspectRatioChecker: "Aspect Ratio Checker",
+    noGroup: "no group",
 };
