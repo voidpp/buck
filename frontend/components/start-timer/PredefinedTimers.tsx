@@ -1,6 +1,6 @@
 import { useBoolState, useGroupedPredefinedTimerList } from "@/hooks";
 import { FormattedButton } from "@/translations";
-import { Dialog, DialogContent, List, ListItem, ListItemText, ListSubheader } from "@mui/material";
+import { Dialog, DialogContent, List, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
 import * as React from "react";
 
 type Props = {
@@ -31,13 +31,12 @@ export default ({ onSelect, style }: Props) => {
                             subheader={<ListSubheader disableSticky={true}>{grp.group?.name ?? "empty"}</ListSubheader>}
                         >
                             {grp.predefinedTimers.map(t => (
-                                <ListItem
-                                    button
+                                <ListItemButton
                                     key={t.id}
                                     onClick={() => {
                                         onSelect(
                                             t.length,
-                                            (grp.group ? grp.group.name + " / " : "") + t.name,
+                                            (grp.group.id ? grp.group.name + " / " : "") + t.name,
                                             t.id,
                                             t.soundFile
                                         );
@@ -47,7 +46,7 @@ export default ({ onSelect, style }: Props) => {
                                     <ListItemText>
                                         {t.name} ({t.length})
                                     </ListItemText>
-                                </ListItem>
+                                </ListItemButton>
                             ))}
                         </List>
                     ))}
