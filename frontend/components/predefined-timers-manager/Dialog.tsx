@@ -117,9 +117,9 @@ const Content = ({ close }: { close: () => void }) => {
     );
 };
 
-export const PredefinedTimerManagerDialog = ({ show, close }: BuckGenericDialogProps) => {
+export const PredefinedTimerManagerDialog = ({ show, close, muiDialogProps }: BuckGenericDialogProps) => {
     return (
-        <Dialog open={show} onClose={close}>
+        <Dialog open={show} onClose={close} {...muiDialogProps}>
             <Content close={close} />
         </Dialog>
     );
