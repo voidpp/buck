@@ -89,10 +89,10 @@ export const Fieldset = ({
 }) => (
     <Box
         component="fieldset"
-        sx={{ borderRadius: 1, borderWidth: 1, borderColor: "rgba(255, 255, 255, 0.23)", margin: 0, ...sx }}
+        sx={{ borderRadius: 1, borderWidth: 1, borderColor: "rgba(255, 255, 255, 0.23)", m: 0, p: "6px 8px", ...sx }}
     >
         <Box component="legend">
-            <Typography variant="caption" sx={{ mx: 0.5, color: "text.secondary" }}>
+            <Typography variant="caption" sx={{ mt: 0.5, px: 0.5, color: "text.secondary" }}>
                 {label}
             </Typography>
         </Box>

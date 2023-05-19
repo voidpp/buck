@@ -41,7 +41,7 @@ export const SoundSelector = ({ value, onChange, sx }: Props) => {
                 <Audio src={`/static/audio/${audioFile}`} />
             </If>
             <Fieldset label={<FormattedMessage id="alarmSoundFile" />} sx={{ width: "100%", ...sx }}>
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: "flex", mt: -0.5, ml: 0.5 }}>
                     <Typography sx={{ flexGrow: 1 }} onClick={show}>
                         {valueTitle}
                     </Typography>
