@@ -8,6 +8,9 @@
     "esModuleInterop": true,
     "baseUrl": "./frontend",
     "paths": {
+      "@/*": [
+        "*"
+      ]      
     },
     "jsx": "react"
   }

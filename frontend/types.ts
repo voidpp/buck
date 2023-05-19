@@ -1,3 +1,4 @@
+import { DialogProps } from "@mui/material";
 import configureStore from "./store";
 
 export type TStore = ReturnType<typeof configureStore>;
@@ -33,3 +34,17 @@ declare global {
         bundleVersion: string;
     }
 }
+
+export class LocalStorageSchema {
+    selectedDashboard: number = 0;
+    weatherCity: string = null;
+    volume: number = 100;
+    aspectRatioOffset: number = 1;
+}
+
+export type BuckGenericDialogProps = {
+    show: boolean,
+    close: () => void,
+    onDone?: () => void,
+    muiDialogProps?: Partial<DialogProps>,
+};

@@ -1,8 +1,8 @@
-import {createErrorHandlerLink} from "./errors";
-import {ApolloClient, from, HttpLink, InMemoryCache, split} from "@apollo/client";
-import {TStore} from "../types";
-import {getMainDefinition} from "@apollo/client/utilities";
-import {WebSocketLink} from "@apollo/client/link/ws";
+import { TStore } from "@/types";
+import { ApolloClient, from, HttpLink, InMemoryCache, split } from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { createErrorHandlerLink } from "./errors";
 
 const httpLink = new HttpLink({
     uri: "/api/graphql",

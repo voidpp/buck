@@ -1,0 +1,162 @@
+query Config {
+    config {
+        sounds {
+            filename
+            title
+        }
+    }
+}
+
+subscription TimerEvents {
+    timerEvents {
+        id
+        time
+        type
+        timer {
+            id
+            length
+            name
+            soundFile
+        }
+    }
+}
+
+subscription RunningTimers {
+    runningTimers {
+        id
+        name
+        state
+        elapsedTime
+        lengths
+        remainingTimes
+        origLength
+    }
+}
+
+query GroupList {
+    groups {
+        id
+        name
+    }
+}
+
+query PredefinedTimerList {
+    predefinedTimers {
+        name
+        length
+        id
+        soundFile
+        group {
+            id
+            name
+        }
+    }
+}
+
+mutation StartTimer($name: String, $length: String!, $predefinedTimerId: Int, $soundFile: String!) {
+    startTimer(name: $name, length: $length, predefinedTimerId: $predefinedTimerId, soundFile: $soundFile) {
+        id
+        errors {
+            path
+            type
+            context
+        }
+    }
+}
+
+mutation SavePredefinedTimer($name: String!, $length: String!, $groupName: String, $id: Int, $soundFile: String) {
+    savePredefinedTimer(name: $name, length: $length, groupName: $groupName, id: $id, soundFile: $soundFile) {
+        id
+        errors {
+            context
+            path
+            type
+        }
+    }
+}
+
+query TimerEventList {
+    timerEvents {
+        id
+        time
+        type
+        timer {
+            name
+            length
+        }
+    }
+}
+
+mutation TimerOperation($id: Int!, $operation: TimerOperation!) {
+    operateTimer(id: $id, operation: $operation) {
+        errors {
+            type
+        }
+    }
+}
+
+query CurrentWeather($city: String!) {
+    weather(city: $city) {
+        temperature
+        conditionsImageUrl
+    }
+}
+
+query QuickTimerList {
+    predefinedTimers(sortBy: LAST_USED) {
+        name
+        length
+        id
+        soundFile
+        group {
+            name
+        }
+    }
+}
+
+mutation DeleteTimer($id: Int!) {
+    deletePredefinedTimer(id: $id) {
+        id
+    }
+}
+
+query GetBrightness {
+    brightness
+    settings {
+        isAutoBacklightEnabled
+    }
+}
+
+mutation SetBrightness($brightness: Int!) {
+    setBrightness(brightness: $brightness)
+}
+
+mutation SetAutoBacklightEnabled($isAutoEnabled: Boolean!) {
+    saveSettings(isAutoBacklightEnabled: $isAutoEnabled)
+}
+
+query CeleryInfo {
+    debugInfo {
+        celeryTasks {
+            alarm {
+                eta
+                isLast
+                isRevoked
+                timerId
+            }
+        }
+    }
+}
+
+query DebugInfo {
+    debugInfo {
+        systemStats {
+            load
+            memory {
+                percent
+            }
+            uptime
+            cpuTemp
+        }
+    }
+}
