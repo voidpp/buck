@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { Box, Button, SxProps } from "@mui/material";
 import { useStartTimerMutation } from "../graphql-types-and-hooks";
+import { SoundSelector } from "./SoundSelector";
 import { Timedelta } from "./widgets";
 
 const styles = {
@@ -83,14 +84,15 @@ function timeToLength(value: number): string {
     return res;
 }
 
-export const QuickStartPicker = ({ onDone }: { onDone: () => void }) => {
+export const QuickStartPicker = ({ onDone, showSoundPicker }: { onDone: () => void; showSoundPicker?: boolean }) => {
     const [value, setValue] = useState(0);
     const [startTimer] = useStartTimerMutation();
+    const [soundFile, setSoundFile] = useState("that-was-quick-606.mp3");
 
     const start = async () => {
         const res = await startTimer({
             variables: {
-                soundFile: "that-was-quick-606.mp3", // TODO: fix this shit
+                soundFile,
                 length: timeToLength(value),
             },
         });
@@ -100,6 +102,7 @@ export const QuickStartPicker = ({ onDone }: { onDone: () => void }) => {
 
     return (
         <Box sx={styles.picker}>
+            {showSoundPicker && <SoundSelector value={soundFile} onChange={setSoundFile} sx={{ mb: 2 }} />}
             <Box sx={styles.optionsContainer}>
                 {options.map(op => (
                     <PickerOption {...op} onSelect={val => setValue(value + val)} key={`${op.amount}${op.unit}`} />

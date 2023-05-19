@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FormErrorHelper } from "../forms/formErrorHelper";
 import { GroupSelectInput } from "./GroupSelectInput";
-import SoundSelector from "./SoundSelector";
+import { SoundSelector } from "./SoundSelector";
 import { TextField } from "./TextField";
 import { FormattedDialogTitle } from "./dialogs";
 import { ErrorList } from "./forms";
@@ -74,7 +74,7 @@ export default ({ show, close, data, onSuccess }: Props) => {
                 <SoundSelector
                     value={formData.soundFile}
                     onChange={val => setFormData({ ...formData, soundFile: val })}
-                    style={{ marginBottom: fieldSpacing }}
+                    sx={{ marginBottom: fieldSpacing }}
                 />
                 <GroupSelectInput
                     value={formData.groupName}

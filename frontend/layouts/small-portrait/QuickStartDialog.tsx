@@ -13,8 +13,8 @@ export const QuickStartDialog = ({ show, close, muiDialogProps }: BuckGenericDia
             </DialogTitle>
             <DialogContent>
                 <SimpleTimerList onDone={close} />
-                <Divider sx={{ mb: 3 }} />
-                <QuickStartPicker onDone={close} />
+                <Divider sx={{ mb: 1 }} />
+                <QuickStartPicker onDone={close} showSoundPicker />
             </DialogContent>
             <DialogActions>
                 <Button onClick={close}>

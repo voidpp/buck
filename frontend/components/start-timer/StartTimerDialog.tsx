@@ -5,7 +5,7 @@ import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FormErrorHelper } from "../../forms/formErrorHelper";
-import SoundSelector from "../SoundSelector";
+import { SoundSelector } from "../SoundSelector";
 import { TextField } from "../TextField";
 import { FormattedDialogTitle } from "../dialogs";
 import { ErrorList } from "../forms";

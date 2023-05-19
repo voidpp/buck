@@ -1,7 +1,7 @@
 import { buckLocalStorage } from "@/tools";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, DialogActions, Slide, SxProps } from "@mui/material";
+import { Box, DialogActions, Slide, SxProps, Typography } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import * as React from "react";
 import { useEffect, useRef } from "react";
@@ -77,3 +77,25 @@ export const Counter = ({ sx }: { sx?: SxProps }) => {
         </Box>
     );
 };
+
+export const Fieldset = ({
+    label,
+    children,
+    sx,
+}: {
+    label: React.ReactNode;
+    children: React.ReactNode;
+    sx?: SxProps;
+}) => (
+    <Box
+        component="fieldset"
+        sx={{ borderRadius: 1, borderWidth: 1, borderColor: "rgba(255, 255, 255, 0.23)", margin: 0, ...sx }}
+    >
+        <Box component="legend">
+            <Typography variant="caption" sx={{ mx: 0.5, color: "text.secondary" }}>
+                {label}
+            </Typography>
+        </Box>
+        {children}
+    </Box>
+);
