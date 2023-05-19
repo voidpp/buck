@@ -57,6 +57,10 @@ export default {
     revoked: "Revoked",
     cpuTemp: "CPU",
     quickStartTitle: "Quick start",
-    aspectRatioChecker: "Aspect Ratio Checker",
+    aspectRatio: "Aspect Ratio",
     noGroup: "no group",
+    misc: "Misc",
+    open: "Open",
+    save: "Save",
+    reset: "Reset",
 };

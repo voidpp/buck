@@ -39,6 +39,7 @@ export class LocalStorageSchema {
     selectedDashboard: number = 0;
     weatherCity: string = null;
     volume: number = 100;
+    aspectRatioOffset: number = 1;
 }
 
 export type BuckGenericDialogProps = {

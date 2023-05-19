@@ -18,3 +18,13 @@ const localStorageHandler = {
 };
 
 export const buckLocalStorage = new Proxy<LocalStorageSchema>(new LocalStorageSchema(), localStorageHandler);
+
+const initialWindowWidth = window.innerWidth;
+
+export const setBodyAspectRatioOffset = (offset: number) => {
+    const pixels = (1 - offset) * initialWindowWidth;
+ 
+    window.document.body.style.transform = `scaleX(${offset})`;
+    window.document.body.style.width = `${initialWindowWidth + pixels}px`;
+    window.document.body.style.marginLeft = `${pixels / -2}px`;
+};
