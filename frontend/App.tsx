@@ -14,7 +14,7 @@ const client = createClient(store);
 
 export default () => {
     React.useEffect(() => {
-        setBodyAspectRatioOffset(buckLocalStorage.aspectRatioOffset);
+        if (buckLocalStorage.aspectRatioOffset != 1) setBodyAspectRatioOffset(buckLocalStorage.aspectRatioOffset);
     }, []);
 
     return (
