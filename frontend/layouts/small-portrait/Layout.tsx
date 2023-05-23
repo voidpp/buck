@@ -24,6 +24,7 @@ const styles = {
         fontSize: "10rem",
         opacity: 0.05,
         position: "absolute",
+        zIndex: -1,
     },
 } satisfies Record<string, SxProps<Theme>>;
 

@@ -63,4 +63,6 @@ export default {
     open: "Open",
     save: "Save",
     reset: "Reset",
+    start: "start",
+    clear: "clear",
 };

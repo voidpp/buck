@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "buck"
-version = "0.10.0"
+version = "1.0.0"
 description = "The most advanced timer ecosystem in the history"
 authors = ["Lajos Santa <santa.lajos@gmail.com>"]
 include = [

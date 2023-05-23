@@ -43,6 +43,7 @@ export const SoundSelector = ({ value, onChange, sx }: Props) => {
                 label={<FormattedMessage id="alarmSoundFile" />}
                 fullWidth
                 value={valueTitle}
+                sx={sx}
                 InputProps={{
                     readOnly: true,
                     inputProps: {

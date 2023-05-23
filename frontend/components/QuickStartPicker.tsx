@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, SxProps, Theme } from "@mui/material";
 import { useStartTimerMutation } from "../graphql-types-and-hooks";
+import { FormattedButton } from "../translations";
 import { SoundSelector } from "./SoundSelector";
 import { Timedelta } from "./widgets";
 
@@ -15,6 +16,7 @@ const styles = {
     },
     pickerOption: {
         textTransform: "lowercase",
+        py: 2,
     },
     picker: {
         display: "flex",
@@ -24,10 +26,10 @@ const styles = {
     },
     optionsContainer: {
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
         gridGap: "10px",
+        width: "100%",
     },
-} satisfies Record<string, SxProps>;
+} satisfies Record<string, SxProps<Theme>>;
 
 type Unit = "s" | "m" | "h";
 
@@ -47,9 +49,6 @@ const PickerOption = ({ amount, unit, onSelect }: { onSelect: (value: number) =>
             variant="contained"
             size="large"
             fullWidth
-            style={{
-                padding: "12px 24px",
-            }}
         >
             {amount}
             {unit}
@@ -84,7 +83,17 @@ function timeToLength(value: number): string {
     return res;
 }
 
-export const QuickStartPicker = ({ onDone, showSoundPicker }: { onDone: () => void; showSoundPicker?: boolean }) => {
+export const QuickStartPicker = ({
+    onDone,
+    showSoundPicker,
+    sx = {},
+    optionMinWidth = 60,
+}: {
+    onDone: () => void;
+    showSoundPicker?: boolean;
+    sx?: SxProps;
+    optionMinWidth?: number;
+}) => {
     const [value, setValue] = useState(0);
     const [startTimer] = useStartTimerMutation();
     const [soundFile, setSoundFile] = useState("that-was-quick-606.mp3");
@@ -101,25 +110,24 @@ export const QuickStartPicker = ({ onDone, showSoundPicker }: { onDone: () => vo
     };
 
     return (
-        <Box sx={styles.picker}>
+        <Box sx={{ ...styles.picker, ...sx }}>
             {showSoundPicker && <SoundSelector value={soundFile} onChange={setSoundFile} sx={{ mb: 2 }} />}
-            <Box sx={styles.optionsContainer}>
+            <Box
+                sx={{
+                    ...styles.optionsContainer,
+                    gridTemplateColumns: `repeat(auto-fill, minmax(${optionMinWidth}px, 1fr))`,
+                }}
+            >
                 {options.map(op => (
                     <PickerOption {...op} onSelect={val => setValue(value + val)} key={`${op.amount}${op.unit}`} />
                 ))}
             </Box>
             <Box sx={{ display: "flex", mt: 2, justifyContent: "space-around", alignItems: "center", width: "100%" }}>
+                <FormattedButton size="large" color="secondary" onClick={e => setValue(0)} msgId="clear" />
                 <Box sx={{ fontSize: "1.5em" }}>
                     <Timedelta value={value} />
                 </Box>
-                <Box>
-                    <Button size="large" color="primary" onClick={start} disabled={!value}>
-                        start
-                    </Button>
-                    <Button size="large" color="secondary" onClick={e => setValue(0)}>
-                        clear
-                    </Button>
-                </Box>
+                <FormattedButton size="large" color="primary" onClick={start} disabled={!value} msgId="start" />
             </Box>
         </Box>
     );

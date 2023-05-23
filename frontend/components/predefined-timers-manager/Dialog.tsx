@@ -1,6 +1,6 @@
 import { FormattedDialogTitle } from "@/components/dialogs";
 import { useBoolState, useGroupedPredefinedTimerList } from "@/hooks";
-import { FormattedTableCell } from "@/translations";
+import { FormattedButton, FormattedTableCell } from "@/translations";
 import { BuckGenericDialogProps } from "@/types";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -9,6 +9,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Dialog,
+    DialogActions,
     DialogContent,
     IconButton,
     SxProps,
@@ -113,6 +114,9 @@ const Content = ({ close }: { close: () => void }) => {
                     </Accordion>
                 ))}
             </DialogContent>
+            <DialogActions>
+                <FormattedButton msgId="close" onClick={close} />
+            </DialogActions>
         </React.Fragment>
     );
 };

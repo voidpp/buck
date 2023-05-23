@@ -12,10 +12,11 @@ const contentStyles = {
         fontSize: "1.1em",
         paddingBottom: "9px",
         paddingTop: "9px",
+        whiteSpace: "nowrap",
     },
 } satisfies Record<string, SxProps>;
 
-export const SimpleTimerList = ({ onDone }: { onDone: () => void }) => {
+export const SimpleTimerList = ({ onDone, limit = 5 }: { onDone: () => void; limit?: number }) => {
     const { data } = useQuickTimerListQuery({ fetchPolicy: "cache-and-network" });
     const [startTimer] = useStartTimerMutation();
 
@@ -36,7 +37,7 @@ export const SimpleTimerList = ({ onDone }: { onDone: () => void }) => {
 
     return (
         <List>
-            {data.predefinedTimers.slice(0, 6).map(timer => (
+            {data.predefinedTimers.slice(0, limit).map(timer => (
                 <ListItemButton key={timer.id} onClick={createStartTimer(timer)} sx={contentStyles.list}>
                     {timer.group ? timer.group.name + " / " : ""}
                     {timer.name} ({timer.length})
