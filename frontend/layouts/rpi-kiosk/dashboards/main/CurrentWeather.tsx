@@ -2,7 +2,6 @@ import { DialogActionButtons, If } from "@/components/widgets";
 import { useCurrentWeatherQuery } from "@/graphql-types-and-hooks";
 import { useBoolState, useInterval } from "@/hooks";
 import { buckLocalStorage } from "@/tools";
-import { gql } from "@apollo/client";
 import { Box, Dialog, DialogContent, SxProps, Typography } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
@@ -63,15 +62,6 @@ const SettingsDialog = ({ hide, isShow, setValue, value }: SettingsDialogProps) 
         </Dialog>
     );
 };
-
-const currentWeatherQuery = gql`
-    query CurrentWeatherQuery($city: String!) {
-        weather(city: $city) {
-            temperature
-            conditionsImageUrl
-        }
-    }
-`;
 
 export default ({ style }: { style?: React.CSSProperties }) => {
     const [city, setCity] = useState(buckLocalStorage.weatherCity);

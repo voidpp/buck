@@ -44,3 +44,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 auto-rpi-backlight = "buck.auto_rpi_backlight.app:main"
+
+[tool.black]
+line-length = 119

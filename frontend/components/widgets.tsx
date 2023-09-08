@@ -58,7 +58,7 @@ export const Timedelta = ({ value }: { value: number }) => {
     return (
         <span>
             {hours ? `${hours}:` : ""}
-            {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
+            {minutes.toString().padStart(2, "0")}:{Math.round(seconds).toString().padStart(2, "0")}
         </span>
     );
 };

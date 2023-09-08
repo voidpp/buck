@@ -1,11 +1,17 @@
-import { RunningTimersSubscription, TimerOperation, useTimerOperationMutation } from "@/graphql-types-and-hooks";
+import { If, Timedelta } from "@/components/widgets";
+import {
+    RunningTimersSubscription,
+    TimerOperation,
+    TimerState,
+    useTimerOperationMutation,
+} from "@/graphql-types-and-hooks";
+import { useActiveTimersTicks } from "@/hooks";
+import { ArrayElement } from "@/tools";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import { Box, Divider, IconButton, SxProps, Theme } from "@mui/material";
 import * as React from "react";
-import { If, Timedelta } from "../../components/widgets";
-import { ArrayElement } from "../../tools";
 
 const padding = "0.5em";
 
@@ -70,11 +76,21 @@ export default ({ timer }: { timer: ArrayElement<RunningTimersSubscription["runn
                     </IconButton>
                 </Box>
             </Box>
-            {timer.remainingTimes.map((time, idx) => (
+            <TimeList times={timer.remainingTimes} isRunning={timer.state === TimerState.Started} />
+        </Box>
+    );
+};
+
+const TimeList = ({ times, isRunning }: { times: number[]; isRunning: boolean }) => {
+    const activeTimers = useActiveTimersTicks(times, isRunning);
+
+    return (
+        <>
+            {activeTimers.map((time, idx) => (
                 <Box key={idx} sx={styles.timer} style={{ fontSize: idx == 0 ? "4em" : "1.5em" }}>
                     <Timedelta value={time} />
                 </Box>
             ))}
-        </Box>
+        </>
     );
 };

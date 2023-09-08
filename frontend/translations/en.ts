@@ -65,4 +65,5 @@ export default {
     reset: "Reset",
     start: "start",
     clear: "clear",
+    close: "close",
 };

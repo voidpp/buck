@@ -1,8 +1,7 @@
 import { Box, Dialog, Fade, IconButton, SxProps, Theme } from "@mui/material";
 import * as React from "react";
 
-import { useRunningTimersSubscription } from "@/graphql-types-and-hooks";
-import { useBoolState } from "@/hooks";
+import { useBoolState, useRunningTimers } from "@/hooks";
 import AlarmOnIcon from "@mui/icons-material/AlarmOn";
 import CloseIcon from "@mui/icons-material/Close";
 import { If, SlideDown } from "../../components/widgets";
@@ -31,8 +30,7 @@ const styles = {
 
 export default () => {
     const [isDialogForceOpen, _1, _2, dialogForceToggle] = useBoolState(true);
-    const { data } = useRunningTimersSubscription();
-    const runningTimers = data?.runningTimers ?? [];
+    const runningTimers = useRunningTimers();
 
     const isTimersRunning = runningTimers.length > 0;
 

@@ -223,7 +223,7 @@ export type Sound = {
 export type Subscription = {
   __typename?: 'Subscription';
   runningTimers?: Maybe<Array<Maybe<RunningTimer>>>;
-  timerEvents?: Maybe<Array<Maybe<TimerEvent>>>;
+  timerEvent?: Maybe<TimerEvent>;
 };
 
 export type SystemStats = {
@@ -289,15 +289,22 @@ export type ConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ConfigQuery = { __typename?: 'Query', config?: { __typename?: 'AppConfig', sounds: Array<{ __typename?: 'Sound', filename: string, title: string } | null> } | null };
 
-export type TimerEventsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type TimerEventSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TimerEventsSubscription = { __typename?: 'Subscription', timerEvents?: Array<{ __typename?: 'TimerEvent', id: number, time?: any | null, type: TimerEventType, timer?: { __typename?: 'Timer', id: number, length: string, name?: string | null, soundFile?: string | null } | null } | null> | null };
+export type TimerEventSubscription = { __typename?: 'Subscription', timerEvent?: { __typename?: 'TimerEvent', id: number, time?: any | null, type: TimerEventType, timer?: { __typename?: 'Timer', id: number, length: string, name?: string | null, soundFile?: string | null } | null } | null };
+
+export type RunningTimerAllFragment = { __typename?: 'RunningTimer', id?: number | null, name?: string | null, state?: TimerState | null, elapsedTime?: number | null, lengths?: Array<number | null> | null, remainingTimes?: Array<number | null> | null, origLength?: string | null };
 
 export type RunningTimersSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RunningTimersSubscription = { __typename?: 'Subscription', runningTimers?: Array<{ __typename?: 'RunningTimer', id?: number | null, name?: string | null, state?: TimerState | null, elapsedTime?: number | null, lengths?: Array<number | null> | null, remainingTimes?: Array<number | null> | null, origLength?: string | null } | null> | null };
+
+export type RunningTimerListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RunningTimerListQuery = { __typename?: 'Query', runningTimers?: Array<{ __typename?: 'RunningTimer', id?: number | null, name?: string | null, state?: TimerState | null, elapsedTime?: number | null, lengths?: Array<number | null> | null, remainingTimes?: Array<number | null> | null, origLength?: string | null } | null> | null };
 
 export type GroupListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -391,7 +398,17 @@ export type DebugInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DebugInfoQuery = { __typename?: 'Query', debugInfo?: { __typename?: 'DebugInfo', systemStats?: { __typename?: 'SystemStats', load?: Array<number | null> | null, uptime?: number | null, cpuTemp?: number | null, memory?: { __typename?: 'Memory', percent?: number | null } | null } | null } | null };
 
-
+export const RunningTimerAllFragmentDoc = gql`
+    fragment RunningTimerAll on RunningTimer {
+  id
+  name
+  state
+  elapsedTime
+  lengths
+  remainingTimes
+  origLength
+}
+    `;
 export const ConfigDocument = gql`
     query Config {
   config {
@@ -429,9 +446,9 @@ export function useConfigLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Con
 export type ConfigQueryHookResult = ReturnType<typeof useConfigQuery>;
 export type ConfigLazyQueryHookResult = ReturnType<typeof useConfigLazyQuery>;
 export type ConfigQueryResult = Apollo.QueryResult<ConfigQuery, ConfigQueryVariables>;
-export const TimerEventsDocument = gql`
-    subscription TimerEvents {
-  timerEvents {
+export const TimerEventDocument = gql`
+    subscription TimerEvent {
+  timerEvent {
     id
     time
     type
@@ -446,39 +463,33 @@ export const TimerEventsDocument = gql`
     `;
 
 /**
- * __useTimerEventsSubscription__
+ * __useTimerEventSubscription__
  *
- * To run a query within a React component, call `useTimerEventsSubscription` and pass it any options that fit your needs.
- * When your component renders, `useTimerEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useTimerEventSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useTimerEventSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useTimerEventsSubscription({
+ * const { data, loading, error } = useTimerEventSubscription({
  *   variables: {
  *   },
  * });
  */
-export function useTimerEventsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TimerEventsSubscription, TimerEventsSubscriptionVariables>) {
+export function useTimerEventSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TimerEventSubscription, TimerEventSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<TimerEventsSubscription, TimerEventsSubscriptionVariables>(TimerEventsDocument, options);
+        return Apollo.useSubscription<TimerEventSubscription, TimerEventSubscriptionVariables>(TimerEventDocument, options);
       }
-export type TimerEventsSubscriptionHookResult = ReturnType<typeof useTimerEventsSubscription>;
-export type TimerEventsSubscriptionResult = Apollo.SubscriptionResult<TimerEventsSubscription>;
+export type TimerEventSubscriptionHookResult = ReturnType<typeof useTimerEventSubscription>;
+export type TimerEventSubscriptionResult = Apollo.SubscriptionResult<TimerEventSubscription>;
 export const RunningTimersDocument = gql`
     subscription RunningTimers {
   runningTimers {
-    id
-    name
-    state
-    elapsedTime
-    lengths
-    remainingTimes
-    origLength
+    ...RunningTimerAll
   }
 }
-    `;
+    ${RunningTimerAllFragmentDoc}`;
 
 /**
  * __useRunningTimersSubscription__
@@ -501,6 +512,40 @@ export function useRunningTimersSubscription(baseOptions?: Apollo.SubscriptionHo
       }
 export type RunningTimersSubscriptionHookResult = ReturnType<typeof useRunningTimersSubscription>;
 export type RunningTimersSubscriptionResult = Apollo.SubscriptionResult<RunningTimersSubscription>;
+export const RunningTimerListDocument = gql`
+    query RunningTimerList {
+  runningTimers {
+    ...RunningTimerAll
+  }
+}
+    ${RunningTimerAllFragmentDoc}`;
+
+/**
+ * __useRunningTimerListQuery__
+ *
+ * To run a query within a React component, call `useRunningTimerListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRunningTimerListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRunningTimerListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRunningTimerListQuery(baseOptions?: Apollo.QueryHookOptions<RunningTimerListQuery, RunningTimerListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RunningTimerListQuery, RunningTimerListQueryVariables>(RunningTimerListDocument, options);
+      }
+export function useRunningTimerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RunningTimerListQuery, RunningTimerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RunningTimerListQuery, RunningTimerListQueryVariables>(RunningTimerListDocument, options);
+        }
+export type RunningTimerListQueryHookResult = ReturnType<typeof useRunningTimerListQuery>;
+export type RunningTimerListLazyQueryHookResult = ReturnType<typeof useRunningTimerListLazyQuery>;
+export type RunningTimerListQueryResult = Apollo.QueryResult<RunningTimerListQuery, RunningTimerListQueryVariables>;
 export const GroupListDocument = gql`
     query GroupList {
   groups {

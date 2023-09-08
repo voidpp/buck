@@ -7,8 +7,8 @@ query Config {
     }
 }
 
-subscription TimerEvents {
-    timerEvents {
+subscription TimerEvent {
+    timerEvent {
         id
         time
         type
@@ -21,15 +21,25 @@ subscription TimerEvents {
     }
 }
 
+fragment RunningTimerAll on RunningTimer {
+    id
+    name
+    state
+    elapsedTime
+    lengths
+    remainingTimes
+    origLength
+}
+
 subscription RunningTimers {
     runningTimers {
-        id
-        name
-        state
-        elapsedTime
-        lengths
-        remainingTimes
-        origLength
+        ...RunningTimerAll
+    }
+}
+
+query RunningTimerList {
+    runningTimers {
+        ...RunningTimerAll
     }
 }
 

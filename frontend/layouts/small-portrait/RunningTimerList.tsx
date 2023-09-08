@@ -2,9 +2,10 @@ import { If, Timedelta } from "@/components/widgets";
 import {
     RunningTimersSubscription,
     TimerOperation,
-    useRunningTimersSubscription,
+    TimerState,
     useTimerOperationMutation,
 } from "@/graphql-types-and-hooks";
+import { useActiveTimersTicks, useRunningTimers } from "@/hooks";
 import { ArrayElement } from "@/tools";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -32,6 +33,20 @@ type RunningTimerProps = {
     timer: ArrayElement<RunningTimersSubscription["runningTimers"]>;
 };
 
+const TimeList = ({ times, isRunning }: { times: number[]; isRunning: boolean }) => {
+    const activeTimers = useActiveTimersTicks(times, isRunning);
+
+    return (
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+            {activeTimers.map((time, idx) => (
+                <Box key={idx} sx={{}} style={{ fontSize: idx == 0 ? "4em" : "1.5em" }}>
+                    <Timedelta value={time} />
+                </Box>
+            ))}
+        </Box>
+    );
+};
+
 const RunningTimer = ({ timer }: RunningTimerProps) => {
     const [operateTimer] = useTimerOperationMutation();
 
@@ -48,13 +63,7 @@ const RunningTimer = ({ timer }: RunningTimerProps) => {
                         <Typography variant="h5">{timer.origLength}</Typography>
                     </Box>
                 </Box>
-                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                    {timer.remainingTimes.map((time, idx) => (
-                        <Box key={idx} sx={{}} style={{ fontSize: idx == 0 ? "4em" : "1.5em" }}>
-                            <Timedelta value={time} />
-                        </Box>
-                    ))}
-                </Box>
+                <TimeList times={timer.remainingTimes ?? []} isRunning={timer.state === TimerState.Started} />
             </Box>
             <Divider sx={{ my: 1 }} />
             <Box sx={{ display: "flex", justifyContent: "center", fontSize: "4rem" }}>
@@ -90,11 +99,11 @@ const TimerListContainer = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const RunningTimerList = () => {
-    const { data } = useRunningTimersSubscription();
+    const runningTimers = useRunningTimers();
 
     return (
         <TransitionGroup component={TimerListContainer}>
-            {data?.runningTimers.map(timer => (
+            {runningTimers.map(timer => (
                 <Collapse key={timer.id}>
                     <RunningTimer key={timer.id} timer={timer} />
                 </Collapse>

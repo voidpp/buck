@@ -1,8 +1,8 @@
-import { Group, PredefinedTimer, TimerEvent, usePredefinedTimerListQuery, useTimerEventsSubscription } from "@/graphql-types-and-hooks";
+import { Group, PredefinedTimer, TimerEvent, usePredefinedTimerListQuery, useRunningTimerListQuery, useTimerEventSubscription } from "@/graphql-types-and-hooks";
 import { useEffect, useRef, useState } from "react";
 
-export function useInterval(callback: any, delay: number, enabled: boolean = true) {
-    const savedCallback = useRef<any>();
+export function useInterval(callback: () => void, delay: number, enabled: boolean = true) {
+    const savedCallback = useRef<() => void>();
 
     useEffect(() => {
         savedCallback.current = callback;
@@ -16,7 +16,7 @@ export function useInterval(callback: any, delay: number, enabled: boolean = tru
 
         const id = setInterval(tick, delay);
         return () => clearInterval(id);
-    }, [delay]);
+    }, [delay, enabled]);
 }
 
 /**
@@ -69,21 +69,51 @@ export const useGroupedPredefinedTimerList = (): GroupedPredefinedTimerList => {
 export const useActiveTimerEvent = (initialEvent?: TimerEvent) => {
     const [activeEvent, setActiveEvent] = useState<TimerEvent>(initialEvent);
 
-    useTimerEventsSubscription({
+    useTimerEventSubscription({
         onData: data => {
-            for (const event of data.data.data.timerEvents) {
-                switch (event.type) {
-                    case "ALARM":
-                        setActiveEvent(event);
-                        break;
-                    case "CLEAR_ALARM":
-                        setActiveEvent(null);
-                        break;
-                }
-                return;
+            const event = data.data.data.timerEvent
+            switch (event.type) {
+                case "ALARM":
+                    setActiveEvent(event);
+                    break;
+                case "CLEAR_ALARM":
+                    setActiveEvent(null);
+                    break;
             }
         },
     });    
 
     return {activeEvent, clearEvent: () => setActiveEvent(null)}
 }
+
+export const useRunningTimers = () => {
+    const { data, refetch } = useRunningTimerListQuery();
+
+    useTimerEventSubscription({
+        onData: _ => {
+            refetch();
+        },
+    });
+
+    return data?.runningTimers ?? [];
+};
+
+
+export const useActiveTimersTicks = (times: number[], isRunning: boolean) => {
+    const [activeTimes, setActiveTimes] = useState<number[]>(times);
+
+    useInterval(
+        () => {
+            const newTimes = [...activeTimes];
+            newTimes[0] -= 0.1;
+            if (newTimes[0] <= 0) newTimes.shift();
+            setActiveTimes(newTimes);
+        },
+        100,
+        isRunning
+    );
+
+    console.log("activeTimes", activeTimes, "isRunning", isRunning);
+
+    return activeTimes;
+};

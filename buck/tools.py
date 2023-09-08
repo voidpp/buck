@@ -43,11 +43,15 @@ def calc_elapsed_time(events: list[TimerEvent]) -> int:
         elif event.type == TimerEventType.CLEAR_ALARM:
             return sys.maxsize
         else:
-            raise CountdownCalcError("calc_elapsed_time can handle only start and pause event types, got %s", event.type)
+            raise CountdownCalcError(
+                f"calc_elapsed_time can handle only start and pause event types, got {event.type}"
+            )
 
         if last_event is not None:
             if last_event.type == event.type:
-                raise CountdownCalcError("%s event must follow a %s event, not %s", last_event.type, event.type, last_event.type)
+                raise CountdownCalcError(
+                    f"{last_event.type} event must follow a {event.type} event, not {last_event.type}"
+                )
 
             if event.time < last_event.time:
                 raise CountdownCalcError("wrong order of events!")
@@ -58,14 +62,11 @@ def calc_elapsed_time(events: list[TimerEvent]) -> int:
 
     for idx, start_event in enumerate(start_events):
         pause_time = now if idx >= len(pause_events) else pause_events[idx].time
-        sections.append((
-            start_event.time,
-            pause_time
-        ))
+        sections.append((start_event.time, pause_time))
 
     seconds = 0
 
-    for (start_time, end_time) in sections:
+    for start_time, end_time in sections:
         diff = end_time - start_time
         seconds += diff.total_seconds()
 
@@ -73,7 +74,7 @@ def calc_elapsed_time(events: list[TimerEvent]) -> int:
 
 
 def parse_timer_lengths(value: str) -> list[int]:
-    time_delta_strings = value.split(',')
+    time_delta_strings = value.split(",")
     lengths = []
     for val in time_delta_strings:
         if seconds := timeparse(val):
@@ -115,7 +116,6 @@ def calc_remaining_times(lengths: list[int], total_elapsed_time: int) -> list[in
 
 
 class LazyString:
-
     def __init__(self, resolver: Callable):
         self._resolver = resolver
         self._value = None
